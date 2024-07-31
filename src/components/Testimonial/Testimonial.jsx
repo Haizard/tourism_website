@@ -4,19 +4,19 @@ import Slider from "react-slick";
 const testimonialData = [
   {
     id: 1,
-    name: "Samuel",
+    name: "Christopher",
     text: "My safari experience with this company was truly unforgettable. From the stunning landscapes to the incredible wildlife, everything was perfectly organized and exceeded my expectations.",
     img: "https://picsum.photos/101/101",
   },
   {
     id: 2,
-    name: "John Doe",
+    name: "Maria John",
     text: "An absolutely amazing adventure! The guides were knowledgeable, the accommodations were top-notch, and the wildlife encounters were spectacular. Highly recommend for any nature enthusiast!",
     img: "https://picsum.photos/102/102",
   },
   {
     id: 3,
-    name: "Smith",
+    name: "Smith winston",
     text: "The attention to detail and personalized service made our trip unforgettable. Every aspect of the safari was thoughtfully planned, ensuring a seamless and thrilling experience.",
     img: "https://picsum.photos/103/103",
   },
