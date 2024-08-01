@@ -10,13 +10,13 @@ const testimonialData = [
   },
   {
     id: 2,
-    name: "Maria John",
+    name: "Maria Wiliam",
     text: "An absolutely amazing adventure! The guides were knowledgeable, the accommodations were top-notch, and the wildlife encounters were spectacular. Highly recommend for any nature enthusiast!",
     img: "https://picsum.photos/102/102",
   },
   {
     id: 3,
-    name: "Smith winston",
+    name: "winston",
     text: "The attention to detail and personalized service made our trip unforgettable. Every aspect of the safari was thoughtfully planned, ensuring a seamless and thrilling experience.",
     img: "https://picsum.photos/103/103",
   },
