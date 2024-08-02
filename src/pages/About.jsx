@@ -32,7 +32,7 @@ const About = () => {
               About Us
             </h1>
             <p>
-            At Makolo Safari pineaple builders, we're dedicated to crafting unforgettable African adventures. Founded in [Year], our goal is to connect you with the continent's stunning landscapes, diverse wildlife, and rich cultures.<br></br><br></br>
+            At Makolo Safari pineaple builders, we are dedicated to crafting unforgettable African adventures. Founded in [Year], our goal is to connect you with the continent's stunning landscapes, diverse wildlife, and rich cultures.<br></br><br></br>
 
 Our Mission
 <br></br>

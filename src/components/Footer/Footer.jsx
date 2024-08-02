@@ -49,12 +49,12 @@ const Footer = () => {
                 {/* TravelloGo */}
               </h1>
               <p className="text-sm">
-              At  Makolo Safari pineaple builders, we craft unforgettable travel experiences with a focus on stunning destinations and exceptional service. Join us to explore the world's most breathtaking landscapes and make lasting memories.
+              At  Makolo Adventure Tours, we craft unforgettable travel experiences with a focus on stunning destinations and exceptional service. Join us to explore the world's most breathtaking landscapes and make lasting memories.
               </p>
               <br />
               <div className="flex items-center gap-3 ">
                 < FaEnvelope />
-                <p>FMATCHES177@gmail.com</p>
+                <p>makoloadventuretours@gmail.com</p>
               </div>
               <div className="flex items-center gap-3 mt-3">
                 <FaMobileAlt />
