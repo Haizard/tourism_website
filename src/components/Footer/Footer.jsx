@@ -140,7 +140,7 @@ const Footer = () => {
           </div>
           <div>
             <div className="text-center py-5 border-t-2 border-blue-300/50 bg-primary text-white">
-              @copyright 2024 All rights reserved || Made with ❤️ by haizard misape | +255 0693671032
+              @copyright 2024 All rights reserved || Made with ❤️ by haizard misape | +255 693671032
             </div>
           </div>
         </div>
