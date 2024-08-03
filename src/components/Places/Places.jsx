@@ -32,7 +32,7 @@ const Places = ({ handleOrderPopup }) => {
     <div className="dark:bg-gray-900 dark:text-white bg-gray-50 py-10">
       <section data-aos="fade-up" className="container">
         <h1 className="my-8 border-l-8 border-primary/50 py-2 pl-2 text-3xl font-bold">
-          Orur Best Latest Photos
+          Our Best Latest Photos
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {PlacesData.map((item, index) => (
