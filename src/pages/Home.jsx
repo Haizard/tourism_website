@@ -8,7 +8,6 @@ import Banner from "../components/Banner/Banner";
 import BannerPic from "../components/BannerPic/BannerPic";
 import BannerImg from "../assets/Kilimanjaro.jpg";
 import Banner2 from "../assets/tembo.jpg";
-import OrderPopup from "../components/OrderPopup/OrderPopup";
 
 const Home = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -30,13 +29,12 @@ const Home = () => {
           </video>
           <Hero />
         </div>
-        <Places handleOrderPopup={handleOrderPopup} />
-        <BannerPic img={BannerImg} />
         <BlogsComp />
+        <BannerPic img={BannerImg} />
+        <Places handleOrderPopup={handleOrderPopup} />
         <Banner />
         <BannerPic img={Banner2} />
         <Testimonial />
-        <OrderPopup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
       </div>
     </>
   );

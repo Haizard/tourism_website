@@ -8,41 +8,270 @@ const BlogsData = [
   {
     id: 1,
     image: Img1,
-    title: "Wildebeest Migration",
+    title: "4 DAYS TZ MID RANGE SAFARI",
     description:
-      "One of nature’s most breathtaking phenomena is the wildebeest migration, an awe-inspiring journey that unfolds across the Serengeti-Masai Mara ecosystem in East Africa. Each year, over a million wildebeest, along with hundreds of thousands of zebras and gazelles, embark on a perilous trek in search of fresh grazing grounds and water.\n\nThis epic migration is driven by the seasonal rains, which dictate the movement of these herds. The journey typically begins in the southern Serengeti, where calving takes place during the rainy season, and continues northward into the Masai Mara in Kenya. Along the way, the herds face numerous challenges, including river crossings teeming with crocodiles and encounters with predators like lions and hyenas.\n\nWitnessing the wildebeest migration is a spectacular experience, offering unparalleled opportunities for wildlife observation and photography. The sheer scale of the migration, coupled with the dramatic landscapes of the African savanna, makes it one of the world’s greatest wildlife events.",
+      "🌟 Experience the magic of Tanzania with our 4-day Mid-Range Safari! 🦁 Explore the lush Ngorongoro Crater, a UNESCO World Heritage Site, known for its breathtaking landscapes and diverse wildlife. Over these four days, you'll witness the majestic beauty of one of Africa’s most iconic safari destinations. Perfect for those seeking a blend of adventure and relaxation in a pristine natural setting.",
     author: "Haitham Misape",
-    date: "April 22, 2022",
+    date: "1659 per 1 - 16496 per 10",
+    itinerary: [
+      {
+        day: 1,
+        events: [
+          "🚗 **Journey from Arusha to Tarangire National Park** - Kick off your safari adventure with a scenic drive.",
+          "🌙 **Overnight stay at Planet Lodge** - Enjoy a comfortable evening under the Tanzanian stars."
+        ]
+      },
+      {
+        day: 2,
+        events: [
+          "🌅 **Morning game drive in Tarangire** - Spot elephants, lions, and more in their natural habitat.",
+          "🍴 **Lunch at the camp** - Relish a delicious meal amidst nature.",
+          "🌞 **Afternoon game drive** - Continue your exploration and discover more wildlife."
+        ]
+      },
+      {
+        day: 3,
+        events: [
+          "🌍 **Full day game drive in Tarangire** - A full day to explore the park’s wonders.",
+          "🥪 **Lunch at a picnic spot** - Enjoy lunch in a picturesque setting.",
+          "🛌 **Evening relaxation at the lodge** - Unwind and reflect on the day's adventures."
+        ]
+      },
+      {
+        day: 4,
+        events: [
+          "🚗 **Travel to Ngorongoro Crater** - Journey to one of the world’s most remarkable natural landmarks.",
+          "🌌 **Evening game drive in Ngorongoro** - Experience a stunning safari in the crater’s unique landscape."
+        ]
+      }
+    ]
   },
+
+  
   
   {
-    id: 1,
+    id: 4,
     image: Img2,
-    title: "Ngorongoro",
+    title: "4 DAYS CAMPING SAFARI (North CIRCUIT)",
     description:
-      "Nestled in the heart of northern Tanzania lies the Ngorongoro Crater, a breathtaking natural wonder that beckons travelers from all corners of the globe. This UNESCO World Heritage Site, often referred to as the 'Garden of Eden,' is a colossal caldera formed by the collapse of a massive volcano.\n\nAs you descend into the crater, you’re greeted by a mesmerizing panorama of lush grasslands, verdant forests, and shimmering lakes. The landscape is not just visually stunning but also teeming with life. The crater’s unique ecosystem supports a dense concentration of wildlife, making it one of Africa’s premier safari destinations.\n\nImagine spotting majestic lions lounging under acacia trees, herds of elephants moving gracefully across the plains, and the elusive black rhino grazing in the distance. The Ngorongoro Crater is also a haven for bird watchers, with over 500 species gracing its skies. Each visit offers a new adventure, whether you're watching wildebeest migrations, witnessing flamingos in the soda lakes, or simply taking in the grandeur of the landscape.\n\nThe Ngorongoro Crater isn’t just a place; it’s an experience a journey into one of the world’s most extraordinary natural habitats. If you’re seeking an unforgettable safari adventure, this iconic crater promises a blend of breathtaking beauty and unparalleled wildlife encounters.",
+      "🏕️ Embrace the rugged beauty of Tanzania’s northern circuit with our 4-day camping safari! 🌍 Traverse through iconic parks like Serengeti and Ngorongoro, and enjoy the adventure of camping under the stars. This tour offers an immersive experience in Tanzania’s diverse wildlife and stunning landscapes.",
     author: "Haitham Misape",
-    date: "April 22, 2022",
+    date: "1369 per person",
+    itinerary: [
+      {
+        day: 1,
+        events: [
+          "🚗 **Depart from Arusha to Tarangire National Park** - Begin your safari with a drive to Tarangire.",
+          "🏕️ **Overnight camping** - Set up camp and enjoy a night in the wilderness."
+        ]
+      },
+      {
+        day: 2,
+        events: [
+          "🚙 **Travel to Serengeti National Park** - Continue your journey to Serengeti.",
+          "🏕️ **Overnight camping** - Experience the serenity of the Serengeti campsite."
+        ]
+      },
+      {
+        day: 3,
+        events: [
+          "🌄 **Full day game drive in Serengeti** - Explore the park’s diverse wildlife.",
+          "🏕️ **Return to camp** - Enjoy another night camping under the stars."
+        ]
+      },
+      {
+        day: 4,
+        events: [
+          "🚗 **Travel to Ngorongoro Crater** - Head to Ngorongoro for more wildlife encounters.",
+          "🏕️ **Overnight camping** - Camp at Manyara Jua Kali Camp and enjoy the natural surroundings."
+        ]
+      }
+    ]
   },
-  
+
   {
-    id: 1,
-    image: Img3,
-    title: "Tanganyika",
+    id: 5,
+    image: Img2,
+    title: "ARUSHA N.P DAY TOUR",
     description:
-      "Explore the Untamed Beauty of Mahale Mountains 🏞️ Embark on a journey to the remote Mahale Mountains, where pristine forests meet the shores of Lake Tanganyika. Encounter wild chimpanzees in their natural habitat, hike through lush, mountainous terrain, and relax on sandy beaches. This secluded paradise offers a unique blend of wildlife encounters and stunning landscapes, providing a tranquil retreat for adventurers and nature lovers alike. 🌳🐒 Join Easy Travel for an unforgettable expeditio..",
+      "🌳 Discover the highlights of Arusha National Park with our engaging day tour! 🦒 Explore diverse landscapes, from lush rainforests to savannahs, and experience the park’s rich wildlife and cultural heritage. Ideal for a quick yet immersive safari experience in Tanzania’s vibrant Arusha region.",
     author: "Haitham Misape",
-    date: "April 22, 2022",
+    date: "299 per 1 - 2896 per pax",
+    itinerary: [
+      {
+        day: 1,
+        events: [
+          "🚗 **Pickup and transfer to Arusha National Park** - Begin your exploration of this unique park.",
+          "🍴 **Lunch at the park** - Enjoy a meal in the midst of nature.",
+          "🏕️ **Overnight stay** - Camp in a scenic location and soak in the natural beauty."
+        ]
+      },
+      {
+        day: 2,
+        events: [
+          "🌅 **Morning game drive** - Spot wildlife and enjoy the park’s stunning views.",
+          "🍽️ **Lunch at the camp** - Relish a delightful meal.",
+          "🌿 **Afternoon game drive** - Continue your adventure and discover more of the park’s wonders."
+        ]
+      },
+      
+      {
+        day: 3,
+        events: [
+          "🏞️ **Visit to a Maasai village** - Experience the local culture and traditions.",
+          "🌌 **Return to camp** - Enjoy dinner and reflect on your day."
+        ]
+      },
+      {
+        day: 4,
+        events: [
+          "🌄 **Final game drive** - A last chance to explore the park.",
+          "🚗 **Transfer to Arusha** - Return to Arusha for departure or further travel."
+        ]
+      }
+    ]
   },
+
+  {
+    id: 6,
+    image: Img2,
+    title: "NGORONGORO CONSERVATION AREA AUTHORITY",
+    description:
+      "🌋 Explore the Ngorongoro Crater, a UNESCO World Heritage Site, with our 2-day tour! 🐘 This experience includes a visit to the world’s largest inactive volcanic caldera, offering incredible wildlife viewing and stunning scenery. Ideal for a quick yet immersive safari experience in one of Tanzania’s most remarkable locations.",
+    author: "Haitham Misape",
+    date: "1169 per person",
+    itinerary: [
+      {
+        day: 1,
+        events: [
+          "🚗 **Travel from Arusha to Ngorongoro Crater** - Journey to the heart of the crater.",
+          "🏨 **Check-in at Marera Valley Lodge** - Enjoy a comfortable stay with scenic views.",
+          "🌌 **Evening at leisure** - Relax and prepare for the exciting day ahead."
+        ]
+      },
+      {
+        day: 2,
+        events: [
+          "🌅 **Morning game drive in Ngorongoro Crater** - Witness diverse wildlife in this spectacular setting.",
+          "🚗 **Return to Arusha** - Travel back for departure or further plans."
+        ]
+      }
+    ]
+  },
+
+  {
+    id: 3,
+    image: Img3,
+    title: "5 DAYS SAFARI",
+    description:
+      "🌟 Embark on a thrilling 5-day safari across Tanzania's most stunning landscapes! 🐘 From the expansive Serengeti to the dramatic Ngorongoro Crater, this tour offers unforgettable wildlife encounters and scenic beauty. Perfect for nature lovers and adventure seekers looking to explore Tanzania’s diverse ecosystems in depth.",
+    author: "Haitham Misape",
+    date: "1799 per 1 - 17896 per pax",
+    itinerary: [
+      {
+        day: 1,
+        events: [
+          "🚗 **Depart from Arusha to Tarangire National Park** - Begin your adventure with a scenic drive.",
+          "🏕️ **Overnight stay at Planet Lodge** - Enjoy a comfortable stay amidst nature."
+        ]
+      },
+      {
+        day: 2,
+        events: [
+          "🚙 **Travel to Serengeti** - Head towards the famous Serengeti plains.",
+          "🏕️ **Check-in at Karibu Camp** - Settle in and prepare for the day's safari.",
+          "🌅 **Evening game drive** - Explore the Serengeti’s wildlife at dusk."
+        ]
+      },
+      {
+        day: 3,
+        events: [
+          "🌄 **Full day game drive in Serengeti** - Discover the rich wildlife and landscapes.",
+          "🏕️ **Return to Karibu Camp** - Relax and enjoy another night in the Serengeti."
+        ]
+      },
+      {
+        day: 4,
+        events: [
+          "🚗 **Travel to Ngorongoro Crater** - Journey to the majestic Ngorongoro.",
+          "🏨 **Check-in at Planet Lodge** - Enjoy your stay with stunning crater views."
+        ]
+      },
+      {
+        day: 5,
+        events: [
+          "🌅 **Morning game drive in Ngorongoro Crater** - Experience the crater’s unique wildlife and scenery.",
+          "🚗 **Return to Arusha** - Travel back for your departure or further exploration."
+        ]
+      }
+    ]
+  },
+
+
+{
+  id: 2,
+  image: Img2,
+  title: "SERENGETI MARA WILDEBEEST MIGRATION",
+  description:
+    "🌍 Dive into the world-famous Serengeti-Mara Wildebeest Migration with our 6-day safari! 🐾 Witness the incredible movement of millions of wildebeest across the Serengeti and Mara regions. This tour offers an unparalleled opportunity to experience one of nature’s greatest spectacles. From vast savannahs to thrilling game drives, every moment is designed to captivate and inspire.",
+  author: "Haitham Misape",
+  date: "2199 per 1 - 1999 per 9",
+  itinerary: [
+    {
+      day: 1,
+      events: [
+        "✈️ **Arrival at JRO Airport** - Meet your guide and transfer to Hotel Planet.",
+        "🏨 **Check-in and overnight stay** - Relax and prepare for the adventure ahead."
+      ]
+    },
+    {
+      day: 2,
+      events: [
+        "🚙 **Transfer to Tarangire National Park** - Embark on your safari journey.",
+        "🏕️ **Check-in at Elephant Spring Camp** - Settle into your tented camp in Tarangire."
+      ]
+    },
+    {
+      day: 3,
+      events: [
+        "🌄 **Travel to Serengeti Center** - Continue your safari through Tanzania’s iconic Serengeti.",
+        "🏕️ **Check-in at Karibuni Camp** - Enjoy a comfortable night in the heart of Serengeti."
+      ]
+    },
+    {
+      day: 4,
+      events: [
+        "🌿 **Explore Serengeti Center** - Discover diverse wildlife and breathtaking landscapes.",
+        "🚗 **Travel to Northern Serengeti** - Move towards the dramatic northern region."
+      ]
+    },
+    {
+      day: 5,
+      events: [
+        "🌅 **Explore Northern Serengeti** - Witness the great migration and other wildlife.",
+        "🏕️ **Check-in at Karibuni Camp** - Return to your camp for another night."
+      ]
+    },
+    {
+      day: 6,
+      events: [
+        "🚗 **Return to Ngorongoro Crater** - Travel back to the crater for a final exploration.",
+        "🏨 **Check-in at Planet Lodge or similar** - Rest and prepare for departure."
+      ]
+    }
+  ]
+}
+  
 ];
+
 
 const BlogsComp = () => {
   return (
     <>
       <div className="dark:bg-gray-900 dark:text-white py-10">
-        <section data-aos="fade-up" className="container ">
-          <h1 className=" my-8 border-l-8 border-primary/50 py-2 pl-2 text-3xl font-bold">
-            Our Latest Blogs
+        <section data-aos="fade-up" className="container">
+          <h1 className="my-8 border-l-8 border-primary/50 py-2 pl-2 text-3xl font-bold">
+            Our Latest Packages
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {BlogsData.map((item) => (

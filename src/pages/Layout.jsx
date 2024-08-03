@@ -15,7 +15,6 @@ const Layout = () => {
       <Navbar handleOrderPopup={handleOrderPopup} />
       <Outlet />
       <Footer />
-      <OrderPopup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
     </>
   );
 };
