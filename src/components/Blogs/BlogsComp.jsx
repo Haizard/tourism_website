@@ -6,10 +6,10 @@ import Img3 from "../../assets/places/Magical of Tanzania Adventure Camping Safa
 import Img4 from "../../assets/places/Ngorongoro.jpg";
 import Img5 from "../../assets/places/Maasai Cultural Experience _ Best Kenya Safari Experiences _ Art Of Safari.jpg";
 import Img6 from "../../assets/places/Serengeti2.jpg";
-import Img7 from "../../assets/places/camp2.jpg";
-import Img8 from "../../assets/places/camp2.jpg";
+import img7 from "../../assets/places/Kilimanjaro.jpg";
+import img8 from "../../assets/places/Maasai Cultural Experience _ Best Kenya Safari Experiences _ Art Of Safari.jpg";
 import Img9 from "../../assets/places/camp2.jpg";
-
+import OrderPopup from "../OrderPopup/OrderPopup";
 
 const BlogsData = [
   {
@@ -269,6 +269,90 @@ const BlogsData = [
       events: [
         "🚗 **Return to Ngorongoro Crater** - Travel back to the crater for a final exploration.",
         "🏨 **Check-in at Planet Lodge or similar** - Rest and prepare for departure."
+      ]
+    }
+  ]
+},
+
+{
+  id: 7,
+  image: img7,
+  title: "KILI TREKKINS",
+  description:
+    "🏔️ Experience the adventure of a lifetime with our Kili Trekkins tour! 🌍 Trekking Mount Kilimanjaro over 6 to 8 days, you will explore various climate zones and reach the summit of Africa's highest peak. Enjoy comfortable lodgings and stunning views along the way.",
+  author: "Haitham Misape",
+  date: "2199 per person",
+  itinerary: [
+    {
+      day: 1,
+      events: [
+        "✈️ **Arrival at Kilimanjaro International Airport** - Meet your guide and transfer to Planet Lodge for overnight accommodation.",
+        "🏨 **Check-in at Planet Lodge** - Relax and prepare for your trek."
+      ]
+    },
+    {
+      day: 2,
+      events: [
+        "🚶 **Begin Trekking** - Start your hike through the lush rainforest and moorland.",
+        "🏕️ **Camping** - Stay in tented camps or huts depending on the route."
+      ]
+    },
+    {
+      day: 3,
+      events: [
+        "🌄 **Continue Trekking** - Ascend through different climate zones, from alpine desert to high altitude.",
+        "🏕️ **Camping** - Overnight stay in tented camps or huts."
+      ]
+    },
+    {
+      day: 4,
+      events: [
+        "🏔️ **Summit Attempt** - Begin your summit push early in the morning to reach the peak of Mount Kilimanjaro.",
+        "🌌 **Descend** - Return to your camp for rest after the summit attempt."
+      ]
+    },
+    {
+      day: 5,
+      events: [
+        "🌄 **Continue Descent** - Trek back through the various climate zones.",
+        "🏕️ **Camping** - Overnight stay in tented camps or huts."
+      ]
+    },
+    {
+      day: 6,
+      events: [
+        "🚶 **Complete Descent** - Finish your trek and return to the base.",
+        "🚗 **Transfer to Kilimanjaro International Airport** - Depart or continue with further travel plans."
+      ]
+    }
+  ]
+},
+
+{
+  id: 8,
+  image: img8,
+  title: "MASAI TOUR VISIT",
+  description:
+    "🌍 Immerse yourself in the rich culture and traditions of the Maasai people with our Masai Tour Visit! 🏞️ This tour offers an authentic experience of the Maasai lifestyle, including visits to traditional villages and interactions with the local community. Explore the unique culture and natural beauty of Tanzania.",
+  author: "Haitham Misape",
+  date: "899 per person",
+  itinerary: [
+    {
+      day: 1,
+      events: [
+        "🚗 **Pickup from your accommodation** - Transfer to a Maasai village.",
+        "🏡 **Village Visit** - Explore a traditional Maasai village, meet local elders, and learn about their customs and way of life.",
+        "🍴 **Lunch with the Maasai** - Enjoy a traditional Maasai meal and experience their hospitality.",
+        "🌄 **Cultural Activities** - Participate in traditional Maasai dances, crafts, and ceremonies."
+      ]
+    },
+    {
+      day: 2,
+      events: [
+        "🌅 **Morning Nature Walk** - Experience the natural beauty of the Maasai land with a guided nature walk.",
+        "🏞️ **Visit to a Maasai Market** - Explore a local market and shop for Maasai crafts and souvenirs.",
+        "🍴 **Lunch** - Enjoy a meal at a local restaurant or picnic in a scenic spot.",
+        "🚗 **Return Transfer** - Travel back to your accommodation or continue with further travel plans."
       ]
     }
   ]

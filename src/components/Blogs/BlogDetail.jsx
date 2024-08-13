@@ -5,24 +5,15 @@ import "./blogdetail.css";
 
 const BlogDetail = () => {
     const location = useLocation();
-    const { image, additionalImage, date, title, description, author, itinerary } = location.state || {};
-
+    const { image, date, title, description, author, itinerary } = location.state || {};
+    
     const [isItineraryVisible, setItineraryVisible] = useState(false);
     const [isOrderPopupVisible, setOrderPopupVisible] = useState(false);
-    const [currentImage, setCurrentImage] = useState(image); // Initialize with the default image
 
     useEffect(() => {
         // Debugging: Check the state data
         console.log("BlogDetail Location State:", location.state);
     }, [location.state]);
-
-    useEffect(() => {
-        if (isItineraryVisible && additionalImage) {
-            setCurrentImage(additionalImage); // Switch to the additional image when the itinerary is visible
-        } else {
-            setCurrentImage(image); // Switch back to the default image when the itinerary is hidden
-        }
-    }, [isItineraryVisible, additionalImage, image]);
 
     if (!location.state) {
         return <div>No blog data available</div>; // Handle missing data
@@ -32,7 +23,7 @@ const BlogDetail = () => {
         <div className="blog-detail-container">
             <div className="blog-content rounded-sm p-4">
                 <div className="blog-card">
-                    <img src={currentImage} alt={title} className="blog-image rounded-lg" />
+                    <img src={image} alt={title} className="blog-image rounded-lg" />
                     <div className="blog-card-info">
                         <p className="blog-card-date">{date}</p>
                         <p className="blog-card-author">By {author}</p>
