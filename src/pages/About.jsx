@@ -3,13 +3,13 @@ import React from "react";
 const operators = [
   {
     id: 1,
-    name: "Haitham Salehe Misape",
+    name: "Mr.John",
     duty: "Founder & CEO",
     image: "https://picsum.photos/100/100", // Replace with actual image URL
   },
   {
     id: 2,
-    name: "Zainabu Suleimani Saidi",
+    name: "Haitham",
     duty: "Head of Marketing",
     image: "https://picsum.photos/101/101", // Replace with actual image URL
   },

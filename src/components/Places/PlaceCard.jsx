@@ -4,17 +4,15 @@ import { IoLocationSharp } from "react-icons/io5";
 const PlaceCard = ({ img, location }) => {
   return (
     <div
-      className="shadow-lg transition-all duration-500 hover:shadow-xl dark:text-white cursor-pointer"
-      style={{ backgroundColor: '#f0f4f8' }} // Cool background color
+      className="shadow-lg transition-all duration-500 hover:shadow-xl dark:text-white cursor-pointer bg-[#f0f4f8] rounded-lg overflow-hidden"
     >
-      <div className="overflow-hidden">
+      <div className="relative w-full h-60">
         <img
           src={img}
           alt="Place"
-          className="mx-auto h-[220px] w-full object-cover transition duration-700 hover:skew-x-2 hover:scale-110"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110"
         />
       </div>
-
       <div className="p-3">
         <div className="flex items-center gap-2 opacity-70">
           <IoLocationSharp />
