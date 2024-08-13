@@ -4,7 +4,7 @@ import Img1 from "../../assets/places/beastmigration1.jpg";
 import Img2 from "../../assets/places/camp2.jpg";
 import Img3 from "../../assets/places/Magical of Tanzania Adventure Camping Safari - 4 days.jpg";
 import Img4 from "../../assets/places/Ngorongoro.jpg";
-import Img5 from "../../assets/places/Maasai Cultural Experience _ Best Kenya Safari Experiences _ Art Of Safari.jpg";
+import Img5 from "../../assets/places/Great migration Wildebeests and zebras.jpg";
 import Img6 from "../../assets/places/Serengeti2.jpg";
 import img7 from "../../assets/places/Kilimanjaro.jpg";
 import img8 from "../../assets/places/Maasai Cultural Experience _ Best Kenya Safari Experiences _ Art Of Safari.jpg";
