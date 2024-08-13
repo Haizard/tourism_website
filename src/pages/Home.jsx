@@ -6,8 +6,8 @@ import Places from "../components/Places/Places";
 import Testimonial from "../components/Testimonial/Testimonial";
 import Banner from "../components/Banner/Banner";
 import BannerPic from "../components/BannerPic/BannerPic";
-import BannerImg from "../assets/Kilimanjaro.jpg";
-import Banner2 from "../assets/tembo.jpg";
+import BannerImg from "../assets/rhino.jpg";
+import Banner2 from "../assets/momentlion.jpg";
 
 const Home = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);

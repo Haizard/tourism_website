@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BlogCard = ({ image, date, title, description, author, itinerary }) => {
+const BlogCard = ({ image, additionalImage, date, title, description, author, itinerary }) => {
   return (
     <Link
       to={`/blogs/${title}`}
       onClick={() => {
         window.scrollTo(0, 0);
       }}
-      state={{ image, date, title, description, author, itinerary }} // Pass itinerary data
+      state={{ image, additionalImage, date, title, description, author, itinerary }} // Pass additionalImage
     >
       <div className="p-4 shadow-lg transition-all duration-500 hover:shadow-xl dark:bg-slate-950 dark:text-white">
         <div className="overflow-hidden">

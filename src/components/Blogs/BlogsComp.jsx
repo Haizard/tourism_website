@@ -1,8 +1,15 @@
 import React from "react";
 import BlogCard from "./BlogCard";
-import Img1 from "../../assets/places/Great migration Wildebeests and zebras.jpg";
-import Img2 from "../../assets/places/Ngorongoro.jpg";
-import Img3 from "../../assets/places/tanganyika.jpg";
+import Img1 from "../../assets/places/beastmigration1.jpg";
+import Img2 from "../../assets/places/camp2.jpg";
+import Img3 from "../../assets/places/Magical of Tanzania Adventure Camping Safari - 4 days.jpg";
+import Img4 from "../../assets/places/Ngorongoro.jpg";
+import Img5 from "../../assets/places/Maasai Cultural Experience _ Best Kenya Safari Experiences _ Art Of Safari.jpg";
+import Img6 from "../../assets/places/Serengeti2.jpg";
+import Img7 from "../../assets/places/camp2.jpg";
+import Img8 from "../../assets/places/camp2.jpg";
+import Img9 from "../../assets/places/camp2.jpg";
+
 
 const BlogsData = [
   {
@@ -55,9 +62,14 @@ const BlogsData = [
     title: "4 DAYS CAMPING SAFARI (North CIRCUIT)",
     description:
       "🏕️ Embrace the rugged beauty of Tanzania’s northern circuit with our 4-day camping safari! 🌍 Traverse through iconic parks like Serengeti and Ngorongoro, and enjoy the adventure of camping under the stars. This tour offers an immersive experience in Tanzania’s diverse wildlife and stunning landscapes.",
+
     author: "Haitham Misape",
     date: "1369 per person",
     itinerary: [
+      {
+        campimage: Img2,
+        camptitle: "hi there",
+      },
       {
         day: 1,
         events: [
@@ -91,7 +103,7 @@ const BlogsData = [
 
   {
     id: 5,
-    image: Img2,
+    image: Img3,
     title: "ARUSHA N.P DAY TOUR",
     description:
       "🌳 Discover the highlights of Arusha National Park with our engaging day tour! 🦒 Explore diverse landscapes, from lush rainforests to savannahs, and experience the park’s rich wildlife and cultural heritage. Ideal for a quick yet immersive safari experience in Tanzania’s vibrant Arusha region.",
@@ -134,7 +146,7 @@ const BlogsData = [
 
   {
     id: 6,
-    image: Img2,
+    image: Img4,
     title: "NGORONGORO CONSERVATION AREA AUTHORITY",
     description:
       "🌋 Explore the Ngorongoro Crater, a UNESCO World Heritage Site, with our 2-day tour! 🐘 This experience includes a visit to the world’s largest inactive volcanic caldera, offering incredible wildlife viewing and stunning scenery. Ideal for a quick yet immersive safari experience in one of Tanzania’s most remarkable locations.",
@@ -161,7 +173,7 @@ const BlogsData = [
 
   {
     id: 3,
-    image: Img3,
+    image: Img5,
     title: "5 DAYS SAFARI",
     description:
       "🌟 Embark on a thrilling 5-day safari across Tanzania's most stunning landscapes! 🐘 From the expansive Serengeti to the dramatic Ngorongoro Crater, this tour offers unforgettable wildlife encounters and scenic beauty. Perfect for nature lovers and adventure seekers looking to explore Tanzania’s diverse ecosystems in depth.",
@@ -210,7 +222,7 @@ const BlogsData = [
 
 {
   id: 2,
-  image: Img2,
+  image: Img6,
   title: "SERENGETI MARA WILDEBEEST MIGRATION",
   description:
     "🌍 Dive into the world-famous Serengeti-Mara Wildebeest Migration with our 6-day safari! 🐾 Witness the incredible movement of millions of wildebeest across the Serengeti and Mara regions. This tour offers an unparalleled opportunity to experience one of nature’s greatest spectacles. From vast savannahs to thrilling game drives, every moment is designed to captivate and inspire.",

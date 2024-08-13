@@ -1,5 +1,5 @@
 import React from "react";
-import TravelImg from "../../assets/travelbox.jpg";
+import TravelImg from "../../assets/camp1.jpg";
 import { MdFlight, MdOutlineLocalHotel } from "react-icons/md";
 import { IoIosWifi } from "react-icons/io";
 import { IoFastFoodSharp } from "react-icons/io5";

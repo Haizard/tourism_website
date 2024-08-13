@@ -7,7 +7,7 @@ import {
   FaEnvelope,
   FaMobileAlt,
 } from "react-icons/fa";
-import NatureVid from "../../assets/video/footer.mp4";
+import NatureVid from "../../assets/video/main.mp4";
 import { Link } from "react-router-dom";
 
 const FooterLinks = [
@@ -39,8 +39,8 @@ const Footer = () => {
           muted
           className="absolute right-0 top-0 h-full overflow-hidden w-full object-cover z-[-1]"
         >
-          <source src={NatureVid} type="video/mp4" />
-        </video>
+            <source src={NatureVid} type="video/mp4" />
+            </video>
         <div className="container">
           <div className="grid md:grid-cols-3 py-5 bg-white/80 backdrop-blur-sm rounded-t-xl">
             <div className="py-8 px-4">

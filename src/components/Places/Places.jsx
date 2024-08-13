@@ -1,29 +1,58 @@
 import React from "react";
 import PlaceCard from "./PlaceCard";
-import Img1 from "../../assets/places/Ngorongoro.jpg";
-import Img2 from "../../assets/places/Great migration Wildebeests and zebras.jpg";
+import Img1 from "../../assets/places/Serengeti2.jpg";
+import Img2 from "../../assets/places/Manyara.jpg";
+import Img3 from "../../assets/places/NatronLake.jpg";
+import Img4 from "../../assets/places/kilimanjarotour.jpg";
+import Img5 from "../../assets/places/birdwatching1.jpg";
+import Img6 from "../../assets/places/birdwatching2.jpg";
+import Img7 from "../../assets/places/birdwatching3.jpg";
+import Img8 from "../../assets/places/birdwatching4.jpg";
+import Img9 from "../../assets/places/beastMigration.jpg";
+import Img10 from "../../assets/places/nicemoment3.jpg";
+
 // ... other imports
 
 const PlacesData = [
   {
     img: Img1,
-    location: "Tanzania"
+    location: "Tanzania, serengeti"
   },
   {
     img: Img2,
-    location: "Tanzania"
+    location: "Tanzania, Manyara"
   },
   {
-    img: Img2,
-    location: "Tanzania"
+    img: Img3,
+    location: "Tanzania, Natron Lake"
   },
   {
-    img: Img2,
-    location: "Tanzania"
+    img: Img4,
+    location: "Tanzania, Mount Kilimanjaro"
   },
   {
-    img: Img2,
-    location: "Tanzania"
+    img: Img5,
+    location: "Tanzania, bird watching"
+  },
+  {
+    img: Img6,
+    location: "Tanzania, bird watching"
+  },
+  {
+    img: Img7,
+    location: "Tanzania, bird watching"
+  },
+  {
+    img: Img8,
+    location: "Tanzania, bird watching"
+  },
+  {
+    img: Img9,
+    location: "Tanzania, Beast Migration"
+  },
+  {
+    img: Img10,
+    location: "Tanzania, Nice Timing"
   },
 ];
 
