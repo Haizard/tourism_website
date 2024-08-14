@@ -3,6 +3,7 @@ import FooterLogo from "../../assets/logo.jpg";
 import {
   FaInstagram,
   FaTripadvisor,
+  FaLinkedin,
   FaEnvelope,
   FaMobileAlt,
 } from "react-icons/fa";
@@ -75,7 +76,7 @@ const Footer = () => {
               <div>
               <div className="flex items-center gap-3 mt-6">
   <a 
-    href="https://www.instagram.com/makoloafrika?igsh=aXV3NXF5OTN1Z3oz" 
+    href="https://www.instagram.com/makoloafrika?igsh=aXV3NXF5OTN1Z3oz//https://www.tripadvisor.co.uk/Profile/makolosafari" 
     target="_blank" 
     rel="noopener noreferrer"
     className="text-red-600 hover:text-gray-800 transition-colors duration-300"
@@ -83,6 +84,15 @@ const Footer = () => {
     <FaInstagram className="text-3xl" />
   </a>
 
+  <a 
+    href="https://www.linkedin.com/in/makoloadventure-safaris-666a13322?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
+  >
+    <FaLinkedin className="text-3xl" />
+  </a>
+  
   <a 
   href="https://www.tripadvisor.co.uk/Profile/makolosafari" 
   target="_blank" 
