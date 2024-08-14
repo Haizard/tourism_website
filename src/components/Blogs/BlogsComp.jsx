@@ -318,7 +318,6 @@ const BlogsData = [
         "🏡 **Village Visit** - Explore a traditional Maasai village, meet local elders, and learn about their customs and way of life.",
         "🍴 **Lunch with the Maasai** - Enjoy a traditional Maasai meal and experience their hospitality.",
         "🌄 **Cultural Activities** - Participate in traditional Maasai dances, crafts, and ceremonies.",
-        "🌋 **Crater Visit** - Explore the breathtaking views and unique landscape of the nearby crater."
       ]
     },
     {
@@ -326,6 +325,7 @@ const BlogsData = [
       events: [
         "🌅 **Morning Nature Walk** - Experience the natural beauty of the Maasai land with a guided nature walk.",
         "🏞️ **Visit to a Maasai Market** - Explore a local market and shop for Maasai crafts and souvenirs.",
+        "🌋 **Crater Visit** - Explore the breathtaking views and unique landscape of the nearby crater.",
         "🍴 **Lunch** - Enjoy a meal at a local restaurant or picnic in a scenic spot.",
         "🚗 **Return Transfer** - Travel back to your accommodation or continue with further travel plans."
       ]
