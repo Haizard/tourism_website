@@ -19,7 +19,7 @@ const BlogsData = [
     description:
       "🌟 Experience the magic of Tanzania with our 4-day Mid-Range Safari! 🦁 Explore the lush Ngorongoro Crater, a UNESCO World Heritage Site, known for its breathtaking landscapes and diverse wildlife. Over these four days, you'll witness the majestic beauty of one of Africa’s most iconic safari destinations. Perfect for those seeking a blend of adventure and relaxation in a pristine natural setting.                                       \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
     author: "Haitham Misape",
-    date: "1659 per 1 - 16496 per 10",
+    date: "$1659 $ per 1 - $16496$ per 10",
     itinerary: [
       {
         day: 1,
@@ -64,17 +64,14 @@ const BlogsData = [
       "🏕️ Embrace the rugged beauty of Tanzania’s northern circuit with our 4-day camping safari! 🌍 Traverse through iconic parks like Serengeti and Ngorongoro, and enjoy the adventure of camping under the stars. This tour offers an immersive experience in Tanzania’s diverse wildlife and stunning landscapes.                    \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
 
     author: "Haitham Misape",
-    date: "1369 per person",
+    date: "$1369 $ per person",
     itinerary: [
-      {
-        campimage: Img2,
-        camptitle: "hi there",
-      },
+     
       {
         day: 1,
         events: [
           "🚗 **Depart from Arusha to Tarangire National Park** - Begin your safari with a drive to Tarangire.",
-          "🏕️ **Overnight camping** - Set up camp and enjoy a night in the wilderness."
+          "🏕️ **Overnight Karibu camping** - (elephant spring)by karibu camps."
         ]
       },
       {
@@ -108,7 +105,7 @@ const BlogsData = [
     description:
       "🌳 Discover the highlights of Arusha National Park with our engaging day tour! 🦒 Explore diverse landscapes, from lush rainforests to savannahs, and experience the park’s rich wildlife and cultural heritage. Ideal for a quick yet immersive safari experience in Tanzania’s vibrant Arusha region.                           \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
     author: "Haitham Misape",
-    date: "299 per 1 - 2896 per pax",
+    date: "$299 $ per 1 - $2896 $ per pax",
     itinerary: [
       {
         day: 1,
@@ -116,29 +113,6 @@ const BlogsData = [
           "🚗 **Pickup and transfer to Arusha National Park** - Begin your exploration of this unique park.",
           "🍴 **Lunch at the park** - Enjoy a meal in the midst of nature.",
           "🏕️ **Overnight stay** - Camp in a scenic location and soak in the natural beauty."
-        ]
-      },
-      {
-        day: 2,
-        events: [
-          "🌅 **Morning game drive** - Spot wildlife and enjoy the park’s stunning views.",
-          "🍽️ **Lunch at the camp** - Relish a delightful meal.",
-          "🌿 **Afternoon game drive** - Continue your adventure and discover more of the park’s wonders."
-        ]
-      },
-      
-      {
-        day: 3,
-        events: [
-          "🏞️ **Visit to a Maasai village** - Experience the local culture and traditions.",
-          "🌌 **Return to camp** - Enjoy dinner and reflect on your day."
-        ]
-      },
-      {
-        day: 4,
-        events: [
-          "🌄 **Final game drive** - A last chance to explore the park.",
-          "🚗 **Transfer to Arusha** - Return to Arusha for departure or further travel."
         ]
       }
     ]
@@ -151,7 +125,7 @@ const BlogsData = [
     description:
       "🌋 Explore the Ngorongoro Crater, a UNESCO World Heritage Site, with our 2-day tour! 🐘 This experience includes a visit to the world’s largest inactive volcanic caldera, offering incredible wildlife viewing and stunning scenery. Ideal for a quick yet immersive safari experience in one of Tanzania’s most remarkable locations.                           \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
     author: "Haitham Misape",
-    date: "1169 per person",
+    date: "$1169 $ per person",
     itinerary: [
       {
         day: 1,
@@ -178,7 +152,7 @@ const BlogsData = [
     description:
       "🌟 Embark on a thrilling 5-day safari across Tanzania's most stunning landscapes! 🐘 From the expansive Serengeti to the dramatic Ngorongoro Crater, this tour offers unforgettable wildlife encounters and scenic beauty. Perfect for nature lovers and adventure seekers looking to explore Tanzania’s diverse ecosystems in depth.                                                       \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
     author: "Haitham Misape",
-    date: "1799 per 1 - 17896 per pax",
+    date: "$1799 $ per 1 - $17896 $ per pax",
     itinerary: [
       {
         day: 1,
@@ -227,7 +201,7 @@ const BlogsData = [
   description:
     "🌍 Dive into the world-famous Serengeti-Mara Wildebeest Migration with our 6-day safari! 🐾 Witness the incredible movement of millions of wildebeest across the Serengeti and Mara regions. This tour offers an unparalleled opportunity to experience one of nature’s greatest spectacles. From vast savannahs to thrilling game drives, every moment is designed to captivate and inspire.                                                        \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
   author: "Haitham Misape",
-  date: "2199 per 1 - 1999 per 9",
+  date: "$2199 $ per 1 - $1999 $ per 9",
   itinerary: [
     {
       day: 1,
@@ -281,7 +255,7 @@ const BlogsData = [
   description:
     "🏔️ Experience the adventure of a lifetime with our Kili Trekkins tour! 🌍 Trekking Mount Kilimanjaro over 6 to 8 days, you will explore various climate zones and reach the summit of Africa's highest peak. Enjoy comfortable lodgings and stunning views along the way. \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
   author: "Haitham Misape",
-  date: "2199 per person",
+  date: "$2199 $ per person",
   itinerary: [
     {
       day: 1,
@@ -335,7 +309,7 @@ const BlogsData = [
   description:
     "🌍 Immerse yourself in the rich culture and traditions of the Maasai people with our Masai Tour Visit! 🏞️ This tour offers an authentic experience of the Maasai lifestyle, including visits to traditional villages and interactions with the local community. Explore the unique culture and natural beauty of Tanzania. \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
   author: "Haitham Misape",
-  date: "899 per person",
+  date: "$899 $ per person",
   itinerary: [
     {
       day: 1,
