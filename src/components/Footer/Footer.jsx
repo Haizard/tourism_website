@@ -52,14 +52,26 @@ const Footer = () => {
               At  Makolo Adventure Tours, we craft unforgettable travel experiences with a focus on stunning destinations and exceptional service. Join us to explore the world's most breathtaking landscapes and make lasting memories.
               </p>
               <br />
-              <div className="flex items-center gap-3 ">
-                < FaEnvelope />
-                <p>makoloadventuresafaris@gmail.com</p>
-              </div>
+              <div className="flex items-center gap-3">
+  <FaEnvelope className="text-2xl" />
+  <a 
+    href="mailto:makoloadventuresafaris@gmail.com" 
+    className="text-blue-600 hover:text-blue-800 transition-colors duration-300 hover:text-red-700 transition-colors duration-500"
+  >
+    makoloadventuresafaris@gmail.com
+  </a>
+</div>
+
               <div className="flex items-center gap-3 mt-3">
-                <FaMobileAlt />
-                <p>+255 710887798</p>
-              </div>
+  <FaMobileAlt className="text-2xl" />
+  <a 
+    href="tel:+255710887798" 
+    className="text-blue-600 hover:text-blue-800 transition-colors duration-300 hover:text-red-700 transition-colors duration-500"
+  >
+    +255 710887798
+  </a>
+</div>
+
               {/* social handles */}
               <div>
               <div className="flex items-center gap-3 mt-6">
