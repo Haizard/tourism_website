@@ -317,7 +317,8 @@ const BlogsData = [
         "🚗 **Pickup from your accommodation** - Transfer to a Maasai village.",
         "🏡 **Village Visit** - Explore a traditional Maasai village, meet local elders, and learn about their customs and way of life.",
         "🍴 **Lunch with the Maasai** - Enjoy a traditional Maasai meal and experience their hospitality.",
-        "🌄 **Cultural Activities** - Participate in traditional Maasai dances, crafts, and ceremonies."
+        "🌄 **Cultural Activities** - Participate in traditional Maasai dances, crafts, and ceremonies.",
+        "🌋 **Crater Visit** - Explore the breathtaking views and unique landscape of the nearby crater."
       ]
     },
     {
