@@ -25,7 +25,7 @@ const BlogsData = [
         day: 1,
         events: [
           "🚗 **Journey from Arusha to Tarangire National Park** - Kick off your safari adventure with a scenic drive.",
-          "🌙 **Overnight stay at Planet Lodge** - Enjoy a comfortable evening under the Tanzanian stars."
+          "🌙 **Overnight stay at Karibu Camps** - elephant spring by karibu camps."
         ]
       },
       {
