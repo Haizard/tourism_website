@@ -67,7 +67,7 @@ const Footer = () => {
     href="https://www.instagram.com/makoloafrika?igsh=aXV3NXF5OTN1Z3oz" 
     target="_blank" 
     rel="noopener noreferrer"
-    className="text-gray-600 hover:text-gray-800 transition-colors duration-300"
+    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
   >
     <FaInstagram className="text-3xl" />
   </a>
@@ -75,7 +75,7 @@ const Footer = () => {
     href="https://www.facebook.com/yourusername" 
     target="_blank" 
     rel="noopener noreferrer"
-    className="text-gray-600 hover:text-gray-800 transition-colors duration-300"
+    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
   >
     <FaFacebook className="text-3xl" />
   </a>
@@ -83,7 +83,7 @@ const Footer = () => {
     href="https://www.linkedin.com/in/yourusername" 
     target="_blank" 
     rel="noopener noreferrer"
-    className="text-gray-600 hover:text-gray-800 transition-colors duration-300"
+    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
   >
     <FaLinkedin className="text-3xl" />
   </a>
