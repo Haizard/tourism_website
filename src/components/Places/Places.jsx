@@ -1,6 +1,6 @@
 import React from "react";
 import PlaceCard from "./PlaceCard";
-import Img1 from "../../assets/places/Serengeti2.jpg";
+import Img1 from "../../assets/places/tarangirepic.jpg";
 import Img2 from "../../assets/places/Manyara.jpg";
 import Img3 from "../../assets/places/NatronLake.jpg";
 import Img4 from "../../assets/places/kilimanjarotour.jpg";
@@ -18,7 +18,7 @@ import Img15 from "../../assets/places/Lewa Safari Camp _ Kenya.jpg";
 
 // Data array
 const PlacesData = [
-  { img: Img1, location: "Tanzania, Serengeti" },
+  { img: Img1, location: "Tanzania, Tarangire" },
   { img: Img2, location: "Tanzania, Manyara" },
   { img: Img3, location: "Tanzania, Natron Lake" },
   { img: Img4, location: "Tanzania, Mount Kilimanjaro" },
