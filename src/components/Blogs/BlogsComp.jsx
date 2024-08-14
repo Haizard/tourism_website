@@ -112,7 +112,7 @@ const BlogsData = [
         events: [
           "🚗 **Pickup and transfer to Arusha National Park** - Begin your exploration of this unique park.",
           "🍴 **Lunch at the park** - Enjoy a meal in the midst of nature.",
-          "🏕️ **Overnight stay** - Camp in a scenic location and soak in the natural beauty."
+          "🏕️ **Overnight stay** - Accomodation in a scenic location and soak in the natural beauty."
         ]
       }
     ]
