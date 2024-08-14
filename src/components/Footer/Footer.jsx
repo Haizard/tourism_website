@@ -62,17 +62,33 @@ const Footer = () => {
               </div>
               {/* social handles */}
               <div>
-                <div className="flex items-center gap-3 mt-6">
-                  <a href="#">
-                    <FaInstagram className="text-3xl" />
-                  </a>
-                  <a href="#">
-                    <FaFacebook className="text-3xl" />
-                  </a>
-                  <a href="#">
-                    <FaLinkedin className="text-3xl" />
-                  </a>
-                </div>
+              <div className="flex items-center gap-3 mt-6">
+  <a 
+    href="https://www.instagram.com/makoloafrika?igsh=aXV3NXF5OTN1Z3oz" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-gray-600 hover:text-gray-800 transition-colors duration-300"
+  >
+    <FaInstagram className="text-3xl" />
+  </a>
+  <a 
+    href="https://www.facebook.com/yourusername" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-gray-600 hover:text-gray-800 transition-colors duration-300"
+  >
+    <FaFacebook className="text-3xl" />
+  </a>
+  <a 
+    href="https://www.linkedin.com/in/yourusername" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-gray-600 hover:text-gray-800 transition-colors duration-300"
+  >
+    <FaLinkedin className="text-3xl" />
+  </a>
+</div>
+
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 col-span-2 md:pl-10">
