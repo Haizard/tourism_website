@@ -31,7 +31,7 @@ const BlogsData = [
       {
         day: 2,
         events: [
-          "🌅 **Morning game drive in Tarangire** - Spot elephants, lions, and more in their natural habitat.",
+          "🌅 **Journey from  Tarangire National Park to Ngorongoro** - Spot elephants, lions, and more in their natural habitat.",
           "🍴 **Lunch at the camp** - Relish a delicious meal amidst nature.",
           "🌞 **Afternoon game drive** - Continue your exploration and discover more wildlife."
         ]
@@ -39,16 +39,16 @@ const BlogsData = [
       {
         day: 3,
         events: [
-          "🌍 **Full day game drive in Tarangire** - A full day to explore the park’s wonders.",
-          "🥪 **Lunch at a picnic spot** - Enjoy lunch in a picturesque setting.",
-          "🛌 **Evening relaxation at the lodge** - Unwind and reflect on the day's adventures."
+          "🌍 **Journey from Ngorongoro to lake Eyasi** - A full day to explore the lake Eyasi’s wonders.",
+          "🥪 **Good quite** - Enjoy lunch in a picturesque setting.",
+          "🛌 **retuning to Manyara** - at Jua Kali Camp Kizumba."
         ]
       },
       {
         day: 4,
         events: [
-          "🚗 **Travel to Ngorongoro Crater** - Journey to one of the world’s most remarkable natural landmarks.",
-          "🌌 **Evening game drive in Ngorongoro** - Experience a stunning safari in the crater’s unique landscape."
+          "🚗 **Travel to Arusha**",
+          "🌌 **resting at** - AirPort Planet Lodge."
         ]
       }
     ]

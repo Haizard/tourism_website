@@ -1,9 +1,8 @@
 import React from "react";
 import FooterLogo from "../../assets/logo.jpg";
 import {
-  FaFacebook,
   FaInstagram,
-  FaLinkedin,
+  FaTripadvisor,
   FaEnvelope,
   FaMobileAlt,
 } from "react-icons/fa";
@@ -83,22 +82,15 @@ const Footer = () => {
   >
     <FaInstagram className="text-3xl" />
   </a>
+
   <a 
-    href="https://www.facebook.com/yourusername" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
-  >
-    <FaFacebook className="text-3xl" />
-  </a>
-  <a 
-    href="https://www.linkedin.com/in/yourusername" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
-  >
-    <FaLinkedin className="text-3xl" />
-  </a>
+  href="https://www.tripadvisor.co.uk/Profile/makolosafari" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="text-red-600 hover:text-gray-800 transition-colors duration-300"
+>
+  <FaTripadvisor className="text-3xl" />
+</a>
 </div>
 
               </div>
