@@ -19,7 +19,7 @@ const BlogsData = [
     description:
       "🌟 Experience the magic of Tanzania with our 4-day Mid-Range Safari! 🦁 Explore the lush Ngorongoro Crater, a UNESCO World Heritage Site, known for its breathtaking landscapes and diverse wildlife. Over these four days, you'll witness the majestic beauty of one of Africa’s most iconic safari destinations. Perfect for those seeking a blend of adventure and relaxation in a pristine natural setting.                                       \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
     author: "Haitham Misape",
-    date: "$1659 $ per 1 - $16496$ per 10",
+    date: "$1659PP - $1649 PER 6",
     itinerary: [
       {
         day: 1,
@@ -125,7 +125,7 @@ const BlogsData = [
     description:
       "🌋 Explore the Ngorongoro Crater, a UNESCO World Heritage Site, with our 2-day tour! 🐘 This experience includes a visit to the world’s largest inactive volcanic caldera, offering incredible wildlife viewing and stunning scenery. Ideal for a quick yet immersive safari experience in one of Tanzania’s most remarkable locations.                           \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
     author: "Haitham Misape",
-    date: "$1169 $ per person",
+    date: "$1169 PP",
     itinerary: [
       {
         day: 1,
@@ -152,7 +152,7 @@ const BlogsData = [
     description:
       "🌟 Embark on a thrilling 5-day safari across Tanzania's most stunning landscapes! 🐘 From the expansive Serengeti to the dramatic Ngorongoro Crater, this tour offers unforgettable wildlife encounters and scenic beauty. Perfect for nature lovers and adventure seekers looking to explore Tanzania’s diverse ecosystems in depth.                                                       \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
     author: "Haitham Misape",
-    date: "$1799 $ per 1 - $17896 $ per pax",
+    date: "$1799PP - $1789 PER 6PAX",
     itinerary: [
       {
         day: 1,
@@ -201,7 +201,7 @@ const BlogsData = [
   description:
     "🌍 Dive into the world-famous Serengeti-Mara Wildebeest Migration with our 6-day safari! 🐾 Witness the incredible movement of millions of wildebeest across the Serengeti and Mara regions. This tour offers an unparalleled opportunity to experience one of nature’s greatest spectacles. From vast savannahs to thrilling game drives, every moment is designed to captivate and inspire.                                                        \n\n**Inclusions:**\n- Park entry fees.\n- Transportation during the tour.\n- Guided tour.\n- Lunch at the park.\n\n**Exclusions:**\n- International flights.\n- Travel insurance.\n- Optional activities and personal expenses.",
   author: "Haitham Misape",
-  date: "$2199 $ per 1 - $1999 $ per 9",
+  date: "$2199 pp-$1999 per 6pax",
   itinerary: [
     {
       day: 1,
