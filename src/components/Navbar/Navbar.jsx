@@ -19,6 +19,10 @@ export const NavbarLinks = [
     link: "/blogs",
   },
   {
+    name: "Packages",
+    link: "/packages",
+  },
+  {
     name: "Best Places",
     link: "/best-places",
   },
@@ -26,16 +30,24 @@ export const NavbarLinks = [
 
 const DropdownLinks = [
   {
-    name: "Our Services",
-    link: "/#services",
+    name: "Safari Adventures",
+    link: "/packages?type=Safari",
   },
   {
-    name: "Top Brands",
-    link: "/#mobile_brands",
+    name: "Mountain Trekking",
+    link: "/packages?type=Trekking",
   },
   {
-    name: "Location",
-    link: "/#location",
+    name: "Beach Holidays",
+    link: "/packages?type=Beach",
+  },
+  {
+    name: "Cultural Tours",
+    link: "/packages?type=Cultural",
+  },
+  {
+    name: "Day Trips",
+    link: "/packages?type=Day Trip",
   },
 ];
 
@@ -59,12 +71,12 @@ const Navbar = ({ handleOrderPopup }) => {
         </div>
         <div className="container py-3 sm:py-0">
           <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4 font-bold text-2xl">
-  <Link to={"/"} onClick={() => window.scrollTo(0, 0)}>
-    <img src={Logo} alt="" className="h-16 rounded-full" />
-  </Link>
-  {/* <span>TCJ Tourism</span> */}
-</div>
+            <div className="flex items-center gap-4 font-bold text-2xl">
+              <Link to={"/"} onClick={() => window.scrollTo(0, 0)}>
+                <img src={Logo} alt="" className="h-16 rounded-full" />
+              </Link>
+              {/* <span>TCJ Tourism</span> */}
+            </div>
 
             <div className="hidden md:block">
               <ul className="flex items-center gap-6 ">
@@ -76,6 +88,11 @@ const Navbar = ({ handleOrderPopup }) => {
                 <li className="py-4">
                   <NavLink to="/blogs" activeClassName="active">
                     Blogs
+                  </NavLink>
+                </li>
+                <li className="py-4">
+                  <NavLink to="/packages" activeClassName="active">
+                    Packages
                   </NavLink>
                 </li>
                 <li className="py-4">
@@ -93,7 +110,7 @@ const Navbar = ({ handleOrderPopup }) => {
                     href="/#home"
                     className="flex h-[72px] items-center gap-[2px]"
                   >
-                    Quick Links{" "}
+                    Tour Types{" "}
                     <span>
                       <FaCaretDown className="transition-all duration-200 group-hover:rotate-180" />
                     </span>

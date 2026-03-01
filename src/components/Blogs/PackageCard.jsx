@@ -1,0 +1,37 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { IoLocationSharp } from "react-icons/io5";
+
+const PackageCard = ({ image, title, location, price, description, tourType, category }) => {
+    return (
+        <Link
+            to={`/packages/${title}`}
+            onClick={() => window.scrollTo(0, 0)}
+            state={{ image, title, location, price, description, tourType, category }}
+            className="group block"
+        >
+            <div className="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100">
+                <div className="relative h-64 overflow-hidden">
+                    <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute top-4 left-4 flex gap-2">
+                        <span className="bg-primary/90 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">{tourType || "Safari"}</span>
+                        <span className="bg-secondary/90 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">{category || "Luxury"}</span>
+                    </div>
+                    <div className="absolute bottom-0 right-0 bg-white px-6 py-2 rounded-tl-3xl">
+                        <p className="text-primary font-black text-xl">${price}<span className="text-[10px] text-gray-400 ml-1">PP</span></p>
+                    </div>
+                </div>
+                <div className="p-6">
+                    <div className="flex items-center gap-1 text-gray-400 mb-2">
+                        <IoLocationSharp className="text-primary" />
+                        <span className="text-xs font-bold uppercase tracking-widest">{location}</span>
+                    </div>
+                    <h3 className="text-xl font-black text-gray-900 group-hover:text-primary transition-colors mb-3 uppercase tracking-tight line-clamp-1">{title}</h3>
+                    <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed">{description}</p>
+                </div>
+            </div>
+        </Link>
+    );
+};
+
+export default PackageCard;
