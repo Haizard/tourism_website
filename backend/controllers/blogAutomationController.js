@@ -19,27 +19,61 @@ export const generateDailyBlog = async (req, res) => {
     }
 
     try {
-        const ai = new GoogleGenAI(process.env.GEMINI_API_KEY);
-        const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const ai = new GoogleGenAI({
+            apiKey: process.env.GEMINI_API_KEY,
+        });
 
-        const prompt = `
+        const systemInstruction = `
             Act as a Tanzanian Travel Journalist and expert blogger for "Makolo Adventure Tours". 
-            Write a professional, engaging, and SEO-friendly blog post about a current trend, seasonal event, or expert travel tip regarding tourism in Tanzania (e.g., Serengeti Migration status, Mt. Kilimanjaro climbing advice, Hidden gems in Zanzibar, or Tanzanian Culture).
+            Write a professional, engaging, and SEO-friendly blog post about a current trend, seasonal event, or expert travel tip regarding tourism in Tanzania.
 
-            Your response MUST be in JSON format with the following structure:
+            Your response MUST be a raw JSON object string ONLY (no markdown backticks) with this structure:
             {
-                "title": "A catchy, SEO-friendly title",
-                "category": "One of: Safari News, Trekking Tips, Beach Living, Cultural Insights",
-                "content": "A detailed article of about 400-600 words. Use Markdown for formatting (bolding, lists). Emphasize why someone should choose Makolo Adventure Tours.",
-                "imageKeyword": "Choose the most relevant single word from this list: Serengeti, Kilimanjaro, Zanzibar, Ngorongoro, Wildlife, Culture"
+                "title": "...",
+                "category": "Safari News" | "Trekking Tips" | "Beach Living" | "Cultural Insights",
+                "content": "...",
+                "imageKeyword": "Serengeti" | "Kilimanjaro" | "Zanzibar" | "Ngorongoro" | "Wildlife" | "Culture"
             }
         `;
 
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
+        const contents = [{ role: 'user', parts: [{ text: "Gather today's most interesting Tanzanian tourism news or advice and write a detailed blog post." }] }];
 
-        // Handle potential markdown code blocks in AI response
-        const jsonStr = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+        let response;
+        const modelsToTry = ["gemini-3-flash-preview", "gemini-1.5-flash", "gemini-1.5-pro-latest", "gemini-pro"];
+        let lastError;
+
+        for (const modelName of modelsToTry) {
+            try {
+                console.log(`AI Blogger: Attempting generation with ${modelName}...`);
+                response = await ai.models.generateContent({
+                    model: modelName,
+                    contents: contents,
+                    config: {
+                        systemInstruction: systemInstruction,
+                        maxOutputTokens: 2500,
+                        temperature: 0.7
+                    }
+                });
+                if (response && response.text) break;
+            } catch (err) {
+                console.warn(`AI Blogger: ${modelName} failed:`, err.message);
+                lastError = err;
+                continue;
+            }
+        }
+
+        if (!response || !response.text) {
+            throw new Error(`All Gemini models failed. Last error: ${lastError?.message}`);
+        }
+
+        const responseText = response.text;
+
+        // Improved JSON extraction
+        let jsonStr = responseText.trim();
+        if (jsonStr.includes("```")) {
+            jsonStr = jsonStr.replace(/```json/g, "").replace(/```/g, "").trim();
+        }
+
         const blogData = JSON.parse(jsonStr);
 
         // Select image based on keyword
