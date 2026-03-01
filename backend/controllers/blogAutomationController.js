@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import Blog from "../models/Blog.js";
+import TourPackage from "../models/TourPackage.js";
 
 const TOPIC_IMAGES = {
     "Serengeti": "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=1200",
@@ -23,15 +24,43 @@ export const generateDailyBlog = async (req, res) => {
             apiKey: process.env.GEMINI_API_KEY,
         });
 
-        const systemInstruction = `
-            Act as a Tanzanian Travel Journalist and expert blogger for "Makolo Adventure Tours". 
-            Write a professional, engaging, and SEO-friendly blog post about a current trend, seasonal event, or expert travel tip regarding tourism in Tanzania.
+        // Fetch available tours to provide as context for internal linking
+        const availableTours = await TourPackage.find({}).select('title').limit(10);
+        const tourContext = availableTours.map(t => `- ${t.title}`).join('\n');
 
-            Your response MUST be a raw JSON object string ONLY (no markdown backticks) with this structure:
+        const systemInstruction = `
+            Act as a Senior Tanzanian Travel Journalist and Luxury Safari Architect for "Makolo Adventure Tours". 
+            Your goal is to write a weekly "Expert Insight" blog that feels handcrafted, authoritative, and deeply knowledgeable. Avoid generic AI phrasing.
+
+            Internal Linking (CRITICAL):
+            You must weave in 1 or 2 natural Markdown links to our existing tour packages when relevant. 
+            Format the links as: [Link Text](/packages/[Package-Title-Slugified])
+            Note: Replace [Package-Title-Slugified] with the actual title, but replace spaces with hyphens (e.g., "Serengeti Safari" becomes "Serengeti-Safari").
+            
+            Available Tours for Linking:
+            ${tourContext}
+
+            Writing Style Requirements:
+            - Professional & Enthusiastic: Use evocative language (e.g., "the golden plains of the Serengeti", "the whispers of the spice islands").
+            - Rich Formatting & Visuals: Use Markdown and relevant travel emojis to make the blog visually stunning:
+              - Use #### headers for sub-sections (e.g., "#### 🦁 Wildlife Encounters").
+              - Use **bold** for key terms, place names, and wildlife.
+              - Use *italics* for emphasis or local Swahili terms (with translations).
+              - Use bullet points or numbered lists for tips/itineraries, starting with relevant emojis (e.g., 📍, 💡, 📸).
+              - Scatter appropriate emojis (🦁, 🏔️, 🌊, 🌍, 🐘, 🦒, 🏝️) throughout the text to keep it vibrant and engaging.
+            - Expert Value: Include specific advice that only a local expert would know (e.g., specific camp names, best times for photography, or local etiquette).
+
+            Conversion-Focused CTA (MANDATORY):
+            Every blog must end with a powerful 'Closing CTA' section, highlighted with engaging emojis.
+            - Use urgency: Mention limited availability, seasonal timing, or exclusive experiences. ⏳
+            - Direct Action: Encourage booking a specific linked package or using the '/tailor-made' page for custom dreams. 🚀
+            - Benefit-Driven: Don't just sell a tour; sell the *transformation* or the *memory*. ✨
+
+            Your response MUST be a raw JSON object string ONLY (no markdown backticks) with this exact structure:
             {
-                "title": "...",
+                "title": "A captivating, expert-level title",
                 "category": "Safari News" | "Trekking Tips" | "Beach Living" | "Cultural Insights",
-                "content": "...",
+                "content": "A high-quality 500-800 word article with the rich Markdown formatting, internal links, and a final persuasive CTA section.",
                 "imageKeyword": "Serengeti" | "Kilimanjaro" | "Zanzibar" | "Ngorongoro" | "Wildlife" | "Culture"
             }
         `;
@@ -95,6 +124,19 @@ export const generateDailyBlog = async (req, res) => {
         });
     } catch (error) {
         console.error("Auto-Blog Error:", error);
+
+        // Check for DNS/Network errors
+        const isNetworkError = error.message?.includes("ENOTFOUND") ||
+            error.message?.includes("fetch failed") ||
+            error.cause?.code === "ENOTFOUND";
+
+        if (isNetworkError) {
+            return res.status(503).json({
+                error: "Local Connectivity Issue: The server cannot reach the AI service. Please check your internet connection.",
+                details: error.message
+            });
+        }
+
         res.status(500).json({ error: "Failed to generate daily blog.", details: error.message });
     }
 };
