@@ -33,7 +33,8 @@ const ChatBot = () => {
             });
             setChatHistory(prev => [...prev, { role: "model", content: response.data.message }]);
         } catch (error) {
-            setChatHistory(prev => [...prev, { role: "model", content: "Oops! I'm having a technical moment. Please try again or message us on WhatsApp!" }]);
+            const errorMsg = error.response?.data?.error || "Oops! I'm having a technical moment. Please try again or message us on WhatsApp!";
+            setChatHistory(prev => [...prev, { role: "model", content: errorMsg }]);
         } finally {
             setIsLoading(false);
         }
@@ -62,8 +63,8 @@ const ChatBot = () => {
                         {chatHistory.map((msg, i) => (
                             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[80%] p-4 rounded-2xl text-sm font-medium leading-relaxed ${msg.role === 'user'
-                                        ? 'bg-primary text-white rounded-tr-none shadow-lg'
-                                        : 'bg-gray-100 text-gray-800 rounded-tl-none'
+                                    ? 'bg-primary text-white rounded-tr-none shadow-lg'
+                                    : 'bg-gray-100 text-gray-800 rounded-tl-none'
                                     }`}>
                                     {msg.content}
                                 </div>
