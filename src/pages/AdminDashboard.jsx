@@ -4,7 +4,8 @@ import {
     fetchGallery, createGallery, deleteGallery,
     fetchBookings, deleteBooking,
     fetchBlogs, createBlog, updateBlog, deleteBlog, generateAiBlog,
-    fetchInquiries, updateInquiryStatus, deleteInquiry
+    fetchInquiries, updateInquiryStatus, deleteInquiry,
+    fetchTaxonomies, createTaxonomy, deleteTaxonomy
 } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const AdminDashboard = () => {
     const [bookings, setBookings] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [inquiries, setInquiries] = useState([]);
+    const [taxonomies, setTaxonomies] = useState([]);
 
     // Auth Check
     useEffect(() => {
@@ -44,7 +46,9 @@ const AdminDashboard = () => {
         title: "", content: "", image: "", category: "Travel Tips", author: "Admin"
     });
 
+
     const [galleryFormData, setGalleryFormData] = useState({ img: "", location: "", caption: "" });
+    const [taxFormData, setTaxFormData] = useState({ name: "", type: "tourType" });
 
     const [editingTourId, setEditingTourId] = useState(null);
     const [editingBlogId, setEditingBlogId] = useState(null);
@@ -56,6 +60,7 @@ const AdminDashboard = () => {
         loadBookings();
         loadBlogs();
         loadInquiries();
+        loadTaxonomies();
     }, []);
 
     const loadTours = async () => { try { const res = await fetchTours(); setTours(res.data); } catch (e) { console.error(e); } };
@@ -63,6 +68,7 @@ const AdminDashboard = () => {
     const loadBookings = async () => { try { const res = await fetchBookings(); setBookings(res.data); } catch (e) { console.error(e); } };
     const loadBlogs = async () => { try { const res = await fetchBlogs(); setBlogs(res.data); } catch (e) { console.error(e); } };
     const loadInquiries = async () => { try { const res = await fetchInquiries(); setInquiries(res.data); } catch (e) { console.error(e); } };
+    const loadTaxonomies = async () => { try { const res = await fetchTaxonomies(); setTaxonomies(res.data); } catch (e) { console.error(e); } };
 
     const handleTourInputChange = (e) => setTourFormData({ ...tourFormData, [e.target.name]: e.target.value });
     const handleBlogInputChange = (e) => setBlogFormData({ ...blogFormData, [e.target.name]: e.target.value });
@@ -118,6 +124,30 @@ const AdminDashboard = () => {
         } catch (e) { console.error(e); } finally { setLoading(false); }
     };
 
+    // Taxonomy Submit
+    const handleTaxSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await createTaxonomy(taxFormData);
+            setTaxFormData({ name: "", type: "tourType" });
+            loadTaxonomies();
+            alert("Filter created!");
+        } catch (e) { console.error(e); } finally { setLoading(false); }
+    };
+
+    // Form logic to ensure initial values for selects match taxonomies
+    useEffect(() => {
+        if (taxonomies.length > 0) {
+            const firstType = taxonomies.find(t => t.type === 'tourType')?.name || "Safari";
+            const firstCat = taxonomies.find(t => t.type === 'tourCategory')?.name || "Luxury";
+            const firstBlogCat = taxonomies.find(t => t.type === 'blogCategory')?.name || "Travel Tips";
+
+            setTourFormData(prev => ({ ...prev, tourType: firstType, category: firstCat }));
+            setBlogFormData(prev => ({ ...prev, category: firstBlogCat }));
+        }
+    }, [taxonomies]);
+
     return (
         <div className="container mx-auto p-4 pt-24 min-h-screen">
             <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-white p-6 rounded-2xl shadow-sm border">
@@ -126,7 +156,7 @@ const AdminDashboard = () => {
                     <p className="text-gray-500 font-medium">Content Management System</p>
                 </div>
                 <div className="flex bg-gray-100 p-1.5 rounded-xl gap-2 overflow-x-auto">
-                    {["packages", "blogs", "gallery", "bookings", "inquiries"].map(tab => (
+                    {["packages", "blogs", "gallery", "bookings", "inquiries", "filters"].map(tab => (
                         <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-2 rounded-lg font-bold transition capitalize ${activeTab === tab ? "bg-white text-primary shadow-sm" : "hover:bg-gray-200 text-gray-600"}`}>{tab}</button>
                     ))}
                 </div>
@@ -171,17 +201,14 @@ const AdminDashboard = () => {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <select name="tourType" value={tourFormData.tourType} onChange={handleTourInputChange} className="bg-gray-50 p-4 rounded-xl border outline-none border-primary text-primary font-bold">
-                                <option value="Safari">Safari</option>
-                                <option value="Trekking">Trekking</option>
-                                <option value="Beach">Beach Holiday</option>
-                                <option value="Cultural">Cultural Tour</option>
-                                <option value="Day Trip">Day Trip</option>
+                                {taxonomies.filter(t => t.type === 'tourType').map(ext => (
+                                    <option key={ext._id} value={ext.name}>{ext.name}</option>
+                                ))}
                             </select>
                             <select name="category" value={tourFormData.category} onChange={handleTourInputChange} className="bg-gray-50 p-4 rounded-xl border outline-none font-bold">
-                                <option value="Luxury">Luxury</option>
-                                <option value="Mid-Range">Mid-Range</option>
-                                <option value="Budget">Budget</option>
-                                <option value="Family">Family Friendly</option>
+                                {taxonomies.filter(t => t.type === 'tourCategory').map(ext => (
+                                    <option key={ext._id} value={ext.name}>{ext.name}</option>
+                                ))}
                             </select>
                             <input type="text" name="duration" value={tourFormData.duration} onChange={handleTourInputChange} placeholder="Duration (e.g. 5 Days)" className="bg-gray-50 p-4 rounded-xl border outline-none" />
                             <input type="text" name="image" value={tourFormData.image} onChange={handleTourInputChange} placeholder="Image URL" className="bg-gray-50 p-4 rounded-xl border outline-none" required />
@@ -300,11 +327,10 @@ const AdminDashboard = () => {
                     <form onSubmit={handleBlogSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <input type="text" name="title" value={blogFormData.title} onChange={handleBlogInputChange} placeholder="Blog Title" className="bg-gray-50 p-4 rounded-xl border font-bold col-span-3 outline-none focus:border-primary" required />
-                            <select name="category" value={blogFormData.category} onChange={handleBlogInputChange} className="bg-gray-50 p-4 rounded-xl border font-bold outline-none">
-                                <option value="Travel Tips">Travel Tips</option>
-                                <option value="News">News</option>
-                                <option value="Destinations">Destinations</option>
-                                <option value="Culture">Culture</option>
+                            <select name="category" value={blogFormData.category} onChange={handleBlogInputChange} className="bg-gray-50 p-4 rounded-xl border font-bold outline-none uppercase text-xs">
+                                {taxonomies.filter(t => t.type === 'blogCategory').map(ext => (
+                                    <option key={ext._id} value={ext.name}>{ext.name}</option>
+                                ))}
                             </select>
                         </div>
                         <input type="text" name="image" value={blogFormData.image} onChange={handleBlogInputChange} placeholder="Featured Image URL" className="w-full bg-gray-50 p-4 rounded-xl border outline-none" required />
@@ -419,6 +445,61 @@ const AdminDashboard = () => {
                     </section>
                 )
             }
+
+            {/* Taxonomy Section */}
+            {activeTab === "filters" && (
+                <section className="bg-white p-8 rounded-3xl shadow-xl border">
+                    <h2 className="text-3xl font-black mb-10 text-gray-900 uppercase">Manage Filters & Categories</h2>
+                    <form onSubmit={handleTaxSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 bg-gray-50 p-6 rounded-2xl border border-dashed text-black">
+                        <input
+                            type="text"
+                            name="name"
+                            value={taxFormData.name}
+                            onChange={(e) => setTaxFormData({ ...taxFormData, name: e.target.value })}
+                            placeholder="Filter Name (e.g. Serengeti, Luxury, Tips)"
+                            className="bg-white p-4 rounded-xl border outline-none font-bold text-black"
+                            required
+                        />
+                        <select
+                            name="type"
+                            value={taxFormData.type}
+                            onChange={(e) => setTaxFormData({ ...taxFormData, type: e.target.value })}
+                            className="bg-white p-4 rounded-xl border outline-none font-bold text-black"
+                        >
+                            <option value="tourType">Tour Adventure Type</option>
+                            <option value="tourCategory">Tour Budget/Style Category</option>
+                            <option value="blogCategory">Blog Category</option>
+                        </select>
+                        <button type="submit" disabled={loading} className="bg-primary text-white font-black rounded-xl uppercase tracking-widest hover:bg-secondary transition active:scale-95">Add Filter</button>
+                    </form>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {['tourType', 'tourCategory', 'blogCategory'].map(type => (
+                            <div key={type} className="space-y-4">
+                                <h3 className="text-xs font-black uppercase text-gray-400 tracking-widest pl-2">
+                                    {type === 'tourType' ? 'Adventure Types' : type === 'tourCategory' ? 'Tour Styles' : 'Blog Categories'}
+                                </h3>
+                                <div className="space-y-2">
+                                    {taxonomies.filter(t => t.type === type).map(tax => (
+                                        <div key={tax._id} className="bg-gray-50 p-4 rounded-xl border flex justify-between items-center group hover:border-primary/30 transition">
+                                            <span className="font-bold text-gray-700">{tax.name}</span>
+                                            <button
+                                                onClick={() => deleteTaxonomy(tax._id).then(loadTaxonomies)}
+                                                className="text-red-400 font-bold text-[10px] uppercase opacity-0 group-hover:opacity-100 transition hover:underline"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    ))}
+                                    {taxonomies.filter(t => t.type === type).length === 0 && (
+                                        <p className="text-[10px] text-gray-400 italic pl-2">No filters added yet.</p>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
         </div >
     );
 };

@@ -35,4 +35,9 @@ export const createInquiry = (data) => API.post('/custom-inquiries', data);
 export const updateInquiryStatus = (id, status) => API.patch(`/custom-inquiries/${id}`, { status });
 export const deleteInquiry = (id) => API.delete(`/custom-inquiries/${id}`);
 
+// Taxonomies (Dynamic Filters)
+export const fetchTaxonomies = (type = "") => API.get(`/taxonomies${type ? `?type=${type}` : ""}`);
+export const createTaxonomy = (data) => API.post('/taxonomies', data);
+export const deleteTaxonomy = (id) => API.delete(`/taxonomies/${id}`);
+
 export default API;

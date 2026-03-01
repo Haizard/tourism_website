@@ -12,6 +12,8 @@ const PackagesComp = () => {
     const search = searchParams.get("search") || "";
     const typeFromUrl = searchParams.get("type") || "";
 
+    const [categories, setCategories] = useState([]);
+    const [tourTypes, setTourTypes] = useState([]);
     const [showMobileFilter, setShowMobileFilter] = useState(false);
     const [filters, setFilters] = useState({
         category: "",
@@ -20,15 +22,21 @@ const PackagesComp = () => {
     });
 
     useEffect(() => {
-        const getTours = async () => {
+        const loadInitialData = async () => {
             try {
-                const response = await fetchTours();
-                setAllTours(response.data);
+                const [toursRes, catRes, typeRes] = await Promise.all([
+                    fetchTours(),
+                    fetchTaxonomies("tourCategory"),
+                    fetchTaxonomies("tourType")
+                ]);
+                setAllTours(toursRes.data);
+                setCategories(catRes.data.map(c => c.name));
+                setTourTypes(typeRes.data.map(t => t.name));
             } catch (error) {
-                console.error("Error fetching tours:", error);
+                console.error("Error loading packages data:", error);
             }
         };
-        getTours();
+        loadInitialData();
     }, []);
 
     useEffect(() => {
@@ -42,12 +50,16 @@ const PackagesComp = () => {
             );
         }
 
-        // Sidebar Filters
+        // Sidebar Filters (Normalization for case/whitespace)
         if (filters.category) {
-            result = result.filter(t => t.category === filters.category);
+            result = result.filter(t =>
+                t.category?.trim().toLowerCase() === filters.category.trim().toLowerCase()
+            );
         }
         if (filters.tourType) {
-            result = result.filter(t => t.tourType === filters.tourType);
+            result = result.filter(t =>
+                t.tourType?.trim().toLowerCase() === filters.tourType.trim().toLowerCase()
+            );
         }
         if (filters.maxPrice) {
             result = result.filter(t => t.price <= filters.maxPrice);
@@ -55,9 +67,6 @@ const PackagesComp = () => {
 
         setFilteredTours(result);
     }, [allTours, filters, search]);
-
-    const categories = ["Luxury", "Budget", "Mid-range", "Family Friendly"];
-    const tourTypes = ["Safari", "Trekking", "Beach", "Cultural", "Day Trip"];
 
     return (
         <div className="bg-gray-50 min-h-screen">

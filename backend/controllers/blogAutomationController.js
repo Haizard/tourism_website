@@ -28,6 +28,11 @@ export const generateDailyBlog = async (req, res) => {
         const availableTours = await TourPackage.find({}).select('title').limit(10);
         const tourContext = availableTours.map(t => `- ${t.title}`).join('\n');
 
+        // Fetch dynamic blog categories
+        const Taxonomy = (await import("../models/Taxonomy.js")).default;
+        const blogCats = await Taxonomy.find({ type: 'blogCategory' }).select('name');
+        const categoryList = blogCats.length > 0 ? blogCats.map(c => c.name).join(' | ') : "Safari News | Trekking Tips | Cultural Insights";
+
         const systemInstruction = `
             Act as a Senior Tanzanian Travel Journalist and Luxury Safari Architect for "Makolo Adventure Tours". 
             Your goal is to write a weekly "Expert Insight" blog that feels handcrafted, authoritative, and deeply knowledgeable. Avoid generic AI phrasing.
@@ -59,7 +64,7 @@ export const generateDailyBlog = async (req, res) => {
             Your response MUST be a raw JSON object string ONLY (no markdown backticks) with this exact structure:
             {
                 "title": "A captivating, expert-level title",
-                "category": "Safari News" | "Trekking Tips" | "Beach Living" | "Cultural Insights",
+                "category": "${categoryList}",
                 "content": "A high-quality 500-800 word article with the rich Markdown formatting, internal links, and a final persuasive CTA section.",
                 "imageKeyword": "Serengeti" | "Kilimanjaro" | "Zanzibar" | "Ngorongoro" | "Wildlife" | "Culture"
             }
