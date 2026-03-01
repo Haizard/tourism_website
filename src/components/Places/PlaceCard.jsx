@@ -5,7 +5,7 @@ import Badge from "../UI/Badge";
 
 const PlaceCard = ({ img, location, title }) => {
   return (
-    <Card className="h-[400px] group relative overflow-hidden border-none cursor-pointer">
+    <Card className="h-[250px] md:h-[400px] group relative overflow-hidden border-none cursor-pointer">
       <img
         src={img}
         alt={location}

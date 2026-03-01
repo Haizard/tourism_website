@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST a new visionary
+// GET a single visionary
 router.get('/:id', async (req, res) => {
     try {
         const visionary = await Visionary.findById(req.params.id);

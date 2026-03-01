@@ -111,7 +111,7 @@ const PackagesComp = () => {
 
           {/* Main Grid */}
           <main className="w-full md:w-3/4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {filteredTours.length > 0 ? (
                 filteredTours.map((item) => (
                   <PackageCard key={item._id} {...item} />

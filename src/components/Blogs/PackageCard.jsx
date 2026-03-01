@@ -29,7 +29,7 @@ const PackageCard = (props) => {
       className="group block h-full"
     >
       <Card className="relative h-full border-none shadow-xl hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] transition-all duration-700 rounded-[40px] overflow-hidden bg-white px-0 py-0">
-        <div className="relative h-72 overflow-hidden">
+        <div className="relative h-48 md:h-72 overflow-hidden">
           <img
             src={image}
             alt={title}
@@ -53,18 +53,18 @@ const PackageCard = (props) => {
                 {location}
               </span>
             </div>
-            <h3 className="text-2xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors duration-300">
+            <h3 className="text-lg md:text-2xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors duration-300">
               {title}
             </h3>
           </div>
 
-          <div className="absolute top-6 right-6 bg-white/95 backdrop-blur shadow-xl rounded-2xl px-4 py-2 text-center transform group-hover:scale-110 transition-transform duration-500">
-            <p className="text-[9px] font-black text-gray-400 uppercase tracking-tighter leading-none mb-1">From</p>
-            <p className="text-xl font-black text-primary leading-none">${price}</p>
+          <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white/95 backdrop-blur shadow-xl rounded-2xl px-3 py-1 md:px-4 md:py-2 text-center transform group-hover:scale-110 transition-transform duration-500">
+            <p className="text-[7px] md:text-[9px] font-black text-gray-400 uppercase tracking-tighter leading-none mb-1">From</p>
+            <p className="text-sm md:text-xl font-black text-primary leading-none">${price}</p>
           </div>
         </div>
 
-        <div className="p-8">
+        <div className="p-4 md:p-8">
           {isGroupTour && (
             <div className="mb-6 bg-gray-50/50 p-4 rounded-3xl border border-gray-100 flex flex-col gap-3">
               <div className="flex justify-between items-center">
@@ -91,7 +91,7 @@ const PackageCard = (props) => {
             </div>
           )}
 
-          <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed font-medium mb-6 opacity-70 group-hover:opacity-100 transition-opacity">
+          <p className="hidden md:line-clamp-2 text-gray-500 text-sm leading-relaxed font-medium mb-6 opacity-70 group-hover:opacity-100 transition-opacity">
             {description}
           </p>
 

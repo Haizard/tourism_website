@@ -12,7 +12,7 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
       className="group block h-full"
     >
       <Card className="relative flex flex-col h-full border-none shadow-xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-500 rounded-[40px] bg-white group">
-        <div className="relative h-72 overflow-hidden">
+        <div className="relative h-48 md:h-72 overflow-hidden">
           <img
             src={image}
             alt={title}
@@ -36,7 +36,7 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
           </div>
         </div>
 
-        <div className="p-10 flex-1 flex flex-col relative bg-white">
+        <div className="p-4 md:p-10 flex-1 flex flex-col relative bg-white">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
               {author?.[0] || 'A'}
@@ -51,11 +51,11 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
             </div>
           </div>
 
-          <h3 className="text-2xl font-black text-gray-900 group-hover:text-primary transition-colors line-clamp-2 uppercase tracking-tighter font-heading leading-tight mb-6">
+          <h3 className="text-sm md:text-2xl font-black text-gray-900 group-hover:text-primary transition-colors line-clamp-2 uppercase tracking-tighter font-heading leading-tight mb-2 md:mb-6">
             {title}
           </h3>
 
-          <p className="text-gray-500 text-sm line-clamp-3 font-medium leading-relaxed mb-6 opacity-80 group-hover:opacity-100 transition-opacity">
+          <p className="hidden md:line-clamp-3 text-gray-500 text-sm font-medium leading-relaxed mb-6 opacity-80 group-hover:opacity-100 transition-opacity">
             {content?.replace(/[#*]/g, '').slice(0, 150)}...
           </p>
 

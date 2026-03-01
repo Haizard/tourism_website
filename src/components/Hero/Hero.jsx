@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../UI/Button";
+import MainVideo from "../../assets/video/main.mp4";
 
 const Hero = () => {
   const [priceValue, setPriceValue] = React.useState(1000);
@@ -18,8 +19,18 @@ const Hero = () => {
       {/* Background Overlay */}
       <div className="absolute inset-0 bg-black/40 z-10" />
 
-      {/* Cinematic Background (Placeholder for actual video/image) */}
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center">
+      {/* Cinematic Background Video */}
+      <div className="absolute inset-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src={MainVideo} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
       </div>
 
