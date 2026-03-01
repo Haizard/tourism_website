@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar/Navbar";
 import { Outlet, Link } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 import OrderPopup from "../components/OrderPopup/OrderPopup";
+import ChatBot from "../components/Chat/ChatBot";
+import WhatsAppButton from "../components/WhatsApp/WhatsAppButton";
 
 const Layout = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -14,6 +16,8 @@ const Layout = () => {
     <>
       <Navbar handleOrderPopup={handleOrderPopup} />
       <Outlet />
+      <ChatBot />
+      <WhatsAppButton />
       <Footer />
     </>
   );
