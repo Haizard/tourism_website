@@ -12,6 +12,7 @@ import BlogDetail from "./components/Blogs/BlogDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import TailorMade from "./pages/TailorMade";
+import ScrollToTop from "./components/UI/ScrollToTop";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -29,6 +30,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
