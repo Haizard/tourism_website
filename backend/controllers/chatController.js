@@ -2,9 +2,6 @@ import { GoogleGenAI } from "@google/genai";
 import TourPackage from "../models/TourPackage.js";
 import Blog from "../models/Blog.js";
 
-// The client can get the API key from process.env.GEMINI_API_KEY automatically
-// if we pass an empty config, but we'll be explicit to be safe.
-
 export const handleChat = async (req, res) => {
     const { message, history } = req.body;
 
@@ -15,14 +12,13 @@ export const handleChat = async (req, res) => {
     try {
         const ai = new GoogleGenAI({
             apiKey: process.env.GEMINI_API_KEY,
-            apiVersion: "v1"
         });
 
         // Fetch context data
         const tours = await TourPackage.find({}).select('title location price duration description tourType category');
         const blogs = await Blog.find({}).sort({ createdAt: -1 }).limit(3).select('title category');
 
-        const contextString = `
+        const companyContext = `
             You are a helpful and persuasive travel assistant for "Makolo Adventure Tours", a premier tourism company in Tanzania.
             Your goal is to assist customers, answer questions about Tanzania travel, and convincingly encourage them to book our packages.
             
@@ -40,43 +36,37 @@ export const handleChat = async (req, res) => {
             4. If asked about booking, direct them to our website's booking buttons.
         `;
 
-        // The new SDK uses a different history format or we can use generateContent with a system instruction
-        // We'll use the generateContent method which is simple and direct based on the quickstart.
+        // Format history for the new SDK
+        const contents = history.map(h => ({
+            role: h.role === 'user' ? 'user' : 'model',
+            parts: [{ text: h.content }]
+        }));
 
-        const contents = [
-            { role: "user", parts: [{ text: `System Context: ${contextString}` }] },
-            { role: "model", parts: [{ text: "Understood. I am the Makolo Adventure Tours assistant. How can I help you today?" }] },
-            ...history.map(h => ({
-                role: h.role === 'user' ? 'user' : 'model',
-                parts: [{ text: h.content }]
-            })),
-            { role: "user", parts: [{ text: message }] }
-        ];
+        // Add the current message
+        contents.push({ role: 'user', parts: [{ text: message }] });
 
         let response;
         try {
-            // Try the state-of-the-art model first
+            // Try the latest Gemini 3 model first
             response = await ai.models.generateContent({
-                model: "gemini-2.0-flash",
+                model: "gemini-3-flash-preview",
                 contents: contents,
                 config: {
+                    systemInstruction: companyContext,
                     maxOutputTokens: 800,
                 }
             });
         } catch (innerError) {
-            // Fallback to 1.5-flash if 2.0 is at quota or unavailable
-            if (innerError.status === 429 || innerError.message?.includes("quota")) {
-                console.log("Gemini 2.0 Quota exceeded, falling back to 1.5-flash...");
-                response = await ai.models.generateContent({
-                    model: "gemini-1.5-flash",
-                    contents: contents,
-                    config: {
-                        maxOutputTokens: 800,
-                    }
-                });
-            } else {
-                throw innerError;
-            }
+            console.warn("Gemini 3 Failed, trying fallback...", innerError.message);
+            // Fallback to Gemini 1.5 Flash if 3.0 is unavailable or at quota
+            response = await ai.models.generateContent({
+                model: "gemini-1.5-flash",
+                contents: contents,
+                config: {
+                    systemInstruction: companyContext,
+                    maxOutputTokens: 800,
+                }
+            });
         }
 
         res.json({ message: response.text });
