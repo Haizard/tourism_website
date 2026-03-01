@@ -185,7 +185,7 @@ const TailorMade = () => {
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-black uppercase text-gray-400 ml-1">
-                      Phon Number
+                      Phone Number
                     </label>
                     <input
                       required
@@ -242,11 +242,10 @@ const TailorMade = () => {
                         key={service.id}
                         type="button"
                         onClick={() => handleServiceToggle(service.label)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-xl border font-bold text-xs transition-all ${
-                          formData.services.includes(service.label)
+                        className={`flex items-center gap-2 px-4 py-2 rounded-xl border font-bold text-xs transition-all ${formData.services.includes(service.label)
                             ? "bg-primary text-white border-primary shadow-lg scale-105"
                             : "bg-white text-gray-600 border-gray-100 hover:border-primary/30"
-                        }`}
+                          }`}
                       >
                         {service.icon}
                         {service.label}

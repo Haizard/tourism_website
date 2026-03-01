@@ -1023,28 +1023,51 @@ const AdminDashboard = () => {
                         Inquiry from <span className="text-primary">{selectedInquiry.name}</span>
                       </h2>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 pb-8 border-b border-slate-100">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 pb-8 border-b border-slate-100">
                         <div className="space-y-4">
                           <div>
                             <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Email Address</p>
-                            <p className="font-bold text-slate-900">{selectedInquiry.email}</p>
+                            <p className="font-bold text-slate-900 break-all">{selectedInquiry.email}</p>
                           </div>
                           <div>
                             <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Phone Number</p>
-                            <p className="font-bold text-slate-900">{selectedInquiry.phone || "Not provided"}</p>
+                            <p className="font-bold text-slate-900 break-words">{selectedInquiry.phone || "Not provided"}</p>
                           </div>
                         </div>
                         <div className="space-y-4">
                           <div>
                             <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Destinations</p>
-                            <p className="font-bold text-slate-900">{selectedInquiry.destinations || "General Interest"}</p>
+                            <p className="font-bold text-slate-900 break-words">{selectedInquiry.destinations || "General Interest"}</p>
                           </div>
                           <div>
                             <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Travel Duration</p>
-                            <p className="font-bold text-slate-900">{selectedInquiry.duration || "TBD"}</p>
+                            <p className="font-bold text-slate-900 break-words">{selectedInquiry.duration || "TBD"}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Budget</p>
+                            <p className="font-bold text-primary break-words">${selectedInquiry.budget || "N/A"}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Status</p>
+                            <Badge variant="secondary" className="mt-1">{selectedInquiry.status}</Badge>
                           </div>
                         </div>
                       </div>
+
+                      {selectedInquiry.services && selectedInquiry.services.length > 0 && (
+                        <div className="mb-8">
+                          <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-3">Requested Services</p>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedInquiry.services.map((s, idx) => (
+                              <Badge key={idx} variant="secondary" className="bg-slate-100 text-slate-600 border-none font-bold">
+                                {s}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
                       <div className="mb-8 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                         <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-3">Custom Requirements</p>

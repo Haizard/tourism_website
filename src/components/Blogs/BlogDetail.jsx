@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {
+  FaFacebookF,
+  FaXTwitter,
+  FaWhatsapp,
+  FaLinkedinIn,
+  FaRegBookmark,
+  FaRegShareFromSquare
+} from "react-icons/fa6";
 import { fetchBlogs, fetchTours } from "../../services/api";
 import PackageCard from "./PackageCard";
 
@@ -59,11 +67,29 @@ const BlogDetail = () => {
           <h1 className="text-4xl md:text-7xl font-black text-gray-900 uppercase tracking-tighter mb-6 leading-[0.9]">
             {title}
           </h1>
-          <div className="flex items-center justify-center gap-4 text-gray-400 font-bold uppercase text-[10px] tracking-widest">
-            <span>{new Date(date).toLocaleDateString()}</span>
-            <span className="w-1.5 h-1.5 bg-primary/20 rounded-full"></span>
-            <span>By {author}</span>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-gray-400 font-bold uppercase text-[10px] tracking-widest">
+            <div className="flex items-center gap-2">
+              <span className="bg-gray-100 p-2 rounded-full text-gray-900 border border-gray-100">
+                {author?.[0] || 'A'}
+              </span>
+              <span>By {author}</span>
+            </div>
+            <span className="hidden md:block w-1.5 h-1.5 bg-primary/20 rounded-full"></span>
+            <span>{new Date(date).toLocaleDateString(undefined, { dateStyle: 'long' })}</span>
           </div>
+        </div>
+
+        {/* Floating Social Share (Desktop) / Fixed (Mobile) */}
+        <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden xl:flex flex-col gap-4">
+          <div className="bg-white p-3 rounded-full shadow-2xl border border-gray-100 flex flex-col gap-6">
+            <ShareButton icon={<FaFacebookF />} url={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} color="hover:text-[#1877F2]" />
+            <ShareButton icon={<FaXTwitter />} url={`https://twitter.com/intent/tweet?url=${window.location.href}&text=${title}`} color="hover:text-[#000000]" />
+            <ShareButton icon={<FaWhatsapp />} url={`https://wa.me/?text=${title}%20${window.location.href}`} color="hover:text-[#25D366]" />
+            <ShareButton icon={<FaLinkedinIn />} url={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`} color="hover:text-[#0A66C2]" />
+          </div>
+          <button className="bg-white p-4 rounded-full shadow-xl border border-gray-100 text-gray-400 hover:text-primary transition-colors">
+            <FaRegBookmark className="text-xl" />
+          </button>
         </div>
 
         {/* Main Content & Sidebar Grid */}
@@ -127,6 +153,20 @@ const BlogDetail = () => {
                   >
                     {content}
                   </ReactMarkdown>
+                </div>
+                <div className="mt-16 pt-12 border-t border-gray-100">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="flex items-center gap-4">
+                      <FaRegShareFromSquare className="text-primary text-xl" />
+                      <span className="text-sm font-black uppercase tracking-widest text-gray-900">Share this story</span>
+                    </div>
+                    <div className="flex gap-4">
+                      <SocialIcon icon={<FaFacebookF />} url={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} label="Facebook" />
+                      <SocialIcon icon={<FaXTwitter />} url={`https://twitter.com/intent/tweet?url=${window.location.href}&text=${title}`} label="X (Twitter)" />
+                      <SocialIcon icon={<FaWhatsapp />} url={`https://wa.me/?text=${title}%20${window.location.href}`} label="WhatsApp" />
+                      <SocialIcon icon={<FaLinkedinIn />} url={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`} label="LinkedIn" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -221,5 +261,29 @@ const BlogDetail = () => {
     </div>
   );
 };
+
+// Helper Components for Social Sharing
+const ShareButton = ({ icon, url, color }) => (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`text-gray-400 text-lg transition-all duration-300 hover:scale-125 ${color}`}
+  >
+    {icon}
+  </a>
+);
+
+const SocialIcon = ({ icon, url, label }) => (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    title={label}
+    className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-lg active:scale-95"
+  >
+    {icon}
+  </a>
+);
 
 export default BlogDetail;
