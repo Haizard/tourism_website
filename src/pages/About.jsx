@@ -1,32 +1,21 @@
 import React from "react";
-import Card from "../components/UI/Card";
 import Badge from "../components/UI/Badge";
-
-const operators = [
-  {
-    id: 1,
-    name: "Mr. John",
-    duty: "Founder & CEO",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
-  },
-  {
-    id: 2,
-    name: "Haitham",
-    duty: "Head of Marketing",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop",
-  },
-  {
-    id: 3,
-    name: "Samuel",
-    duty: "Customer Support",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop",
-  },
-];
+import { fetchVisionaries } from "../services/api";
 
 const About = () => {
+  const [visionaries, setVisionaries] = React.useState([]);
+
+  React.useEffect(() => {
+    const loadVisionaries = async () => {
+      try {
+        const res = await fetchVisionaries();
+        setVisionaries(res.data);
+      } catch (error) {
+        console.error("Error loading visionaries:", error);
+      }
+    };
+    loadVisionaries();
+  }, []);
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -106,29 +95,35 @@ const About = () => {
                 The Visionaries
               </h3>
               <div className="space-y-8">
-                {operators.map((operator) => (
-                  <div
-                    key={operator.id}
-                    className="flex items-center gap-6 group"
-                  >
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-primary/20 rounded-full scale-110 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <img
-                        src={operator.image}
-                        alt={operator.name}
-                        className="w-20 h-20 rounded-full object-cover relative z-10 border-2 border-white shadow-md transition-transform group-hover:scale-105"
-                      />
+                {visionaries.length > 0 ? (
+                  visionaries.map((operator) => (
+                    <div
+                      key={operator._id}
+                      className="flex items-center gap-6 group"
+                    >
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-primary/20 rounded-full scale-110 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <img
+                          src={operator.image}
+                          alt={operator.name}
+                          className="w-20 h-20 rounded-full object-cover relative z-10 border-2 border-white shadow-md transition-transform group-hover:scale-105"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-black text-gray-900 group-hover:text-primary transition-colors">
+                          {operator.name}
+                        </h4>
+                        <p className="text-gray-500 text-xs font-black uppercase tracking-widest">
+                          {operator.duty}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-lg font-black text-gray-900 group-hover:text-primary transition-colors">
-                        {operator.name}
-                      </h4>
-                      <p className="text-gray-500 text-xs font-black uppercase tracking-widest">
-                        {operator.duty}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className="text-center text-gray-400 font-bold uppercase text-[10px] tracking-widest py-10">
+                    No visionaries added yet.
+                  </p>
+                )}
               </div>
             </div>
           </div>

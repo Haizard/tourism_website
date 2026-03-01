@@ -6,6 +6,7 @@ import {
     FaCalendarCheck,
     FaQuestionCircle,
     FaTags,
+    FaUsers,
     FaSignOutAlt,
 } from "react-icons/fa";
 import Logo from "../../assets/logo.jpg";
@@ -17,6 +18,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, handleLogout }) => {
         { id: "gallery", label: "Gallery", icon: <FaImages /> },
         { id: "bookings", label: "Bookings", icon: <FaCalendarCheck /> },
         { id: "inquiries", label: "Inquiries", icon: <FaQuestionCircle /> },
+        { id: "visionaries", label: "Visionaries", icon: <FaUsers /> },
         { id: "filters", label: "Filters", icon: <FaTags /> },
     ];
 
@@ -46,8 +48,8 @@ const AdminSidebar = ({ activeTab, setActiveTab, handleLogout }) => {
                         key={item.id}
                         onClick={() => setActiveTab(item.id)}
                         className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === item.id
-                                ? "bg-primary text-white shadow-lg shadow-primary/20"
-                                : "text-slate-400 hover:bg-white/5 hover:text-white"
+                            ? "bg-primary text-white shadow-lg shadow-primary/20"
+                            : "text-slate-400 hover:bg-white/5 hover:text-white"
                             }`}
                     >
                         <span className="text-lg">{item.icon}</span>

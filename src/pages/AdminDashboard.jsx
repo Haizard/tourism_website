@@ -21,6 +21,10 @@ import {
   fetchTaxonomies,
   createTaxonomy,
   deleteTaxonomy,
+  fetchVisionaries,
+  createVisionary,
+  updateVisionary,
+  deleteVisionary,
 } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -38,6 +42,7 @@ const AdminDashboard = () => {
   const [blogs, setBlogs] = useState([]);
   const [inquiries, setInquiries] = useState([]);
   const [taxonomies, setTaxonomies] = useState([]);
+  const [visionaries, setVisionaries] = useState([]);
 
   // Auth Check
   useEffect(() => {
@@ -92,10 +97,17 @@ const AdminDashboard = () => {
     type: "tourType",
   });
 
+  const [visionaryFormData, setVisionaryFormData] = useState({
+    name: "",
+    duty: "",
+    image: "",
+  });
+
   const [selectedInquiry, setSelectedInquiry] = useState(null);
 
   const [editingTourId, setEditingTourId] = useState(null);
   const [editingBlogId, setEditingBlogId] = useState(null);
+  const [editingVisionaryId, setEditingVisionaryId] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -105,6 +117,7 @@ const AdminDashboard = () => {
     loadBlogs();
     loadInquiries();
     loadTaxonomies();
+    loadVisionaries();
   }, []);
 
   const loadTours = async () => {
@@ -155,6 +168,14 @@ const AdminDashboard = () => {
       console.error(e);
     }
   };
+  const loadVisionaries = async () => {
+    try {
+      const res = await fetchVisionaries();
+      setVisionaries(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleTourInputChange = (e) =>
     setTourFormData({ ...tourFormData, [e.target.name]: e.target.value });
@@ -162,6 +183,8 @@ const AdminDashboard = () => {
     setBlogFormData({ ...blogFormData, [e.target.name]: e.target.value });
   const handleGalleryInputChange = (e) =>
     setGalleryFormData({ ...galleryFormData, [e.target.name]: e.target.value });
+  const handleVisionaryInputChange = (e) =>
+    setVisionaryFormData({ ...visionaryFormData, [e.target.name]: e.target.value });
 
   // Tour Submit
   const handleTourSubmit = async (e) => {
@@ -241,6 +264,47 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Visionary Submit
+  const handleVisionarySubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (editingVisionaryId)
+        await updateVisionary(editingVisionaryId, visionaryFormData);
+      else await createVisionary(visionaryFormData);
+      setVisionaryFormData({ name: "", duty: "", image: "" });
+      setEditingVisionaryId(null);
+      loadVisionaries();
+      alert("Visionary saved!");
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteVisionary = async (id) => {
+    if (window.confirm("Delete this team member?")) {
+      try {
+        await deleteVisionary(id);
+        loadVisionaries();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  const handleEditVisionary = (visionary) => {
+    setVisionaryFormData({
+      name: visionary.name,
+      duty: visionary.duty,
+      image: visionary.image,
+    });
+    setEditingVisionaryId(visionary._id);
+    setActiveTab("visionaries");
+    window.scrollTo(0, 0);
   };
 
   // Taxonomy Submit
@@ -1257,6 +1321,117 @@ const AdminDashboard = () => {
                             </button>
                           </div>
                         ))}
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Visionaries Section */}
+          {activeTab === "visionaries" && (
+            <div className="animate-fade-in">
+              <div className="flex justify-between items-center mb-10">
+                <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">
+                  Team Visionaries
+                </h2>
+                <Badge variant="primary">{visionaries.length} Team Members</Badge>
+              </div>
+
+              <Card className="p-8 mb-12 border-none shadow-xl">
+                <h3 className="text-xl font-bold mb-8 italic">
+                  {editingVisionaryId ? "Update Member" : "Add New Visionary"}
+                </h3>
+                <form onSubmit={handleVisionarySubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Member Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={visionaryFormData.name}
+                        onChange={handleVisionaryInputChange}
+                        placeholder="e.g. John Doe"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Role / Duty</label>
+                      <input
+                        type="text"
+                        name="duty"
+                        value={visionaryFormData.duty}
+                        onChange={handleVisionaryInputChange}
+                        placeholder="e.g. CEO & Founder"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Image URL</label>
+                      <input
+                        type="text"
+                        name="image"
+                        value={visionaryFormData.image}
+                        onChange={handleVisionaryInputChange}
+                        placeholder="https://..."
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <Button type="submit" disabled={loading} className="px-10">
+                      {editingVisionaryId ? "Update Member" : "Add to Team"}
+                    </Button>
+                    {editingVisionaryId && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingVisionaryId(null);
+                          setVisionaryFormData({ name: "", duty: "", image: "" });
+                        }}
+                        className="text-gray-400 font-bold hover:text-gray-600"
+                      >
+                        Cancel Edit
+                      </button>
+                    )}
+                  </div>
+                </form>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {visionaries.map((v) => (
+                  <Card key={v._id} className="p-6 border-none shadow-lg bg-white group flex items-center gap-6">
+                    <div className="relative">
+                      <img
+                        src={v.image}
+                        alt={v.name}
+                        className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md group-hover:scale-105 transition-transform"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-lg font-black text-gray-900 leading-tight uppercase tracking-tight mb-1">
+                        {v.name}
+                      </h4>
+                      <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest mb-4">
+                        {v.duty}
+                      </p>
+                      <div className="flex gap-4">
+                        <button
+                          onClick={() => handleEditVisionary(v)}
+                          className="text-primary font-black text-[10px] uppercase hover:underline"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteVisionary(v._id)}
+                          className="text-red-500 font-black text-[10px] uppercase hover:underline"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </Card>
                 ))}

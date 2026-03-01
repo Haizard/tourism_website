@@ -9,6 +9,7 @@ import blogRoutes from './routes/blogRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
 import customInquiryRoutes from './routes/customInquiryRoutes.js';
 import taxonomyRoutes from './routes/taxonomyRoutes.js';
+import visionaryRoutes from './routes/visionaryRoutes.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/custom-inquiries', customInquiryRoutes);
 app.use('/api/taxonomies', taxonomyRoutes);
+app.use('/api/visionaries', visionaryRoutes);
 
 // Health check
 app.get('/', (req, res) => {

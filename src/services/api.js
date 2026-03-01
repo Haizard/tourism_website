@@ -43,4 +43,10 @@ export const fetchTaxonomies = (type = "") =>
 export const createTaxonomy = (data) => API.post("/taxonomies", data);
 export const deleteTaxonomy = (id) => API.delete(`/taxonomies/${id}`);
 
+// Visionaries (Team Members)
+export const fetchVisionaries = () => API.get("/visionaries");
+export const createVisionary = (data) => API.post("/visionaries", data);
+export const updateVisionary = (id, data) => API.put(`/visionaries/${id}`, data);
+export const deleteVisionary = (id) => API.delete(`/visionaries/${id}`);
+
 export default API;
