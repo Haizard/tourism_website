@@ -251,6 +251,7 @@ const AdminDashboard = () => {
       alert("Filter created!");
     } catch (e) {
       console.error(e);
+      alert(e.response?.data?.message || "Failed to create filter");
     } finally {
       setLoading(false);
     }

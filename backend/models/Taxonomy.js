@@ -11,11 +11,10 @@ const taxonomySchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Create a slug from name before saving
-taxonomySchema.pre('save', function (next) {
-    if (this.isModified('name')) {
-        this.slug = this.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+taxonomySchema.pre('save', async function () {
+    if (this.isModified('name') || this.isModified('type')) {
+        this.slug = `${this.type}-${this.name}`.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     }
-    next();
 });
 
 const Taxonomy = mongoose.model('Taxonomy', taxonomySchema);
