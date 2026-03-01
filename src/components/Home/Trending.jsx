@@ -30,20 +30,20 @@ const trending = [
 
 const Trending = () => {
   return (
-    <div className="py-24 bg-background">
+    <div className="py-24 bg-slate-900">
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div>
-            <p className="text-secondary font-bold uppercase tracking-widest mb-3 text-xs">
+            <p className="text-secondary font-bold uppercase tracking-widest mb-3 text-sm">
               Our Top Picks
             </p>
-            <h2 className="text-4xl font-black font-heading text-white">
+            <h2 className="text-4xl md:text-5xl font-black font-heading text-white">
               Trending Destinations
             </h2>
           </div>
           <Button
             variant="outline"
-            className="border-white/20 text-white hover:bg-white/10"
+            className="border-slate-700 text-white hover:bg-slate-800"
           >
             View All Packages
           </Button>
@@ -53,13 +53,13 @@ const Trending = () => {
             <Card
               key={item.id}
               delay={i * 0.1}
-              className="group relative h-[420px] border-none"
+              className="group relative h-[420px] rounded-3xl overflow-hidden border-none shadow-2xl"
             >
               <img
                 src={item.img}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90" />
               <div className="absolute top-4 left-4">
                 <Badge variant={item.tag === "Luxury" ? "luxury" : "secondary"}>
                   {item.tag}
@@ -70,15 +70,15 @@ const Trending = () => {
                   {item.title}
                 </h3>
                 <div className="flex justify-between items-center">
-                  <p className="text-white/70 font-bold text-sm">
+                  <p className="text-slate-300 font-bold text-sm">
                     From{" "}
-                    <span className="text-secondary text-lg font-black">
+                    <span className="text-secondary text-xl font-black">
                       ${item.price}
                     </span>
                   </p>
                   <motion.button
                     whileHover={{ x: 5 }}
-                    className="text-primary font-black uppercase text-xs tracking-widest"
+                    className="text-primary font-black uppercase text-sm tracking-widest"
                   >
                     Explore →
                   </motion.button>

@@ -40,14 +40,14 @@ const Testimonial = () => {
   };
 
   return (
-    <div className="py-24 bg-surface">
+    <div className="py-24 bg-slate-200">
       <div className="container">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-primary font-bold uppercase tracking-widest text-xs mb-3">
+          <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
             Guest Reviews
           </p>
-          <h2 className="text-4xl font-black font-heading text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-black font-heading text-slate-900">
             What Our Adventurers Say
           </h2>
         </div>
@@ -57,12 +57,12 @@ const Testimonial = () => {
           <Slider {...settings}>
             {testimonialData.map(({ id, name, role, text, img }) => (
               <div key={id} className="px-4 py-3">
-                <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 h-full relative">
+                <div className="bg-white rounded-3xl p-8 shadow-md border border-slate-100 h-full relative">
                   {/* Quote mark */}
                   <span className="absolute top-6 right-8 text-7xl text-primary/10 font-serif leading-none select-none">
                     "
                   </span>
-                  <p className="text-gray-600 text-sm leading-relaxed font-medium mb-8 relative z-10">
+                  <p className="text-slate-700 text-sm leading-relaxed font-medium mb-8 relative z-10">
                     {text}
                   </p>
                   <div className="flex items-center gap-4">
@@ -72,7 +72,7 @@ const Testimonial = () => {
                       className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/30"
                     />
                     <div>
-                      <p className="font-black text-gray-900 text-sm">{name}</p>
+                      <p className="font-black text-slate-900 text-sm">{name}</p>
                       <p className="text-primary font-bold text-xs uppercase tracking-wider">
                         {role}
                       </p>

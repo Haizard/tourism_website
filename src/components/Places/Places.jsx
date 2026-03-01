@@ -18,13 +18,13 @@ const Places = ({ handleOrderPopup }) => {
   }, []);
 
   return (
-    <div className="bg-white py-24">
+    <div className="bg-stone-300 py-24">
       <section className="container">
         <div className="mb-16">
-          <p className="text-primary font-black uppercase tracking-widest mb-2">
+          <p className="text-primary font-bold uppercase tracking-widest mb-3 text-sm">
             Visual Journeys
           </p>
-          <h2 className="text-4xl font-black font-heading">
+          <h2 className="text-4xl md:text-5xl font-black font-heading text-slate-900">
             Our Adventure Gallery
           </h2>
         </div>

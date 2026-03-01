@@ -28,13 +28,13 @@ const features = [
 
 const Features = () => {
   return (
-    <div className="py-24 bg-surface">
+    <div className="py-24 bg-slate-100">
       <div className="container">
         <div className="text-center mb-16">
-          <p className="text-primary font-bold uppercase tracking-widest mb-3 text-xs">
+          <p className="text-primary font-bold uppercase tracking-widest mb-3 text-sm">
             Why Choose Us
           </p>
-          <h2 className="text-4xl font-black font-heading text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-black font-heading text-slate-900">
             The Makolo Difference
           </h2>
         </div>
@@ -43,15 +43,15 @@ const Features = () => {
             <Card
               key={i}
               delay={i * 0.1}
-              className="p-8 text-center flex flex-col items-center bg-white border-surface hover:border-primary/20"
+              className="p-8 text-center flex flex-col items-center bg-white shadow-lg border border-slate-100 hover:border-primary/30"
             >
-              <div className="mb-6 p-5 rounded-2xl bg-surface border border-gray-100">
+              <div className="mb-6 p-5 rounded-2xl bg-slate-50 border border-slate-200">
                 {f.icon}
               </div>
-              <h3 className="text-lg font-black mb-3 text-gray-900 uppercase tracking-tight">
+              <h3 className="text-xl font-black mb-3 text-slate-900 tracking-tight">
                 {f.title}
               </h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
+              <p className="text-slate-600 font-medium leading-relaxed">{f.desc}</p>
             </Card>
           ))}
         </div>

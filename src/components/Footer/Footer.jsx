@@ -20,7 +20,7 @@ const FooterLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-background text-white">
+    <footer className="bg-slate-900 text-white">
       <div className="container py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
           {/* Brand Column */}

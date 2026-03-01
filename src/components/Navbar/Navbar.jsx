@@ -73,13 +73,7 @@ const Navbar = ({ handleOrderPopup }) => {
 
   return (
     <>
-      <nav
-        className={`fixed top-0 right-0 w-full z-50 transition-all duration-500 ${
-          isScrolled
-            ? "bg-background/90 backdrop-blur-lg border-b border-white/5 py-2"
-            : "bg-transparent py-4"
-        }`}
-      >
+      <nav className="fixed top-0 right-0 w-full z-50 transition-all duration-500 bg-slate-900/95 backdrop-blur-lg border-b border-white/5 py-2">
         <div className="container">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
@@ -87,9 +81,7 @@ const Navbar = ({ handleOrderPopup }) => {
                 <img
                   src={Logo}
                   alt="Logo"
-                  className={`transition-all duration-500 ${
-                    isScrolled ? "h-11" : "h-16"
-                  } rounded-full`}
+                  className="transition-all duration-500 h-11 rounded-full"
                 />
               </Link>
             </div>
@@ -104,8 +96,7 @@ const Navbar = ({ handleOrderPopup }) => {
                     <NavLink
                       to={link.link}
                       className={({ isActive }) =>
-                        `transition-all duration-300 text-sm uppercase tracking-wider ${
-                          isActive ? "text-primary" : "hover:text-primary"
+                        `transition-all duration-300 text-sm uppercase tracking-wider ${isActive ? "text-primary" : "hover:text-primary"
                         }`
                       }
                     >

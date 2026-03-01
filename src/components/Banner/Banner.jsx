@@ -26,7 +26,7 @@ const amenities = [
 
 const Banner = () => {
   return (
-    <div className="bg-background py-24">
+    <div className="bg-slate-900 py-24">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Image section */}
@@ -37,9 +37,9 @@ const Banner = () => {
               alt="Tanzania Adventure"
               className="relative z-10 w-full h-[420px] object-cover rounded-[32px] shadow-2xl"
             />
-            <div className="absolute bottom-0 right-0 z-20 bg-secondary text-white p-5 rounded-2xl shadow-xl">
+            <div className="absolute bottom-0 right-0 z-20 bg-secondary text-white p-5 rounded-2xl shadow-xl border border-secondary/20">
               <p className="font-black text-2xl leading-none">500+</p>
-              <p className="text-xs font-bold uppercase tracking-widest mt-1 text-white/80">
+              <p className="text-xs font-bold uppercase tracking-widest mt-1 text-white/90">
                 Happy Adventurers
               </p>
             </div>
@@ -48,14 +48,14 @@ const Banner = () => {
           {/* Text content */}
           <div className="text-white space-y-8">
             <div>
-              <p className="text-primary font-bold uppercase tracking-widest text-xs mb-3">
+              <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
                 All-Inclusive Adventures
               </p>
-              <h2 className="text-4xl font-black font-heading leading-tight">
+              <h2 className="text-4xl md:text-5xl font-black font-heading leading-tight text-white">
                 Explore Every Corner of Tanzania
               </h2>
             </div>
-            <p className="text-gray-400 leading-relaxed font-medium">
+            <p className="text-slate-300 leading-relaxed font-medium">
               Discover breathtaking landscapes, vibrant wildlife, and unique
               cultural experiences. Our tailored journeys offer unparalleled
               adventures, exceptional service, and unforgettable memories.

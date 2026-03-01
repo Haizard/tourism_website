@@ -18,13 +18,13 @@ const BlogsComp = () => {
   }, []);
 
   return (
-    <div className="bg-surface py-24">
+    <div className="bg-slate-100 py-24">
       <section className="container">
         <div className="mb-16">
-          <p className="text-primary font-black uppercase tracking-widest text-sm mb-2">
+          <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
             Travel Journal
           </p>
-          <h2 className="text-4xl font-black font-heading uppercase tracking-tighter">
+          <h2 className="text-4xl md:text-5xl font-black font-heading uppercase tracking-tighter text-slate-900">
             Recent Stories
           </h2>
         </div>
@@ -32,7 +32,7 @@ const BlogsComp = () => {
           {blogsData.length > 0 ? (
             blogsData.map((item) => <BlogCard key={item._id} {...item} />)
           ) : (
-            <p className="text-center col-span-full py-20 text-gray-400 font-bold italic font-heading text-xl">
+            <p className="text-center col-span-full py-20 text-slate-500 font-bold italic font-heading text-xl">
               Our writers are busy crafting stories. Check back soon!
             </p>
           )}
