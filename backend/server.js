@@ -18,7 +18,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:5173", "https://makoloafrika.com", "https://tourism-website-inky.vercel.app"],
+    credentials: true
+}));
 
 // Routes
 app.use('/api/tours', tourRoutes);
@@ -50,3 +53,5 @@ mongoose.connect(MONGODB_URI)
     .catch((error) => {
         console.error('❌ MongoDB connection error:', error.message);
     });
+
+export default app;
