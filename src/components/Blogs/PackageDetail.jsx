@@ -5,7 +5,10 @@ import {
   IoTimeOutline,
   IoPeopleOutline,
   IoLocationOutline,
+  IoChevronDownOutline,
+  IoChevronUpOutline,
 } from "react-icons/io5";
+import { motion, AnimatePresence } from "framer-motion";
 
 const PackageDetail = () => {
   const location = useLocation();
@@ -25,6 +28,9 @@ const PackageDetail = () => {
   } = location.state || {};
 
   const [isOrderPopupVisible, setOrderPopupVisible] = useState(false);
+  const [isItineraryOpen, setIsItineraryOpen] = useState(false);
+  const [isInclusionsOpen, setIsInclusionsOpen] = useState(true);
+  const [isExclusionsOpen, setIsExclusionsOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,6 +64,11 @@ const PackageDetail = () => {
                 <IoTimeOutline className="text-primary text-xl" />{" "}
                 {duration || "5 Days"}
               </span>
+              {maxGroupSize && (
+                <span className="flex items-center gap-2">
+                  <IoPeopleOutline className="text-primary text-xl" /> Max {maxGroupSize} People
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -73,32 +84,59 @@ const PackageDetail = () => {
               </p>
             </div>
 
-            {itinerary && (
-              <div>
-                <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight mb-6">
-                  Planned Itinerary
-                </h2>
-                <div className="space-y-6">
-                  {itinerary.map((day, i) => (
-                    <div key={i} className="flex gap-6 items-start">
-                      <div className="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-black shrink-0">
-                        {day.day}
+            {itinerary && itinerary.length > 0 && (
+              <div className="border-b pb-10">
+                <button
+                  onClick={() => setIsItineraryOpen(!isItineraryOpen)}
+                  className="w-full flex justify-between items-center group"
+                >
+                  <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
+                    Planned Itinerary
+                  </h2>
+                  <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-primary">
+                    {isItineraryOpen ? "Hide Details" : "View Details"}
+                    <motion.div
+                      animate={{ rotate: isItineraryOpen ? 180 : 0 }}
+                      className="bg-primary/10 p-2 rounded-full"
+                    >
+                      <IoChevronDownOutline className="text-lg" />
+                    </motion.div>
+                  </div>
+                </button>
+
+                <AnimatePresence>
+                  {isItineraryOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: "circOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="space-y-6 pt-8">
+                        {itinerary.map((day, i) => (
+                          <div key={i} className="flex gap-6 items-start">
+                            <div className="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-black shrink-0">
+                              {day.day}
+                            </div>
+                            <div className="bg-gray-50 p-6 rounded-3xl flex-1 border">
+                              <ul className="space-y-2">
+                                {day.events.map((e, ei) => (
+                                  <li
+                                    key={ei}
+                                    className="text-gray-700 text-sm italic"
+                                  >
+                                    • {e}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="bg-gray-50 p-6 rounded-3xl flex-1 border">
-                        <ul className="space-y-2">
-                          {day.events.map((e, ei) => (
-                            <li
-                              key={ei}
-                              className="text-gray-700 text-sm italic"
-                            >
-                              • {e}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             )}
           </div>
@@ -120,21 +158,89 @@ const PackageDetail = () => {
               </button>
             </div>
 
-            <div className="border p-8 rounded-[32px] space-y-6">
-              <h4 className="font-black uppercase tracking-tight text-gray-900">
-                What's Included
-              </h4>
-              <ul className="space-y-3">
-                {inclusions?.map((inc, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm text-gray-600 font-medium"
+            <div className="border p-8 rounded-[32px] overflow-hidden">
+              <button
+                onClick={() => setIsInclusionsOpen(!isInclusionsOpen)}
+                className="w-full flex justify-between items-center mb-6"
+              >
+                <h4 className="font-black uppercase tracking-tight text-gray-900">
+                  What's Included
+                </h4>
+                <motion.div
+                  animate={{ rotate: isInclusionsOpen ? 180 : 0 }}
+                  className="text-gray-400"
+                >
+                  <IoChevronDownOutline />
+                </motion.div>
+              </button>
+
+              <AnimatePresence>
+                {isInclusionsOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="overflow-hidden"
                   >
-                    ✅ {inc}
-                  </li>
-                ))}
-              </ul>
+                    <ul className="space-y-3">
+                      {inclusions?.length > 0 ? (
+                        inclusions.map((inc, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-sm text-gray-600 font-medium"
+                          >
+                            <span className="text-primary">✅</span> {inc}
+                          </li>
+                        ))
+                      ) : (
+                        <li className="text-sm text-gray-400 italic">No inclusions listed</li>
+                      )}
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
+
+            {exclusions?.length > 0 && (
+              <div className="border p-8 rounded-[32px] overflow-hidden">
+                <button
+                  onClick={() => setIsExclusionsOpen(!isExclusionsOpen)}
+                  className="w-full flex justify-between items-center mb-6"
+                >
+                  <h4 className="font-black uppercase tracking-tight text-gray-900">
+                    What's Not Included
+                  </h4>
+                  <motion.div
+                    animate={{ rotate: isExclusionsOpen ? 180 : 0 }}
+                    className="text-gray-400"
+                  >
+                    <IoChevronDownOutline />
+                  </motion.div>
+                </button>
+
+                <AnimatePresence>
+                  {isExclusionsOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <ul className="space-y-3">
+                        {exclusions.map((exc, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-sm text-gray-600 font-medium"
+                          >
+                            <span className="text-red-500">❌</span> {exc}
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
           </div>
         </div>
       </div>

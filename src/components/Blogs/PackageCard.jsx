@@ -4,19 +4,20 @@ import { motion } from "framer-motion";
 import Badge from "../UI/Badge";
 import Card from "../UI/Card";
 
-const PackageCard = ({
-  image,
-  title,
-  location,
-  price,
-  description,
-  tourType,
-  category,
-  isGroupTour,
-  maxCapacity,
-  currentBookings,
-  launchDate,
-}) => {
+const PackageCard = (props) => {
+  const {
+    image,
+    title,
+    location,
+    price,
+    description,
+    tourType,
+    category,
+    isGroupTour,
+    maxCapacity,
+    currentBookings,
+    launchDate,
+  } = props;
   const spotsLeft = maxCapacity - currentBookings;
   const progress = (currentBookings / maxCapacity) * 100;
 
@@ -24,19 +25,7 @@ const PackageCard = ({
     <Link
       to={`/packages/${title}`}
       onClick={() => window.scrollTo(0, 0)}
-      state={{
-        image,
-        title,
-        location,
-        price,
-        description,
-        tourType,
-        category,
-        isGroupTour,
-        maxCapacity,
-        currentBookings,
-        launchDate,
-      }}
+      state={props}
       className="group block h-full"
     >
       <Card className="relative h-full border-none shadow-xl hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] transition-all duration-700 rounded-[40px] overflow-hidden bg-white px-0 py-0">
