@@ -1,4 +1,5 @@
 import React from "react";
+import Card from "../components/UI/Card";
 import Badge from "../components/UI/Badge";
 import { fetchVisionaries } from "../services/api";
 
