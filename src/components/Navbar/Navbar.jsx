@@ -74,10 +74,11 @@ const Navbar = ({ handleOrderPopup }) => {
   return (
     <>
       <nav
-        className={`fixed top-0 right-0 w-full z-50 transition-all duration-500 ${isScrolled
-            ? "bg-white/80 backdrop-blur-lg shadow-lg py-2"
+        className={`fixed top-0 right-0 w-full z-50 transition-all duration-500 ${
+          isScrolled
+            ? "bg-background/90 backdrop-blur-lg border-b border-white/5 py-2"
             : "bg-transparent py-4"
-          }`}
+        }`}
       >
         <div className="container">
           <div className="flex justify-between items-center">
@@ -86,21 +87,25 @@ const Navbar = ({ handleOrderPopup }) => {
                 <img
                   src={Logo}
                   alt="Logo"
-                  className={`transition-all duration-500 ${isScrolled ? "h-12" : "h-16"
-                    } rounded-full`}
+                  className={`transition-all duration-500 ${
+                    isScrolled ? "h-11" : "h-16"
+                  } rounded-full`}
                 />
               </Link>
             </div>
 
             <div className="hidden md:block">
-              <ul className={`flex items-center gap-8 font-bold transition-colors duration-500 ${isScrolled ? "text-gray-900" : "text-white"
-                }`}>
+              <ul className="flex items-center gap-8 font-bold text-white">
                 {NavbarLinks.map((link) => (
-                  <li key={link.name} className="relative group overflow-hidden py-2">
+                  <li
+                    key={link.name}
+                    className="relative group overflow-hidden py-2"
+                  >
                     <NavLink
                       to={link.link}
                       className={({ isActive }) =>
-                        `transition-all duration-300 ${isActive ? "text-primary" : "hover:text-primary"
+                        `transition-all duration-300 text-sm uppercase tracking-wider ${
+                          isActive ? "text-primary" : "hover:text-primary"
                         }`
                       }
                     >
@@ -114,17 +119,18 @@ const Navbar = ({ handleOrderPopup }) => {
 
             <div className="flex items-center gap-4">
               <button
-                className="bg-primary text-white px-6 py-2 rounded-full font-bold cinematic-shadow transition-all duration-300 hover:scale-105 active:scale-95"
+                className="bg-secondary text-white px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider cinematic-shadow transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-primary"
                 onClick={handleOrderPopup}
               >
                 Book Now
               </button>
               <div className="md:hidden block">
-                <button
-                  onClick={toggleMenu}
-                  className={isScrolled ? "text-gray-900" : "text-white"}
-                >
-                  {showMenu ? <HiMenuAlt1 size={30} /> : <HiMenuAlt3 size={30} />}
+                <button onClick={toggleMenu} className="text-white">
+                  {showMenu ? (
+                    <HiMenuAlt1 size={30} />
+                  ) : (
+                    <HiMenuAlt3 size={30} />
+                  )}
                 </button>
               </div>
             </div>

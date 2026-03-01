@@ -7,19 +7,22 @@ const operators = [
     id: 1,
     name: "Mr. John",
     duty: "Founder & CEO",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
   },
   {
     id: 2,
     name: "Haitham",
     duty: "Head of Marketing",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop",
   },
   {
     id: 3,
     name: "Samuel",
     duty: "Customer Support",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop",
   },
 ];
 
@@ -31,7 +34,9 @@ const About = () => {
         <div className="absolute inset-0 bg-black/50 z-10" />
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center" />
         <div className="container relative z-20 text-center text-white">
-          <Badge variant="secondary" className="mb-4">Our Story</Badge>
+          <Badge variant="secondary" className="mb-4">
+            Our Story
+          </Badge>
           <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter font-heading">
             The Makolo <span className="text-primary italic">Heritage</span>
           </h1>
@@ -43,12 +48,19 @@ const About = () => {
           {/* Left Column: About Us */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-4">
-              <p className="text-primary font-black uppercase tracking-widest text-sm">Who We Are</p>
-              <h2 className="text-4xl font-black font-heading leading-tight uppercase">Crafting Unforgettable <br /> African Adventures</h2>
+              <p className="text-primary font-black uppercase tracking-widest text-sm">
+                Who We Are
+              </p>
+              <h2 className="text-4xl font-black font-heading leading-tight uppercase">
+                Crafting Unforgettable <br /> African Adventures
+              </h2>
             </div>
 
             <p className="text-gray-600 text-lg leading-relaxed font-medium">
-              At Makolo Safari, we are dedicated to crafting unforgettable African adventures. Founded with a passion for the wild, our goal is to connect you with the continent's stunning landscapes, diverse wildlife, and rich cultures.
+              At Makolo Safari, we are dedicated to crafting unforgettable
+              African adventures. Founded with a passion for the wild, our goal
+              is to connect you with the continent's stunning landscapes,
+              diverse wildlife, and rich cultures.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
@@ -58,7 +70,10 @@ const About = () => {
                   OUR MISSION
                 </h3>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  We offer bespoke safari experiences and cultural tours that are tailored to your interests. From witnessing the Great Migration to exploring the Ngorongoro Crater, our expert team ensures every journey is exceptional.
+                  We offer bespoke safari experiences and cultural tours that
+                  are tailored to your interests. From witnessing the Great
+                  Migration to exploring the Ngorongoro Crater, our expert team
+                  ensures every journey is exceptional.
                 </p>
               </div>
               <div className="space-y-4">
@@ -67,9 +82,18 @@ const About = () => {
                   OUR VALUES
                 </h3>
                 <ul className="space-y-2 text-gray-500 text-sm">
-                  <li className="flex items-center gap-2 font-bold"><span className="text-primary">✓</span> Authenticity: Genuine immersion.</li>
-                  <li className="flex items-center gap-2 font-bold"><span className="text-primary">✓</span> Sustainability: Responsible travel.</li>
-                  <li className="flex items-center gap-2 font-bold"><span className="text-primary">✓</span> Personalization: Tailored for you.</li>
+                  <li className="flex items-center gap-2 font-bold">
+                    <span className="text-primary">✓</span> Authenticity:
+                    Genuine immersion.
+                  </li>
+                  <li className="flex items-center gap-2 font-bold">
+                    <span className="text-primary">✓</span> Sustainability:
+                    Responsible travel.
+                  </li>
+                  <li className="flex items-center gap-2 font-bold">
+                    <span className="text-primary">✓</span> Personalization:
+                    Tailored for you.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -78,10 +102,15 @@ const About = () => {
           {/* Right Column: Operators */}
           <div className="lg:col-span-5 space-y-10">
             <div className="bg-gray-50 p-10 rounded-[40px] border border-gray-100 shadow-sm">
-              <h3 className="text-2xl font-black font-heading mb-10 text-center uppercase tracking-tight">The Visionaries</h3>
+              <h3 className="text-2xl font-black font-heading mb-10 text-center uppercase tracking-tight">
+                The Visionaries
+              </h3>
               <div className="space-y-8">
                 {operators.map((operator) => (
-                  <div key={operator.id} className="flex items-center gap-6 group">
+                  <div
+                    key={operator.id}
+                    className="flex items-center gap-6 group"
+                  >
                     <div className="relative">
                       <div className="absolute inset-0 bg-primary/20 rounded-full scale-110 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
                       <img
@@ -91,8 +120,12 @@ const About = () => {
                       />
                     </div>
                     <div>
-                      <h4 className="text-lg font-black text-gray-900 group-hover:text-primary transition-colors">{operator.name}</h4>
-                      <p className="text-gray-500 text-xs font-black uppercase tracking-widest">{operator.duty}</p>
+                      <h4 className="text-lg font-black text-gray-900 group-hover:text-primary transition-colors">
+                        {operator.name}
+                      </h4>
+                      <p className="text-gray-500 text-xs font-black uppercase tracking-widest">
+                        {operator.duty}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -104,8 +137,12 @@ const About = () => {
         {/* Location Section */}
         <section className="mt-32">
           <div className="text-center mb-16">
-            <Badge variant="primary" className="mb-4">Visit Us</Badge>
-            <h2 className="text-4xl font-black font-heading uppercase tracking-tighter">Our Global Headquarters</h2>
+            <Badge variant="primary" className="mb-4">
+              Visit Us
+            </Badge>
+            <h2 className="text-4xl font-black font-heading uppercase tracking-tighter">
+              Our Global Headquarters
+            </h2>
           </div>
           <Card className="rounded-[40px] overflow-hidden shadow-2xl border-none">
             <div className="w-full h-[500px]">
@@ -125,8 +162,12 @@ const About = () => {
                   📍
                 </div>
                 <div>
-                  <p className="font-black uppercase tracking-widest text-xs opacity-60">Location</p>
-                  <p className="text-lg font-bold">Moshi, Tanzania, East Africa</p>
+                  <p className="font-black uppercase tracking-widest text-xs opacity-60">
+                    Location
+                  </p>
+                  <p className="text-lg font-bold">
+                    Moshi, Tanzania, East Africa
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -134,7 +175,9 @@ const About = () => {
                   📧
                 </div>
                 <div>
-                  <p className="font-black uppercase tracking-widest text-xs opacity-60">Email</p>
+                  <p className="font-black uppercase tracking-widest text-xs opacity-60">
+                    Email
+                  </p>
                   <p className="text-lg font-bold">hello@makolosafari.com</p>
                 </div>
               </div>
@@ -147,4 +190,3 @@ const About = () => {
 };
 
 export default About;
-```

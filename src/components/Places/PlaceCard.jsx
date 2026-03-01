@@ -14,7 +14,10 @@ const PlaceCard = ({ img, location, title }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
       <div className="absolute top-4 left-4">
-        <Badge variant="primary" className="bg-white/20 backdrop-blur-md text-white border-white/30">
+        <Badge
+          variant="primary"
+          className="bg-white/20 backdrop-blur-md text-white border-white/30"
+        >
           Featured
         </Badge>
       </div>
@@ -22,7 +25,9 @@ const PlaceCard = ({ img, location, title }) => {
       <div className="absolute bottom-6 left-6 right-6">
         <div className="flex items-center gap-2 text-primary mb-2">
           <IoLocationSharp className="text-lg" />
-          <span className="text-xs font-black uppercase tracking-widest">{location}</span>
+          <span className="text-xs font-black uppercase tracking-widest">
+            {location}
+          </span>
         </div>
         <h3 className="text-2xl font-black text-white leading-tight group-hover:text-primary transition-colors">
           {title || "Explore Destination"}

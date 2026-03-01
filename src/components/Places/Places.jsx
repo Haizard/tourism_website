@@ -21,8 +21,12 @@ const Places = ({ handleOrderPopup }) => {
     <div className="bg-white py-24">
       <section className="container">
         <div className="mb-16">
-          <p className="text-primary font-black uppercase tracking-widest mb-2">Visual Journeys</p>
-          <h2 className="text-4xl font-black font-heading">Our Adventure Gallery</h2>
+          <p className="text-primary font-black uppercase tracking-widest mb-2">
+            Visual Journeys
+          </p>
+          <h2 className="text-4xl font-black font-heading">
+            Our Adventure Gallery
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -37,7 +41,9 @@ const Places = ({ handleOrderPopup }) => {
             ))
           ) : (
             <div className="col-span-full py-20 text-center">
-              <p className="text-gray-400 font-bold uppercase tracking-widest italic font-heading text-xl">Capturing the world's beauty...</p>
+              <p className="text-gray-400 font-bold uppercase tracking-widest italic font-heading text-xl">
+                Capturing the world's beauty...
+              </p>
             </div>
           )}
         </div>

@@ -18,19 +18,23 @@ const BlogsComp = () => {
   }, []);
 
   return (
-    <div className="bg-white py-12">
-      <section data-aos="fade-up" className="container">
-        <h1 className="my-8 border-l-8 border-secondary py-2 pl-4 text-4xl font-black uppercase tracking-tighter">
-          Our Travel Stories
-        </h1>
-        <p className="text-gray-500 mb-10 max-w-2xl">Discover tips, stories, and cultural insights from our expert guides to help you plan your perfect Tanzanian adventure.</p>
+    <div className="bg-surface py-24">
+      <section className="container">
+        <div className="mb-16">
+          <p className="text-primary font-black uppercase tracking-widest text-sm mb-2">
+            Travel Journal
+          </p>
+          <h2 className="text-4xl font-black font-heading uppercase tracking-tighter">
+            Recent Stories
+          </h2>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {blogsData.length > 0 ? (
-            blogsData.map((item) => (
-              <BlogCard key={item._id} {...item} />
-            ))
+            blogsData.map((item) => <BlogCard key={item._id} {...item} />)
           ) : (
-            <p className="text-center col-span-full py-20 text-gray-400 font-bold italic">Our writers are busy creating stories. Check back soon!</p>
+            <p className="text-center col-span-full py-20 text-gray-400 font-bold italic font-heading text-xl">
+              Our writers are busy crafting stories. Check back soon!
+            </p>
           )}
         </div>
       </section>

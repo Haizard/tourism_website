@@ -8,165 +8,143 @@ import {
   FaMobileAlt,
   FaShieldAlt,
 } from "react-icons/fa";
-import NatureVid from "../../assets/video/main.mp4";
 import { Link } from "react-router-dom";
 
 const FooterLinks = [
-  {
-    title: "Home",
-    link: "/",
-  },
-  {
-    title: "About",
-    link: "/about",
-  },
-  {
-    title: "Best Places",
-    link: "/best-places",
-  },
-  {
-    title: "Blogs",
-    link: "/blogs",
-  },
+  { title: "Home", link: "/" },
+  { title: "About", link: "/about" },
+  { title: "Best Places", link: "/best-places" },
+  { title: "Packages", link: "/packages" },
+  { title: "Blogs", link: "/blogs" },
 ];
 
 const Footer = () => {
   return (
-    <>
-      <div className=" dark:bg-brown-950 py-10 relative overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          className="absolute right-0 top-0 h-full overflow-hidden w-full object-cover z-[-1]"
-        >
-          <source src={NatureVid} type="video/mp4" />
-        </video>
-        <div className="container">
-          <div className="grid md:grid-cols-3 py-5 bg-white/80 backdrop-blur-sm rounded-t-xl">
-            <div className="py-8 px-4">
-              <h1 className="flex items-center gap-3 text-xl sm:text-3xl font-bold text-justify sm:text-left">
-                <img src={FooterLogo} alt="" className="h-16 rounded-full" />
-                {/* TravelloGo */}
-              </h1>
-              <p className="text-sm">
-                At  Makolo Adventure Tours, we craft unforgettable travel experiences with a focus on stunning destinations and exceptional service. Join us to explore the world's most breathtaking landscapes and make lasting memories.
-              </p>
-              <br />
-              <div className="flex items-center gap-3">
-                <FaEnvelope className="text-2xl" />
-                <a
-                  href="mailto:makoloadventuresafaris@gmail.com"
-                  className="text-blue-600 hover:text-blue-800 transition-colors duration-300 hover:text-red-700 transition-colors duration-500"
-                >
-                  makoloadventuresafaris@gmail.com
-                </a>
-              </div>
-
-              <div className="flex items-center gap-3 mt-3">
-                <FaMobileAlt className="text-2xl" />
-                <a
-                  href="tel:+255710887798"
-                  className="text-blue-600 hover:text-blue-800 transition-colors duration-300 hover:text-red-700 transition-colors duration-500"
-                >
-                  +255 710887798
-                </a>
-              </div>
-
-              {/* social handles */}
+    <footer className="bg-background text-white">
+      <div className="container py-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          {/* Brand Column */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <img
+                src={FooterLogo}
+                alt="Makolo Logo"
+                className="h-14 w-14 rounded-full object-cover ring-2 ring-primary/30"
+              />
               <div>
-                <div className="flex items-center gap-3 mt-6">
-                  <a
-                    href="https://www.instagram.com/makoloafrika?igsh=aXV3NXF5OTN1Z3oz//https://www.tripadvisor.co.uk/Profile/makolosafari"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
-                  >
-                    <FaInstagram className="text-3xl" />
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/makoloadventure-safaris-666a13322?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
-                  >
-                    <FaLinkedin className="text-3xl" />
-                  </a>
-
-                  <a
-                    href="https://www.tripadvisor.co.uk/Profile/makolosafari"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-red-600 hover:text-gray-800 transition-colors duration-300"
-                  >
-                    <FaTripadvisor className="text-3xl" />
-                  </a>
-                </div>
-
+                <p className="font-black text-xl font-heading uppercase tracking-tight">
+                  Makolo
+                </p>
+                <p className="text-primary text-xs font-black uppercase tracking-widest">
+                  Adventure Tours
+                </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-2 col-span-2 md:pl-10">
-              <div>
-                <div className="py-8 px-4">
-                  <h1 className="text-xl font-bold text-justify sm:text-left mb-3">
-                    Important Links
-                  </h1>
-                  <ul className="flex flex-col gap-3">
-                    {FooterLinks.map((link) => (
-                      <li key={link.title} className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-700 dark:text-gray-200">
-                        <Link
-                          to={link.link}
-                          onClick={() => window.scrollTo(0, 0)}
-                        >
-                          <span>&#11162;</span>
-                          <span>{link.title}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div className="py-8 px-4">
-                  <h1 className="text-xl font-bold text-justify sm:text-left mb-3">
-                    Company
-                  </h1>
-                  <ul className="flex flex-col gap-3">
-                    <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-700 dark:text-gray-200">
-                      <Link to="/about" onClick={() => window.scrollTo(0, 0)}>
-                        <span>&#11162;</span>
-                        <span>About Us</span>
-                      </Link>
-                    </li>
-                    <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-700 dark:text-gray-200">
-                      <Link to="/best-places" onClick={() => window.scrollTo(0, 0)}>
-                        <span>&#11162;</span>
-                        <span>Best Places</span>
-                      </Link>
-                    </li>
-                    <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-700 dark:text-gray-200">
-                      <Link to="/blogs" onClick={() => window.scrollTo(0, 0)}>
-                        <span>&#11162;</span>
-                        <span>Latest News</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <p className="text-gray-400 text-sm leading-relaxed font-medium">
+              We craft unforgettable travel experiences with a focus on stunning
+              destinations and exceptional service. Explore the world's most
+              breathtaking landscapes with us.
+            </p>
+            <div className="space-y-3">
+              <a
+                href="mailto:makoloadventuresafaris@gmail.com"
+                className="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors text-sm font-bold"
+              >
+                <FaEnvelope className="text-primary" />
+                makoloadventuresafaris@gmail.com
+              </a>
+              <a
+                href="tel:+255710887798"
+                className="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors text-sm font-bold"
+              >
+                <FaMobileAlt className="text-primary" />
+                +255 710 887 798
+              </a>
+            </div>
+            <div className="flex items-center gap-4 pt-2">
+              <a
+                href="https://www.instagram.com/makoloafrika"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/40 transition-all"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/makoloadventure-safaris-666a13322"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/40 transition-all"
+              >
+                <FaLinkedin />
+              </a>
+              <a
+                href="https://www.tripadvisor.co.uk/Profile/makolosafari"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/40 transition-all"
+              >
+                <FaTripadvisor />
+              </a>
             </div>
           </div>
-          <div>
-            <div className="text-center py-5 border-t-2 border-blue-300/50 bg-primary text-white flex justify-center items-center gap-2">
-              <span>@copyright 2024 All rights reserved || Made with ❤️ by haizard misape | +255 693671032</span>
-              <Link to="/login" className="opacity-10 hover:opacity-50 transition-opacity">
-                <FaShieldAlt size={12} />
-              </Link>
-            </div>
+
+          {/* Links Column */}
+          <div className="space-y-6">
+            <h3 className="font-black uppercase tracking-widest text-xs text-gray-500">
+              Navigate
+            </h3>
+            <ul className="space-y-4">
+              {FooterLinks.map((link) => (
+                <li key={link.title}>
+                  <Link
+                    to={link.link}
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-400 hover:text-primary transition-colors font-bold text-sm flex items-center gap-2 group"
+                  >
+                    <span className="w-4 h-px bg-gray-600 group-hover:w-6 group-hover:bg-primary transition-all" />
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* CTA Column */}
+          <div className="space-y-6">
+            <h3 className="font-black uppercase tracking-widest text-xs text-gray-500">
+              Plan Your Adventure
+            </h3>
+            <p className="text-gray-400 text-sm leading-relaxed font-medium">
+              Ready to experience the wild? Let us craft the perfect Tanzanian
+              safari for you.
+            </p>
+            <Link
+              to="/tailor-made"
+              onClick={() => window.scrollTo(0, 0)}
+              className="inline-block bg-gradient-to-r from-primary to-[#00aeaf] text-white font-black px-8 py-4 rounded-full uppercase tracking-widest text-xs hover:opacity-90 transition shadow-xl shadow-primary/20"
+            >
+              Start Planning →
+            </Link>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-white/5">
+        <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-600 text-xs font-bold">
+            © 2024 Makolo Adventure Tours. All rights reserved.
+          </p>
+          <Link
+            to="/login"
+            className="opacity-10 hover:opacity-40 transition-opacity"
+          >
+            <FaShieldAlt size={12} className="text-gray-400" />
+          </Link>
+        </div>
+      </div>
+    </footer>
   );
 };
 

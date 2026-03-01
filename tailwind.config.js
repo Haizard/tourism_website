@@ -5,11 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#00D2D3", // Electric Teal
-        secondary: "#F1C40F", // Luxury Gold
-        background: "#121212", // Deep Obsidian
-        accent: "#FF7675", // Sunset Orange
-        dark: "#1e1e1e",
+        primary: "#0d9488",    // Teal 600 - Great contrast on white
+        secondary: "#eab308",  // Yellow 500 - Great for accents
+        background: "#0f172a", // Slate 900 - Very dark, high contrast with white text
+        surface: "#f8fafc",    // Slate 50 - Very light gray, distinct from pure white
+        accent: "#f97316",     // Orange 500
+        dark: "#1e293b",       // Slate 800
       },
       fontFamily: {
         heading: ["'Playfair Display'", "serif"],

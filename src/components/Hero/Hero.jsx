@@ -33,7 +33,8 @@ const Hero = () => {
             Discover the Unseen
           </p>
           <h1 className="text-5xl sm:text-7xl font-black mb-8 tracking-tighter leading-tight font-heading">
-            Your Next <span className="text-primary">Great Adventure</span> <br /> Starts Here
+            Your Next <span className="text-primary">Great Adventure</span>{" "}
+            <br /> Starts Here
           </h1>
         </motion.div>
 
@@ -71,11 +72,16 @@ const Hero = () => {
                   onChange={(e) => setPriceValue(e.target.value)}
                   className="flex-1 accent-primary"
                 />
-                <span className="font-bold text-xl min-w-[80px]">${priceValue}</span>
+                <span className="font-bold text-xl min-w-[80px]">
+                  ${priceValue}
+                </span>
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
-              <Button onClick={handleSearch} className="w-full md:w-auto h-full py-4 px-10">
+              <Button
+                onClick={handleSearch}
+                className="w-full md:w-auto h-full py-4 px-10"
+              >
                 Explore Now
               </Button>
             </div>

@@ -37,7 +37,10 @@ const ResponsiveMenu = ({ showMenu, setShowMenu }) => {
       </div>
       <div className="footer">
         <h1>
-          Made with ❤ by <a href="https://first-tech-solution.netlify.app/">Haitham Misape</a>{" "}
+          Made with ❤ by{" "}
+          <a href="https://first-tech-solution.netlify.app/">
+            Haitham Misape
+          </a>{" "}
         </h1>
       </div>
     </div>

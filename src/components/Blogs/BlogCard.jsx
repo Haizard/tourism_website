@@ -19,7 +19,10 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute top-4 left-4">
-            <Badge variant="secondary" className="backdrop-blur-md bg-secondary/80 text-white border-none">
+            <Badge
+              variant="secondary"
+              className="backdrop-blur-md bg-secondary/80 text-white border-none"
+            >
               {category}
             </Badge>
           </div>

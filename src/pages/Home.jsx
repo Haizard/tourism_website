@@ -16,35 +16,38 @@ const Home = () => {
   };
 
   return (
-    <>
-      <div className="bg-white">
-        <div className="h-screen relative overflow-hidden">
-          <video
-            autoPlay
-            loop
-            muted
-            className="absolute right-0 top-0 h-full w-full object-cover z-0"
-          >
-            <source src={NatureVid} type="video/mp4" />
-          </video>
-          <Hero />
-        </div>
-
-        <Features />
-
-        <Trending />
-
-        <div className="bg-gray-50">
-          <BlogsComp />
-        </div>
-
-        <Places handleOrderPopup={handleOrderPopup} />
-
-        <Banner />
-
-        <Testimonial />
+    <div>
+      {/* Hero — dark */}
+      <div className="h-screen relative overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute right-0 top-0 h-full w-full object-cover z-0"
+        >
+          <source src={NatureVid} type="video/mp4" />
+        </video>
+        <Hero />
       </div>
-    </>
+
+      {/* Features — warm ivory (bg-surface) */}
+      <Features />
+
+      {/* Trending — dark (bg-background) */}
+      <Trending />
+
+      {/* Blogs — warm ivory (bg-surface) */}
+      <BlogsComp />
+
+      {/* Places — white */}
+      <Places handleOrderPopup={handleOrderPopup} />
+
+      {/* Banner — dark (bg-background) */}
+      <Banner />
+
+      {/* Testimonials — warm ivory (bg-surface) */}
+      <Testimonial />
+    </div>
   );
 };
 
