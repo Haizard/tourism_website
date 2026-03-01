@@ -44,14 +44,25 @@ app.listen(PORT, () => {
 });
 
 // Database connection
-const MONGODB_URI = process.env.MONGODB_URI;
+const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) return;
 
-mongoose.connect(MONGODB_URI)
-    .then(() => {
+    const MONGODB_URI = process.env.MONGODB_URI;
+
+    if (!MONGODB_URI) {
+        console.error('❌ MONGODB_URI is not defined in environment variables');
+        return;
+    }
+
+    try {
+        await mongoose.connect(MONGODB_URI);
         console.log('✅ Connected to MongoDB');
-    })
-    .catch((error) => {
+    } catch (error) {
         console.error('❌ MongoDB connection error:', error.message);
-    });
+    }
+};
+
+// Execute connection
+connectDB();
 
 export default app;
