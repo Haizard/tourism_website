@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PackageCard from "./PackageCard";
 import FilterSidebar from "./FilterSidebar";
-import { fetchTours } from "../../services/api";
+import { fetchTours, fetchTaxonomies } from "../../services/api";
 import { useSearchParams } from "react-router-dom";
 import { FaFilter, FaTimes } from "react-icons/fa";
 

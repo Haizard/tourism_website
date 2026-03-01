@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   fetchTours,
   createTour,
@@ -90,6 +91,8 @@ const AdminDashboard = () => {
     name: "",
     type: "tourType",
   });
+
+  const [selectedInquiry, setSelectedInquiry] = useState(null);
 
   const [editingTourId, setEditingTourId] = useState(null);
   const [editingBlogId, setEditingBlogId] = useState(null);
@@ -943,57 +946,133 @@ const AdminDashboard = () => {
 
           {/* Inquiries Section */}
           {activeTab === "inquiries" && (
-            <div className="animate-fade-in">
+            <div className="animate-fade-in relative">
               <div className="flex justify-between items-center mb-10">
                 <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">
                   Client Inquiries
                 </h2>
                 <Badge variant="secondary">{inquiries.length} Messages</Badge>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {inquiries.map((i) => (
-                  <Card key={i._id} className="p-8 border-none shadow-lg group">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <h4 className="font-black text-xl text-gray-900">
-                          {i.name}
-                        </h4>
-                        <p className="text-primary font-bold text-sm">
-                          {i.email}
+                  <Card key={i._id} className="p-6 border-none shadow-lg hover:shadow-xl transition-all group flex flex-col justify-between h-72">
+                    <div>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-black text-lg uppercase">
+                          {i.name.charAt(0)}
+                        </div>
+                        <div className="flex flex-col items-end gap-1">
+                          <Badge variant="primary" className="text-[8px]">Inquiry</Badge>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteInquiry(i._id).then(loadInquiries);
+                            }}
+                            className="text-[9px] text-red-400 opacity-0 group-hover:opacity-100 transition uppercase font-black hover:text-red-600"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                      <h4 className="font-black text-lg text-gray-900 truncate">
+                        {i.name}
+                      </h4>
+                      <p className="text-primary font-bold text-xs truncate mb-4">
+                        {i.email}
+                      </p>
+                      <div className="bg-gray-50/50 p-4 rounded-xl mb-4 border border-gray-100">
+                        <p className="text-gray-600 text-sm italic line-clamp-2 leading-relaxed">
+                          "{i.message}"
                         </p>
                       </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <Badge variant="primary">Inquiry</Badge>
-                        <button
-                          onClick={() => deleteInquiry(i._id).then(loadInquiries)}
-                          className="text-[10px] text-red-400 opacity-0 group-hover:opacity-100 transition uppercase font-black"
-                        >
-                          Delete
-                        </button>
-                      </div>
                     </div>
-                    <div className="bg-gray-50 p-6 rounded-2xl mb-6">
-                      <p className="text-gray-600 italic leading-relaxed">
-                        "{i.message}"
-                      </p>
-                    </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mt-auto">
                       <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
                         {new Date(i.createdAt).toLocaleDateString()}
                       </span>
                       <Button
                         variant="outline"
-                        className="py-2 px-6 text-xs"
-                        onClick={() =>
-                          (window.location.href = `mailto:${i.email}`)
-                        }
+                        className="py-1.5 px-4 text-[10px] rounded-lg border-primary/30"
+                        onClick={() => setSelectedInquiry(i)}
                       >
-                        Reply via Email
+                        View Full Detail
                       </Button>
                     </div>
                   </Card>
                 ))}
               </div>
+
+              {/* Inquiry Detail Modal Overlay */}
+              {selectedInquiry && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden relative"
+                  >
+                    <button
+                      onClick={() => setSelectedInquiry(null)}
+                      className="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors z-10"
+                    >
+                      <span className="text-2xl">&times;</span>
+                    </button>
+
+                    <div className="p-8 md:p-12">
+                      <Badge variant="primary" className="mb-4">Message Details</Badge>
+                      <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter mb-8 italic">
+                        Inquiry from <span className="text-primary">{selectedInquiry.name}</span>
+                      </h2>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 pb-8 border-b border-slate-100">
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Email Address</p>
+                            <p className="font-bold text-slate-900">{selectedInquiry.email}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Phone Number</p>
+                            <p className="font-bold text-slate-900">{selectedInquiry.phone || "Not provided"}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Destinations</p>
+                            <p className="font-bold text-slate-900">{selectedInquiry.destinations || "General Interest"}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Travel Duration</p>
+                            <p className="font-bold text-slate-900">{selectedInquiry.duration || "TBD"}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-8 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                        <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-3">Custom Requirements</p>
+                        <p className="text-slate-600 italic leading-relaxed whitespace-pre-wrap">
+                          "{selectedInquiry.message}"
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col md:flex-row gap-4">
+                        <Button
+                          variant="primary"
+                          className="flex-1 rounded-2xl"
+                          onClick={() => window.location.href = `mailto:${selectedInquiry.email}`}
+                        >
+                          Send Official Reply
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="flex-1 rounded-2xl border-slate-200 text-slate-600"
+                          onClick={() => setSelectedInquiry(null)}
+                        >
+                          Close Preview
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
             </div>
           )}
 
