@@ -27,6 +27,7 @@ export const fetchBlog = (id) => API.get(`/blogs/${id}`);
 export const createBlog = (data) => API.post('/blogs', data);
 export const updateBlog = (id, data) => API.put(`/blogs/${id}`, data);
 export const deleteBlog = (id) => API.delete(`/blogs/${id}`);
+export const generateAiBlog = () => API.post('/blogs/auto-generate');
 
 // Custom Inquiries
 export const fetchInquiries = () => API.get('/custom-inquiries');

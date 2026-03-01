@@ -3,7 +3,7 @@ import {
     fetchTours, createTour, updateTour, deleteTour,
     fetchGallery, createGallery, deleteGallery,
     fetchBookings, deleteBooking,
-    fetchBlogs, createBlog, updateBlog, deleteBlog,
+    fetchBlogs, createBlog, updateBlog, deleteBlog, generateAiBlog,
     fetchInquiries, updateInquiryStatus, deleteInquiry
 } from "../services/api";
 import { useNavigate } from "react-router-dom";
@@ -280,7 +280,23 @@ const AdminDashboard = () => {
             {/* Blogs Section */}
             {activeTab === "blogs" && (
                 <section className="bg-white p-8 rounded-3xl shadow-xl border">
-                    <h2 className="text-3xl font-black mb-10 text-gray-900 uppercase">Manage Blog Posts</h2>
+                    <div className="flex justify-between items-center mb-10">
+                        <h2 className="text-3xl font-black text-gray-900 uppercase">Manage Blog Posts</h2>
+                        <button
+                            onClick={async () => {
+                                setLoading(true);
+                                try {
+                                    await generateAiBlog();
+                                    alert("AI is writing a new blog post... it will appear in a few seconds!");
+                                    loadBlogs();
+                                } catch (e) { alert("AI Generation failed. Check backend console."); }
+                                finally { setLoading(false); }
+                            }}
+                            className="bg-primary/10 text-primary border border-primary/20 font-black px-6 py-2 rounded-xl hover:bg-primary hover:text-white transition flex items-center gap-2"
+                        >
+                            <span>🤖</span> GENERATE AI POST
+                        </button>
+                    </div>
                     <form onSubmit={handleBlogSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <input type="text" name="title" value={blogFormData.title} onChange={handleBlogInputChange} placeholder="Blog Title" className="bg-gray-50 p-4 rounded-xl border font-bold col-span-3 outline-none focus:border-primary" required />
@@ -316,90 +332,94 @@ const AdminDashboard = () => {
             )}
 
             {/* Gallery Section */}
-            {activeTab === "gallery" && (
-                <section className="bg-white p-8 rounded-3xl shadow-xl border">
-                    <h2 className="text-3xl font-black mb-10 text-gray-900 uppercase">Manage Gallery</h2>
-                    <form onSubmit={handleGallerySubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <input type="text" name="img" value={galleryFormData.img} onChange={handleGalleryInputChange} placeholder="Photo URL" className="bg-gray-50 p-4 rounded-xl border outline-none" required />
-                        <input type="text" name="location" value={galleryFormData.location} onChange={handleGalleryInputChange} placeholder="Location/Subject" className="bg-gray-50 p-4 rounded-xl border outline-none" required />
-                        <button type="submit" className="bg-primary text-white font-black rounded-xl">Add Photo</button>
-                    </form>
-                    <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-8">
-                        {gallery.map(img => (
-                            <div key={img._id} className="relative aspect-square group rounded-xl overflow-hidden shadow-sm">
-                                <img src={img.img} className="w-full h-full object-cover" />
-                                <button onClick={() => deleteGallery(img._id).then(loadGallery)} className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition font-black uppercase text-xs">Delete</button>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            )}
+            {
+                activeTab === "gallery" && (
+                    <section className="bg-white p-8 rounded-3xl shadow-xl border">
+                        <h2 className="text-3xl font-black mb-10 text-gray-900 uppercase">Manage Gallery</h2>
+                        <form onSubmit={handleGallerySubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <input type="text" name="img" value={galleryFormData.img} onChange={handleGalleryInputChange} placeholder="Photo URL" className="bg-gray-50 p-4 rounded-xl border outline-none" required />
+                            <input type="text" name="location" value={galleryFormData.location} onChange={handleGalleryInputChange} placeholder="Location/Subject" className="bg-gray-50 p-4 rounded-xl border outline-none" required />
+                            <button type="submit" className="bg-primary text-white font-black rounded-xl">Add Photo</button>
+                        </form>
+                        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-8">
+                            {gallery.map(img => (
+                                <div key={img._id} className="relative aspect-square group rounded-xl overflow-hidden shadow-sm">
+                                    <img src={img.img} className="w-full h-full object-cover" />
+                                    <button onClick={() => deleteGallery(img._id).then(loadGallery)} className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition font-black uppercase text-xs">Delete</button>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )
+            }
 
             {/* Inquiries Section */}
-            {activeTab === "inquiries" && (
-                <section className="bg-white rounded-3xl shadow-2xl overflow-hidden border">
-                    <div className="bg-secondary p-8 text-white">
-                        <h2 className="text-3xl font-black uppercase tracking-tighter">Tailor-Made Requests</h2>
-                        <p className="text-xs font-bold opacity-80 mt-1">Custom tour designs from your visitors</p>
-                    </div>
-                    <div className="p-8 overflow-x-auto">
-                        <table className="w-full text-left">
-                            <thead>
-                                <tr className="border-b text-gray-400 text-xs uppercase font-black">
-                                    <th className="pb-4">Date</th>
-                                    <th className="pb-4">Customer</th>
-                                    <th className="pb-4">Destinations</th>
-                                    <th className="pb-4">Duration</th>
-                                    <th className="pb-4">Status</th>
-                                    <th className="pb-4 text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {inquiries.length === 0 && (
-                                    <tr>
-                                        <td colSpan="6" className="py-10 text-center text-gray-400 font-bold uppercase tracking-widest italic">No custom inquiries yet</td>
+            {
+                activeTab === "inquiries" && (
+                    <section className="bg-white rounded-3xl shadow-2xl overflow-hidden border">
+                        <div className="bg-secondary p-8 text-white">
+                            <h2 className="text-3xl font-black uppercase tracking-tighter">Tailor-Made Requests</h2>
+                            <p className="text-xs font-bold opacity-80 mt-1">Custom tour designs from your visitors</p>
+                        </div>
+                        <div className="p-8 overflow-x-auto">
+                            <table className="w-full text-left">
+                                <thead>
+                                    <tr className="border-b text-gray-400 text-xs uppercase font-black">
+                                        <th className="pb-4">Date</th>
+                                        <th className="pb-4">Customer</th>
+                                        <th className="pb-4">Destinations</th>
+                                        <th className="pb-4">Duration</th>
+                                        <th className="pb-4">Status</th>
+                                        <th className="pb-4 text-right">Action</th>
                                     </tr>
-                                )}
-                                {inquiries.map(i => (
-                                    <tr key={i._id} className="border-b hover:bg-gray-50 transition group">
-                                        <td className="py-6 text-sm font-bold text-gray-400">{new Date(i.createdAt).toLocaleDateString()}</td>
-                                        <td>
-                                            <p className="font-bold">{i.name}</p>
-                                            <p className="text-xs text-gray-500">{i.email}</p>
-                                            <p className="text-[10px] text-gray-400 font-mono">{i.phone}</p>
-                                        </td>
-                                        <td className="max-w-[200px] truncate"><span className="text-sm font-medium text-gray-600">{i.destinations}</span></td>
-                                        <td className="font-bold text-xs">{i.duration}</td>
-                                        <td>
-                                            <select
-                                                value={i.status}
-                                                onChange={(e) => updateInquiryStatus(i._id, e.target.value).then(loadInquiries)}
-                                                className={`text-[10px] font-black uppercase px-3 py-1 rounded-full border-none outline-none cursor-pointer ${i.status === 'Pending' ? 'bg-yellow-100 text-yellow-600' :
+                                </thead>
+                                <tbody>
+                                    {inquiries.length === 0 && (
+                                        <tr>
+                                            <td colSpan="6" className="py-10 text-center text-gray-400 font-bold uppercase tracking-widest italic">No custom inquiries yet</td>
+                                        </tr>
+                                    )}
+                                    {inquiries.map(i => (
+                                        <tr key={i._id} className="border-b hover:bg-gray-50 transition group">
+                                            <td className="py-6 text-sm font-bold text-gray-400">{new Date(i.createdAt).toLocaleDateString()}</td>
+                                            <td>
+                                                <p className="font-bold">{i.name}</p>
+                                                <p className="text-xs text-gray-500">{i.email}</p>
+                                                <p className="text-[10px] text-gray-400 font-mono">{i.phone}</p>
+                                            </td>
+                                            <td className="max-w-[200px] truncate"><span className="text-sm font-medium text-gray-600">{i.destinations}</span></td>
+                                            <td className="font-bold text-xs">{i.duration}</td>
+                                            <td>
+                                                <select
+                                                    value={i.status}
+                                                    onChange={(e) => updateInquiryStatus(i._id, e.target.value).then(loadInquiries)}
+                                                    className={`text-[10px] font-black uppercase px-3 py-1 rounded-full border-none outline-none cursor-pointer ${i.status === 'Pending' ? 'bg-yellow-100 text-yellow-600' :
                                                         i.status === 'Contacted' ? 'bg-blue-100 text-blue-600' :
                                                             i.status === 'Booked' ? 'bg-green-100 text-green-600' :
                                                                 'bg-gray-100 text-gray-600'
-                                                    }`}
-                                            >
-                                                <option value="Pending">Pending</option>
-                                                <option value="Contacted">Contacted</option>
-                                                <option value="Booked">Booked</option>
-                                                <option value="Cancelled">Cancelled</option>
-                                            </select>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="flex justify-end items-center gap-4">
-                                                <button onClick={() => alert(`Full Message: ${i.message}\n\nBudget: ${i.budget}\nServices: ${i.services?.join(', ')}`)} className="text-primary font-bold text-xs uppercase hover:underline">View</button>
-                                                <button onClick={() => deleteInquiry(i._id).then(loadInquiries)} className="text-red-400 font-bold text-xs uppercase opacity-0 group-hover:opacity-100 transition">Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            )}
-        </div>
+                                                        }`}
+                                                >
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Contacted">Contacted</option>
+                                                    <option value="Booked">Booked</option>
+                                                    <option value="Cancelled">Cancelled</option>
+                                                </select>
+                                            </td>
+                                            <td className="text-right">
+                                                <div className="flex justify-end items-center gap-4">
+                                                    <button onClick={() => alert(`Full Message: ${i.message}\n\nBudget: ${i.budget}\nServices: ${i.services?.join(', ')}`)} className="text-primary font-bold text-xs uppercase hover:underline">View</button>
+                                                    <button onClick={() => deleteInquiry(i._id).then(loadInquiries)} className="text-red-400 font-bold text-xs uppercase opacity-0 group-hover:opacity-100 transition">Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                )
+            }
+        </div >
     );
 };
 
