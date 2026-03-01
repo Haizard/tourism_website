@@ -6,6 +6,7 @@ import {
   FaLinkedin,
   FaEnvelope,
   FaMobileAlt,
+  FaShieldAlt,
 } from "react-icons/fa";
 import NatureVid from "../../assets/video/main.mp4";
 import { Link } from "react-router-dom";
@@ -105,7 +106,7 @@ const Footer = () => {
 
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 col-span-2 md:pl-10">
+            <div className="grid grid-cols-2 sm:grid-cols-2 col-span-2 md:pl-10">
               <div>
                 <div className="py-8 px-4">
                   <h1 className="text-xl font-bold text-justify sm:text-left mb-3">
@@ -144,22 +145,10 @@ const Footer = () => {
                         <span>Best Places</span>
                       </Link>
                     </li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div className="py-8 px-4">
-                  <h1 className="text-xl font-bold text-justify sm:text-left mb-3">
-                    Admin
-                  </h1>
-                  <ul className="flex flex-col gap-3">
                     <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-700 dark:text-gray-200">
-                      <Link
-                        to="/login"
-                        onClick={() => window.scrollTo(0, 0)}
-                      >
+                      <Link to="/blogs" onClick={() => window.scrollTo(0, 0)}>
                         <span>&#11162;</span>
-                        <span>Login</span>
+                        <span>Latest News</span>
                       </Link>
                     </li>
                   </ul>
@@ -168,8 +157,11 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <div className="text-center py-5 border-t-2 border-blue-300/50 bg-primary text-white">
-              @copyright 2024 All rights reserved || Made with ❤️ by haizard misape | +255 693671032
+            <div className="text-center py-5 border-t-2 border-blue-300/50 bg-primary text-white flex justify-center items-center gap-2">
+              <span>@copyright 2024 All rights reserved || Made with ❤️ by haizard misape | +255 693671032</span>
+              <Link to="/login" className="opacity-10 hover:opacity-50 transition-opacity">
+                <FaShieldAlt size={12} />
+              </Link>
             </div>
           </div>
         </div>
