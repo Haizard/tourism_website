@@ -181,7 +181,47 @@ const AdminDashboard = () => {
                             <input type="text" name="duration" value={tourFormData.duration} onChange={handleTourInputChange} placeholder="Duration (e.g. 5 Days)" className="bg-gray-50 p-4 rounded-xl border outline-none" />
                             <input type="text" name="image" value={tourFormData.image} onChange={handleTourInputChange} placeholder="Image URL" className="bg-gray-50 p-4 rounded-xl border outline-none" required />
                         </div>
-                        <textarea name="description" value={tourFormData.description} onChange={handleTourInputChange} placeholder="Description" className="w-full bg-gray-50 p-4 rounded-xl border h-32 outline-none" required></textarea>
+                        <textarea name="description" value={tourFormData.description} onChange={handleTourInputChange} placeholder="Description" className="w-full bg-gray-50 p-4 rounded-xl border h-32 outline-none focus:border-primary font-medium" required></textarea>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase text-gray-400 ml-2">Inclusions (One per line)</label>
+                                <textarea name="inclusions" value={tourFormData.inclusions} onChange={handleTourInputChange} placeholder="Example:&#10;Professional Guide&#10;Park Fees&#10;Meals" className="w-full bg-gray-50 p-4 rounded-xl border h-40 outline-none focus:border-primary font-medium"></textarea>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase text-gray-400 ml-2">Exclusions (One per line)</label>
+                                <textarea name="exclusions" value={tourFormData.exclusions} onChange={handleTourInputChange} placeholder="Example:&#10;International Flights&#10;Tips&#10;Personal Items" className="w-full bg-gray-50 p-4 rounded-xl border h-40 outline-none focus:border-primary font-medium"></textarea>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                                <label className="text-sm font-black uppercase text-gray-900">Itinerary Days</label>
+                                <button type="button" onClick={() => setTourFormData({ ...tourFormData, itinerary: [...tourFormData.itinerary, { day: tourFormData.itinerary.length + 1, events: "" }] })} className="text-primary font-black text-xs uppercase hover:underline">+ Add Day</button>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {tourFormData.itinerary.map((item, index) => (
+                                    <div key={index} className="bg-gray-50 p-4 rounded-xl border space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="font-black text-xs text-primary">Day {item.day}</span>
+                                            {index > 0 && (
+                                                <button type="button" onClick={() => setTourFormData({ ...tourFormData, itinerary: tourFormData.itinerary.filter((_, i) => i !== index) })} className="text-red-400 text-[10px] font-black uppercase">Remove</button>
+                                            )}
+                                        </div>
+                                        <textarea
+                                            placeholder="Events for this day (One per line)"
+                                            value={item.events}
+                                            className="w-full bg-white p-3 rounded-lg border text-sm outline-none focus:border-primary h-24"
+                                            onChange={(e) => {
+                                                const newItinerary = [...tourFormData.itinerary];
+                                                newItinerary[index].events = e.target.value;
+                                                setTourFormData({ ...tourFormData, itinerary: newItinerary });
+                                            }}
+                                        ></textarea>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                         <button type="submit" disabled={loading} className="w-full bg-primary text-white font-black p-5 rounded-2xl shadow-xl uppercase tracking-widest">{editingTourId ? "Update Package" : "Add Package"}</button>
                     </form>
                     <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
