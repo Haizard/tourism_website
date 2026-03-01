@@ -18,23 +18,27 @@ const Places = ({ handleOrderPopup }) => {
   }, []);
 
   return (
-    <div className="dark:bg-gray-900 dark:text-white bg-gray-50 py-10">
-      <section data-aos="fade-up" className="container">
-        <h1 className="my-8 border-l-8 border-primary/50 py-2 pl-2 text-3xl font-bold">
-          Our Best Latest Photos
-        </h1>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div className="bg-white py-24">
+      <section className="container">
+        <div className="mb-16">
+          <p className="text-primary font-black uppercase tracking-widest mb-2">Visual Journeys</p>
+          <h2 className="text-4xl font-black font-heading">Our Adventure Gallery</h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {galleryData.length > 0 ? (
             galleryData.map((item, index) => (
               <PlaceCard
-                handleOrderPopup={handleOrderPopup}
-                key={index}
+                key={item._id || index}
                 img={item.img}
                 location={item.location}
+                title={item.caption}
               />
             ))
           ) : (
-            <p className="text-center col-span-full py-10">No photos found or loading...</p>
+            <div className="col-span-full py-20 text-center">
+              <p className="text-gray-400 font-bold uppercase tracking-widest italic font-heading text-xl">Capturing the world's beauty...</p>
+            </div>
           )}
         </div>
       </section>

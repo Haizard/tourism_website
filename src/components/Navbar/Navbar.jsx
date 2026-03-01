@@ -57,114 +57,75 @@ const DropdownLinks = [
 
 const Navbar = ({ handleOrderPopup }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
   return (
     <>
-      <nav className="fixed top-0 right-0 w-full z-50 bg-green backdrop-blur-sm text-black shadow-md">
-        <div className="bg-gradient-to-r from-primary to-secondary text-white ">
-          <div className="container py-[2px] sm:block hidden">
-            <div className="flex items-center justify-between">
-              <p className="text-sm">20% off on next booking</p>
-              <p>mobile no. +255 758219169</p>
-              <p>mobile no. +255 710887798</p>
-            </div>
-          </div>
-        </div>
-        <div className="container py-3 sm:py-0">
+      <nav
+        className={`fixed top-0 right-0 w-full z-50 transition-all duration-500 ${isScrolled
+            ? "bg-white/80 backdrop-blur-lg shadow-lg py-2"
+            : "bg-transparent py-4"
+          }`}
+      >
+        <div className="container">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4 font-bold text-2xl">
+            <div className="flex items-center gap-4">
               <Link to={"/"} onClick={() => window.scrollTo(0, 0)}>
-                <img src={Logo} alt="" className="h-16 rounded-full" />
+                <img
+                  src={Logo}
+                  alt="Logo"
+                  className={`transition-all duration-500 ${isScrolled ? "h-12" : "h-16"
+                    } rounded-full`}
+                />
               </Link>
-              {/* <span>TCJ Tourism</span> */}
             </div>
 
             <div className="hidden md:block">
-              <ul className="flex items-center gap-6 ">
-                <li className="py-4">
-                  <NavLink to="/" activeClassName="active">
-                    Home
-                  </NavLink>
-                </li>
-                <li className="py-4">
-                  <NavLink to="/blogs" activeClassName="active">
-                    Blogs
-                  </NavLink>
-                </li>
-                <li className="py-4">
-                  <NavLink to="/packages" activeClassName="active">
-                    Packages
-                  </NavLink>
-                </li>
-                <li className="py-4">
-                  <NavLink to="/about" activeClassName="active">
-                    About
-                  </NavLink>
-                </li>
-                <li className="py-4">
-                  <NavLink to="/best-places" activeClassName="active">
-                    Best Places
-                  </NavLink>
-                </li>
-                <li className="py-4">
-                  <NavLink to="/tailor-made" activeClassName="active">
-                    Tailor-Made
-                  </NavLink>
-                </li>
-                <li className="group relative cursor-pointer">
-                  <a
-                    href="/#home"
-                    className="flex h-[72px] items-center gap-[2px]"
-                  >
-                    Tour Types{" "}
-                    <span>
-                      <FaCaretDown className="transition-all duration-200 group-hover:rotate-180" />
-                    </span>
-                  </a>
-                  <div className="absolute -left-9 z-[9999] hidden w-[150px] rounded-md bg-white p-2 text-black group-hover:block shadow-md ">
-                    <ul className="space-y-3">
-                      {DropdownLinks.map((data) => (
-                        <li key={data.name}>
-                          <a
-                            className="inline-block w-full rounded-md p-2 hover:bg-primary/20"
-                            href={data.link}
-                          >
-                            {data.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
+              <ul className={`flex items-center gap-8 font-bold transition-colors duration-500 ${isScrolled ? "text-gray-900" : "text-white"
+                }`}>
+                {NavbarLinks.map((link) => (
+                  <li key={link.name} className="relative group overflow-hidden py-2">
+                    <NavLink
+                      to={link.link}
+                      className={({ isActive }) =>
+                        `transition-all duration-300 ${isActive ? "text-primary" : "hover:text-primary"
+                        }`
+                      }
+                    >
+                      {link.name}
+                    </NavLink>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  </li>
+                ))}
               </ul>
             </div>
+
             <div className="flex items-center gap-4">
               <button
-                className="bg-gradient-to-r from-primary to-secondary hover:bg-bg-gradient-to-r hover:from-secondary hover:bg-primary transition-all duration-600 text-white px-3 py-1 rounded-full"
-                onClick={() => {
-                  handleOrderPopup();
-                }}
+                className="bg-primary text-white px-6 py-2 rounded-full font-bold cinematic-shadow transition-all duration-300 hover:scale-105 active:scale-95"
+                onClick={handleOrderPopup}
               >
                 Book Now
               </button>
-              {/* Mobile Hamburger icon */}
               <div className="md:hidden block">
-                {showMenu ? (
-                  <HiMenuAlt1
-                    onClick={toggleMenu}
-                    className=" cursor-pointer transition-all"
-                    size={30}
-                  />
-                ) : (
-                  <HiMenuAlt3
-                    onClick={toggleMenu}
-                    className="cursor-pointer transition-all"
-                    size={30}
-                  />
-                )}
+                <button
+                  onClick={toggleMenu}
+                  className={isScrolled ? "text-gray-900" : "text-white"}
+                >
+                  {showMenu ? <HiMenuAlt1 size={30} /> : <HiMenuAlt3 size={30} />}
+                </button>
               </div>
             </div>
           </div>
