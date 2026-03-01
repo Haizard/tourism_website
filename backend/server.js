@@ -7,6 +7,7 @@ import galleryRoutes from './routes/galleryRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
+import customInquiryRoutes from './routes/customInquiryRoutes.js';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api/gallery', galleryRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/custom-inquiries', customInquiryRoutes);
 
 // Health check
 app.get('/', (req, res) => {

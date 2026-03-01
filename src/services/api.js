@@ -24,8 +24,14 @@ export const deleteBooking = (id) => API.delete(`/bookings/${id}`);
 // Blogs
 export const fetchBlogs = () => API.get("/blogs");
 export const fetchBlog = (id) => API.get(`/blogs/${id}`);
-export const createBlog = (newBlog) => API.post("/blogs", newBlog);
-export const updateBlog = (id, updatedBlog) => API.put(`/blogs/${id}`, updatedBlog);
+export const createBlog = (data) => API.post('/blogs', data);
+export const updateBlog = (id, data) => API.put(`/blogs/${id}`, data);
 export const deleteBlog = (id) => API.delete(`/blogs/${id}`);
+
+// Custom Inquiries
+export const fetchInquiries = () => API.get('/custom-inquiries');
+export const createInquiry = (data) => API.post('/custom-inquiries', data);
+export const updateInquiryStatus = (id, status) => API.patch(`/custom-inquiries/${id}`, { status });
+export const deleteInquiry = (id) => API.delete(`/custom-inquiries/${id}`);
 
 export default API;

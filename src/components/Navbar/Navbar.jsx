@@ -26,6 +26,10 @@ export const NavbarLinks = [
     name: "Best Places",
     link: "/best-places",
   },
+  {
+    name: "Tailor-Made",
+    link: "/tailor-made",
+  },
 ];
 
 const DropdownLinks = [
@@ -103,6 +107,11 @@ const Navbar = ({ handleOrderPopup }) => {
                 <li className="py-4">
                   <NavLink to="/best-places" activeClassName="active">
                     Best Places
+                  </NavLink>
+                </li>
+                <li className="py-4">
+                  <NavLink to="/tailor-made" activeClassName="active">
+                    Tailor-Made
                   </NavLink>
                 </li>
                 <li className="group relative cursor-pointer">

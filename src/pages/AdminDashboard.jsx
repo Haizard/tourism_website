@@ -3,7 +3,8 @@ import {
     fetchTours, createTour, updateTour, deleteTour,
     fetchGallery, createGallery, deleteGallery,
     fetchBookings, deleteBooking,
-    fetchBlogs, createBlog, updateBlog, deleteBlog
+    fetchBlogs, createBlog, updateBlog, deleteBlog,
+    fetchInquiries, updateInquiryStatus, deleteInquiry
 } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +15,7 @@ const AdminDashboard = () => {
     const [gallery, setGallery] = useState([]);
     const [bookings, setBookings] = useState([]);
     const [blogs, setBlogs] = useState([]);
+    const [inquiries, setInquiries] = useState([]);
 
     // Auth Check
     useEffect(() => {
@@ -34,7 +36,8 @@ const AdminDashboard = () => {
         author: "Admin", date: "", duration: "", maxGroupSize: "",
         tourType: "Safari", category: "Standard",
         inclusions: "", exclusions: "",
-        itinerary: [{ day: 1, events: "" }]
+        itinerary: [{ day: 1, events: "" }],
+        isGroupTour: false, maxCapacity: 12, currentBookings: 0, launchDate: ""
     });
 
     const [blogFormData, setBlogFormData] = useState({
@@ -52,12 +55,14 @@ const AdminDashboard = () => {
         loadGallery();
         loadBookings();
         loadBlogs();
+        loadInquiries();
     }, []);
 
     const loadTours = async () => { try { const res = await fetchTours(); setTours(res.data); } catch (e) { console.error(e); } };
     const loadGallery = async () => { try { const res = await fetchGallery(); setGallery(res.data); } catch (e) { console.error(e); } };
     const loadBookings = async () => { try { const res = await fetchBookings(); setBookings(res.data); } catch (e) { console.error(e); } };
     const loadBlogs = async () => { try { const res = await fetchBlogs(); setBlogs(res.data); } catch (e) { console.error(e); } };
+    const loadInquiries = async () => { try { const res = await fetchInquiries(); setInquiries(res.data); } catch (e) { console.error(e); } };
 
     const handleTourInputChange = (e) => setTourFormData({ ...tourFormData, [e.target.name]: e.target.value });
     const handleBlogInputChange = (e) => setBlogFormData({ ...blogFormData, [e.target.name]: e.target.value });
@@ -121,7 +126,7 @@ const AdminDashboard = () => {
                     <p className="text-gray-500 font-medium">Content Management System</p>
                 </div>
                 <div className="flex bg-gray-100 p-1.5 rounded-xl gap-2 overflow-x-auto">
-                    {["packages", "blogs", "gallery", "bookings"].map(tab => (
+                    {["packages", "blogs", "gallery", "bookings", "inquiries"].map(tab => (
                         <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-2 rounded-lg font-bold transition capitalize ${activeTab === tab ? "bg-white text-primary shadow-sm" : "hover:bg-gray-200 text-gray-600"}`}>{tab}</button>
                     ))}
                 </div>
@@ -180,6 +185,37 @@ const AdminDashboard = () => {
                             </select>
                             <input type="text" name="duration" value={tourFormData.duration} onChange={handleTourInputChange} placeholder="Duration (e.g. 5 Days)" className="bg-gray-50 p-4 rounded-xl border outline-none" />
                             <input type="text" name="image" value={tourFormData.image} onChange={handleTourInputChange} placeholder="Image URL" className="bg-gray-50 p-4 rounded-xl border outline-none" required />
+                        </div>
+
+                        <div className="bg-primary/5 p-6 rounded-2xl border border-primary/20 space-y-4">
+                            <div className="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    id="isGroupTour"
+                                    name="isGroupTour"
+                                    checked={tourFormData.isGroupTour}
+                                    onChange={(e) => setTourFormData({ ...tourFormData, isGroupTour: e.target.checked })}
+                                    className="w-5 h-5 accent-primary"
+                                />
+                                <label htmlFor="isGroupTour" className="font-black text-gray-900 uppercase text-sm">Enable as Group Tour Package</label>
+                            </div>
+
+                            {tourFormData.isGroupTour && (
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fadeIn">
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 ml-1">Max Capacity</label>
+                                        <input type="number" name="maxCapacity" value={tourFormData.maxCapacity} onChange={handleTourInputChange} placeholder="Max People" className="w-full bg-white p-4 rounded-xl border outline-none font-bold" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 ml-1">Current Bookings</label>
+                                        <input type="number" name="currentBookings" value={tourFormData.currentBookings} onChange={handleTourInputChange} placeholder="Initial Bookings" className="w-full bg-white p-4 rounded-xl border outline-none font-bold" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 ml-1">Launch Date</label>
+                                        <input type="date" name="launchDate" value={tourFormData.launchDate ? tourFormData.launchDate.split('T')[0] : ""} onChange={handleTourInputChange} className="w-full bg-white p-4 rounded-xl border outline-none font-bold" />
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         <textarea name="description" value={tourFormData.description} onChange={handleTourInputChange} placeholder="Description" className="w-full bg-gray-50 p-4 rounded-xl border h-32 outline-none focus:border-primary font-medium" required></textarea>
 
@@ -295,6 +331,71 @@ const AdminDashboard = () => {
                                 <button onClick={() => deleteGallery(img._id).then(loadGallery)} className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition font-black uppercase text-xs">Delete</button>
                             </div>
                         ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Inquiries Section */}
+            {activeTab === "inquiries" && (
+                <section className="bg-white rounded-3xl shadow-2xl overflow-hidden border">
+                    <div className="bg-secondary p-8 text-white">
+                        <h2 className="text-3xl font-black uppercase tracking-tighter">Tailor-Made Requests</h2>
+                        <p className="text-xs font-bold opacity-80 mt-1">Custom tour designs from your visitors</p>
+                    </div>
+                    <div className="p-8 overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead>
+                                <tr className="border-b text-gray-400 text-xs uppercase font-black">
+                                    <th className="pb-4">Date</th>
+                                    <th className="pb-4">Customer</th>
+                                    <th className="pb-4">Destinations</th>
+                                    <th className="pb-4">Duration</th>
+                                    <th className="pb-4">Status</th>
+                                    <th className="pb-4 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {inquiries.length === 0 && (
+                                    <tr>
+                                        <td colSpan="6" className="py-10 text-center text-gray-400 font-bold uppercase tracking-widest italic">No custom inquiries yet</td>
+                                    </tr>
+                                )}
+                                {inquiries.map(i => (
+                                    <tr key={i._id} className="border-b hover:bg-gray-50 transition group">
+                                        <td className="py-6 text-sm font-bold text-gray-400">{new Date(i.createdAt).toLocaleDateString()}</td>
+                                        <td>
+                                            <p className="font-bold">{i.name}</p>
+                                            <p className="text-xs text-gray-500">{i.email}</p>
+                                            <p className="text-[10px] text-gray-400 font-mono">{i.phone}</p>
+                                        </td>
+                                        <td className="max-w-[200px] truncate"><span className="text-sm font-medium text-gray-600">{i.destinations}</span></td>
+                                        <td className="font-bold text-xs">{i.duration}</td>
+                                        <td>
+                                            <select
+                                                value={i.status}
+                                                onChange={(e) => updateInquiryStatus(i._id, e.target.value).then(loadInquiries)}
+                                                className={`text-[10px] font-black uppercase px-3 py-1 rounded-full border-none outline-none cursor-pointer ${i.status === 'Pending' ? 'bg-yellow-100 text-yellow-600' :
+                                                        i.status === 'Contacted' ? 'bg-blue-100 text-blue-600' :
+                                                            i.status === 'Booked' ? 'bg-green-100 text-green-600' :
+                                                                'bg-gray-100 text-gray-600'
+                                                    }`}
+                                            >
+                                                <option value="Pending">Pending</option>
+                                                <option value="Contacted">Contacted</option>
+                                                <option value="Booked">Booked</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                        </td>
+                                        <td className="text-right">
+                                            <div className="flex justify-end items-center gap-4">
+                                                <button onClick={() => alert(`Full Message: ${i.message}\n\nBudget: ${i.budget}\nServices: ${i.services?.join(', ')}`)} className="text-primary font-bold text-xs uppercase hover:underline">View</button>
+                                                <button onClick={() => deleteInquiry(i._id).then(loadInquiries)} className="text-red-400 font-bold text-xs uppercase opacity-0 group-hover:opacity-100 transition">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </section>
             )}

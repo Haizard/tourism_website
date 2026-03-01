@@ -11,6 +11,7 @@ import PackagesPage from "./pages/PackagesPage";
 import BlogDetail from "./components/Blogs/BlogDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
+import TailorMade from "./pages/TailorMade";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -39,6 +40,7 @@ const App = () => {
             <Route path="about" element={<About />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="login" element={<AdminLogin />} />
+            <Route path="tailor-made" element={<TailorMade />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>

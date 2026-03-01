@@ -21,6 +21,11 @@ const tourPackageSchema = new mongoose.Schema({
   tourType: { type: String }, // e.g., Safari, Trekking
   category: { type: String }, // e.g., Luxury, Budget
   featured: { type: Boolean, default: false },
+  // Group Tour Fields
+  isGroupTour: { type: Boolean, default: false },
+  maxCapacity: { type: Number, default: 0 },
+  currentBookings: { type: Number, default: 0 },
+  launchDate: { type: Date },
 }, { timestamps: true });
 
 const TourPackage = mongoose.model('TourPackage', tourPackageSchema);

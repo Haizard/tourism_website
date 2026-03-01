@@ -1,5 +1,6 @@
 import express from 'express';
 import Booking from '../models/Booking.js';
+import TourPackage from '../models/TourPackage.js';
 
 const router = express.Router();
 
@@ -15,9 +16,25 @@ router.get('/', async (req, res) => {
 
 // Create a new booking (Customer)
 router.post('/', async (req, res) => {
-    const booking = req.body;
-    const newBooking = new Booking(booking);
+    const bookingData = req.body;
+
     try {
+        // If it's a specific package booking, check for group capacity
+        const tour = await TourPackage.findOne({ title: bookingData.packageTour });
+
+        if (tour && tour.isGroupTour) {
+            if (tour.currentBookings + bookingData.pax > tour.maxCapacity) {
+                return res.status(400).json({
+                    message: `Sorry, only ${tour.maxCapacity - tour.currentBookings} spots left for this group tour.`
+                });
+            }
+
+            // Increment bookings
+            tour.currentBookings += bookingData.pax;
+            await tour.save();
+        }
+
+        const newBooking = new Booking(bookingData);
         await newBooking.save();
         res.status(201).json(newBooking);
     } catch (error) {

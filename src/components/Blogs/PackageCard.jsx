@@ -2,12 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 
-const PackageCard = ({ image, title, location, price, description, tourType, category }) => {
+const PackageCard = ({ image, title, location, price, description, tourType, category, isGroupTour, maxCapacity, currentBookings, launchDate }) => {
+    const spotsLeft = maxCapacity - currentBookings;
+    const progress = (currentBookings / maxCapacity) * 100;
+
     return (
         <Link
             to={`/packages/${title}`}
             onClick={() => window.scrollTo(0, 0)}
-            state={{ image, title, location, price, description, tourType, category }}
+            state={{ image, title, location, price, description, tourType, category, isGroupTour, maxCapacity, currentBookings, launchDate }}
             className="group block"
         >
             <div className="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100">
@@ -26,7 +29,26 @@ const PackageCard = ({ image, title, location, price, description, tourType, cat
                         <IoLocationSharp className="text-primary" />
                         <span className="text-xs font-bold uppercase tracking-widest">{location}</span>
                     </div>
-                    <h3 className="text-xl font-black text-gray-900 group-hover:text-primary transition-colors mb-3 uppercase tracking-tight line-clamp-1">{title}</h3>
+                    <h3 className="text-xl font-black text-gray-900 group-hover:text-primary transition-colors mb-2 uppercase tracking-tight line-clamp-1">{title}</h3>
+
+                    {isGroupTour && (
+                        <div className="mb-4 bg-primary/5 p-3 rounded-2xl border border-primary/10">
+                            <div className="flex justify-between items-center mb-1">
+                                <span className="text-[10px] font-black uppercase text-primary">Confirmed Group</span>
+                                <span className="text-[10px] font-black uppercase text-gray-400">{spotsLeft} Spots Left</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                <div
+                                    className="h-full bg-primary transition-all duration-1000"
+                                    style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
+                            {launchDate && (
+                                <p className="text-[10px] font-bold text-secondary mt-2 uppercase tracking-tighter">🚀 Launching: {new Date(launchDate).toLocaleDateString()}</p>
+                            )}
+                        </div>
+                    )}
+
                     <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed">{description}</p>
                 </div>
             </div>
