@@ -4,8 +4,7 @@ import TourPackage from "../models/TourPackage.js";
 
 // Helper to generate image using Gemini Native Image Generation
 const generateAiImage = async (ai, prompt) => {
-    // List of potential image generation models from models.list()
-    // Trying both with and without 'models/' prefix for robustness
+    // Confirmed image generation models from models.list()
     const imageModels = [
         "gemini-3.1-flash-image-preview",
         "gemini-3-pro-image-preview",
@@ -13,50 +12,37 @@ const generateAiImage = async (ai, prompt) => {
         "gemini-2.5-flash-image"
     ];
 
+    const generationPrompt = `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.`;
+
     for (const modelId of imageModels) {
-        try {
-            console.log(`AI Blogger: Requesting image from ${modelId}...`);
+        // Try the model ID as is, and with 'models/' prefix
+        const variants = [modelId, `models/${modelId}`];
 
-            // Following the latest pattern from official documentation
-            // Using a simple prompt string as in the first example
-            const response = await ai.models.generateContent({
-                model: modelId,
-                contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }],
-                config: {
-                    responseModalities: ['TEXT', 'IMAGE']
-                }
-            });
+        for (const variantId of variants) {
+            try {
+                console.log(`AI Blogger: Requesting native image from ${variantId}...`);
 
-            if (response && response.candidates && response.candidates[0].content && response.candidates[0].content.parts) {
-                for (const part of response.candidates[0].content.parts) {
-                    if (part.inlineData) {
-                        console.log(`AI Blogger: Image generation successful with ${modelId}!`);
-                        return `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`;
+                // Following official documentation: contents can be a simple string
+                const response = await ai.models.generateContent({
+                    model: variantId,
+                    contents: generationPrompt,
+                    config: {
+                        responseModalities: ['IMAGE'] // Request only image for efficiency
                     }
-                }
-            }
-            console.warn(`AI Blogger: No image returned by ${modelId}. Response: ${JSON.stringify(response)}`);
-        } catch (error) {
-            console.error(`AI Blogger: model ${modelId} failed: ${error.message}`);
-            // If it's a 404, we might need to try the models/ prefix
-            if (error.message.includes("not found")) {
-                try {
-                    console.log(`AI Blogger: Re-trying ${modelId} with 'models/' prefix...`);
-                    const prefixedResponse = await ai.models.generateContent({
-                        model: `models/${modelId}`,
-                        contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }],
-                        config: { responseModalities: ['TEXT', 'IMAGE'] }
-                    });
-                    if (prefixedResponse && prefixedResponse.candidates && prefixedResponse.candidates[0].content.parts) {
-                        for (const part of prefixedResponse.candidates[0].content.parts) {
-                            if (part.inlineData) {
-                                console.log(`AI Blogger: Image generation successful with models/${modelId}!`);
-                                return `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`;
-                            }
+                });
+
+                if (response?.candidates?.[0]?.content?.parts) {
+                    for (const part of response.candidates[0].content.parts) {
+                        if (part.inlineData) {
+                            console.log(`AI Blogger: Image generation successful with ${variantId}!`);
+                            return `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`;
                         }
                     }
-                } catch (prefixedError) {
-                    console.error(`AI Blogger: models/${modelId} also failed: ${prefixedError.message}`);
+                }
+            } catch (error) {
+                // Only log if it's NOT a "not found" error for the non-prefixed variant
+                if (!(variantId === modelId && error.message.includes("not found"))) {
+                    console.warn(`AI Blogger: ${variantId} attempt failed: ${error.message}`);
                 }
             }
         }
