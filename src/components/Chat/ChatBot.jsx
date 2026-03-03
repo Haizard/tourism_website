@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoSend, IoClose, IoChatbubbleEllipses } from "react-icons/io5";
-import axios from "axios";
+import { sendChatMessage } from "../../services/api";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,9 +31,7 @@ const ChatBot = () => {
     setIsLoading(true);
 
     try {
-      const baseUrl =
-        import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-      const response = await axios.post(`${baseUrl}/api/chat`, {
+      const response = await sendChatMessage({
         message: message,
         history: chatHistory,
       });
@@ -89,11 +87,10 @@ const ChatBot = () => {
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[80%] p-4 rounded-2xl text-sm font-medium leading-relaxed ${
-                    msg.role === "user"
+                  className={`max-w-[80%] p-4 rounded-2xl text-sm font-medium leading-relaxed ${msg.role === "user"
                       ? "bg-primary text-white rounded-tr-none shadow-lg"
                       : "bg-gray-100 text-gray-800 rounded-tl-none"
-                  }`}
+                    }`}
                 >
                   {msg.content}
                 </div>
