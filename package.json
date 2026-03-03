@@ -12,6 +12,7 @@
   "dependencies": {
     "@formspree/react": "^2.5.1",
     "@fortawesome/fontawesome-free": "^6.6.0",
+    "@google/genai": "^1.43.0",
     "aos": "^2.3.4",
     "axios": "^1.13.6",
     "cors": "^2.8.6",
@@ -27,14 +28,14 @@
     "react-markdown": "^10.1.0",
     "react-slick": "^0.29.0",
     "remark-gfm": "^4.0.1",
-    "slick-carousel": "^1.8.1",
-    "@google/genai": "^1.43.0"
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
+    "concurrently": "^9.2.1",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
