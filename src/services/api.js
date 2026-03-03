@@ -51,4 +51,7 @@ export const createVisionary = (data) => API.post("/visionaries", data);
 export const updateVisionary = (id, data) => API.put(`/visionaries/${id}`, data);
 export const deleteVisionary = (id) => API.delete(`/visionaries/${id}`);
 
+// Chat
+export const sendChatMessage = (data) => API.post("/chat", data);
+
 export default API;
