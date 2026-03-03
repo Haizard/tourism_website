@@ -27,7 +27,8 @@
     "react-markdown": "^10.1.0",
     "react-slick": "^0.29.0",
     "remark-gfm": "^4.0.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "@google/genai": "^1.43.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
