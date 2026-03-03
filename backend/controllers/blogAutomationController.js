@@ -5,26 +5,25 @@ import TourPackage from "../models/TourPackage.js";
 // Helper to generate image using Gemini Imagen 3
 const generateAiImage = async (ai, prompt) => {
     try {
-        console.log("AI Blogger: Generating photorealistic image with Imagen 3...");
-        // Use the imagen-3.0 model
-        const model = ai.getGenerativeModel({ model: "imagen-3.0-alpha-generate-001" });
+        console.log(`AI Blogger: Generating image for: "${prompt}"`);
 
-        const result = await model.generateContent({
-            contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }]
+        // Use the correct method for the @google/genai SDK
+        const response = await ai.models.generateImages({
+            model: "imagen-3.0-generate-001",
+            prompt: `A high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.`
         });
 
-        // Note: In the current public Gemini API for Imagen 3, the response 
-        // structure might vary or require specific handling for the generated image data.
-        // We will attempt to extract the base64 data if available.
-        // If the specific Imagen model isn't available for the API key, we fallback.
-
-        if (result.response && result.response.candidates[0].content.parts[0].inlineData) {
-            return `data:image/png;base64,${result.response.candidates[0].content.parts[0].inlineData.data}`;
+        // Extract base64 from the first generated image
+        if (response && response.generatedImages && response.generatedImages[0]) {
+            console.log("AI Blogger: Image generation successful!");
+            return `data:image/png;base64,${response.generatedImages[0].image.encodedImage}`;
         }
 
+        console.warn("Imagen 3: No image data in response. Full response:", JSON.stringify(response));
         return null;
     } catch (error) {
-        console.warn("Imagen 3 Generation Failed:", error.message);
+        console.error("Imagen 3 Generation Error:", error.message);
+        if (error.response) console.error("Error Response:", error.response);
         return null;
     }
 };
