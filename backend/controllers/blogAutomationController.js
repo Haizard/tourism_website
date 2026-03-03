@@ -2,30 +2,42 @@ import { GoogleGenAI } from "@google/genai";
 import Blog from "../models/Blog.js";
 import TourPackage from "../models/TourPackage.js";
 
-// Helper to generate image using Gemini Imagen 3
+// Helper to generate image using Gemini Native Image Generation
 const generateAiImage = async (ai, prompt) => {
-    try {
-        console.log(`AI Blogger: Generating image for: "${prompt}"`);
+    // List of potential image generation models from models.list()
+    const imageModels = [
+        "gemini-3.1-flash-image-preview",
+        "gemini-3-pro-image-preview",
+        "gemini-2.0-flash-exp-image-generation",
+        "gemini-2.5-flash-image"
+    ];
 
-        // Use the correct method for the @google/genai SDK
-        const response = await ai.models.generateImages({
-            model: "imagen-3.0-generate-001",
-            prompt: `A high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.`
-        });
+    for (const modelId of imageModels) {
+        try {
+            console.log(`AI Blogger: Trying image generation with ${modelId} using generateContent...`);
 
-        // Extract base64 from the first generated image
-        if (response && response.generatedImages && response.generatedImages[0]) {
-            console.log("AI Blogger: Image generation successful!");
-            return `data:image/png;base64,${response.generatedImages[0].image.encodedImage}`;
+            // Following the latest pattern from ai.google.dev documentation
+            const response = await ai.models.generateContent({
+                model: modelId,
+                contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }]
+            });
+
+            if (response && response.candidates && response.candidates[0].content.parts) {
+                for (const part of response.candidates[0].content.parts) {
+                    if (part.inlineData) {
+                        console.log(`AI Blogger: Image generation successful with ${modelId}!`);
+                        return `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`;
+                    }
+                }
+            }
+        } catch (error) {
+            console.warn(`AI Blogger: ${modelId} failed:`, error.message);
+            // Continue to next model
         }
-
-        console.warn("Imagen 3: No image data in response. Full response:", JSON.stringify(response));
-        return null;
-    } catch (error) {
-        console.error("Imagen 3 Generation Error:", error.message);
-        if (error.response) console.error("Error Response:", error.response);
-        return null;
     }
+
+    console.warn("AI Blogger: All native image generation models failed.");
+    return null;
 };
 
 export const generateDailyBlog = async (req, res) => {
