@@ -2,22 +2,31 @@ import { GoogleGenAI } from "@google/genai";
 import Blog from "../models/Blog.js";
 import TourPackage from "../models/TourPackage.js";
 
-// Fallback images if dynamic service fails
-const FALLBACK_IMAGES = {
-    "Serengeti": "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=1200",
-    "Kilimanjaro": "https://images.unsplash.com/photo-1589553460731-f99ec047805d?auto=format&fit=crop&q=80&w=1200",
-    "Zanzibar": "https://images.unsplash.com/photo-1586861633534-2e9f6583921b?auto=format&fit=crop&q=80&w=1200",
-    "Ngorongoro": "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=1200",
-    "Wildlife": "https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&q=80&w=1200",
-    "Culture": "https://images.unsplash.com/photo-1489493585363-d69421e0dee3?auto=format&fit=crop&q=80&w=1200",
-    "Default": "https://images.unsplash.com/photo-1544620347-c4fd4a315927?auto=format&fit=crop&q=80&w=1200"
-};
+// Helper to generate image using Gemini Imagen 3
+const generateAiImage = async (ai, prompt) => {
+    try {
+        console.log("AI Blogger: Generating photorealistic image with Imagen 3...");
+        // Use the imagen-3.0 model
+        const model = ai.getGenerativeModel({ model: "imagen-3.0-alpha-generate-001" });
 
-const getDynamicImage = (keyword) => {
-    // We use LoremFlickr which allows fetching relevant images by keyword
-    // Using 'tanzania' as a base keyword to ensure localized results
-    const cleanKeyword = keyword.replace(/[^a-zA-Z0-9]/g, '');
-    return `https://loremflickr.com/1200/800/tanzania,${cleanKeyword}/all`;
+        const result = await model.generateContent({
+            contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }]
+        });
+
+        // Note: In the current public Gemini API for Imagen 3, the response 
+        // structure might vary or require specific handling for the generated image data.
+        // We will attempt to extract the base64 data if available.
+        // If the specific Imagen model isn't available for the API key, we fallback.
+
+        if (result.response && result.response.candidates[0].content.parts[0].inlineData) {
+            return `data:image/png;base64,${result.response.candidates[0].content.parts[0].inlineData.data}`;
+        }
+
+        return null;
+    } catch (error) {
+        console.warn("Imagen 3 Generation Failed:", error.message);
+        return null;
+    }
 };
 
 export const generateDailyBlog = async (req, res) => {
@@ -74,7 +83,7 @@ export const generateDailyBlog = async (req, res) => {
                 "title": "A captivating, expert-level title",
                 "category": "${categoryList}",
                 "content": "A high-quality 500-800 word article with the rich Markdown formatting, internal links, and a final persuasive CTA section.",
-                "imageKeyword": "Provide 1-2 words that best describe the visual subject of this blog (e.g. 'Lion', 'Beach', 'Mountain')"
+                "imagePrompt": "A highly detailed, photorealistic prompt for Gemini Imagen 3 that describes the visual subject of this blog. Be specific about the location, lighting, and key subjects (e.g. 'A close up of a majestic male lion in the Serengeti at sunset, golden grass, 4k')."
             }
         `;
 
@@ -118,8 +127,13 @@ export const generateDailyBlog = async (req, res) => {
 
         const blogData = JSON.parse(jsonStr);
 
-        // Select dynamic image based on blog content
-        const imageUrl = getDynamicImage(blogData.imageKeyword || "Tanzania");
+        // Generate AI Image using Gemini Imagen 3
+        let imageUrl = await generateAiImage(ai, blogData.imagePrompt || blogData.title);
+
+        // Fallback to a high-quality default if AI generation fails
+        if (!imageUrl) {
+            imageUrl = "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=1200";
+        }
 
         const newBlog = new Blog({
             title: blogData.title,
