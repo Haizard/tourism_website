@@ -5,6 +5,7 @@ import TourPackage from "../models/TourPackage.js";
 // Helper to generate image using Gemini Native Image Generation
 const generateAiImage = async (ai, prompt) => {
     // List of potential image generation models from models.list()
+    // Trying both with and without 'models/' prefix for robustness
     const imageModels = [
         "gemini-3.1-flash-image-preview",
         "gemini-3-pro-image-preview",
@@ -14,15 +15,19 @@ const generateAiImage = async (ai, prompt) => {
 
     for (const modelId of imageModels) {
         try {
-            console.log(`AI Blogger: Trying image generation with ${modelId} using generateContent...`);
+            console.log(`AI Blogger: Requesting image from ${modelId}...`);
 
-            // Following the latest pattern from ai.google.dev documentation
+            // Following the latest pattern from official documentation
+            // Using a simple prompt string as in the first example
             const response = await ai.models.generateContent({
                 model: modelId,
-                contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }]
+                contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }],
+                config: {
+                    responseModalities: ['TEXT', 'IMAGE']
+                }
             });
 
-            if (response && response.candidates && response.candidates[0].content.parts) {
+            if (response && response.candidates && response.candidates[0].content && response.candidates[0].content.parts) {
                 for (const part of response.candidates[0].content.parts) {
                     if (part.inlineData) {
                         console.log(`AI Blogger: Image generation successful with ${modelId}!`);
@@ -30,13 +35,34 @@ const generateAiImage = async (ai, prompt) => {
                     }
                 }
             }
+            console.warn(`AI Blogger: No image returned by ${modelId}. Response: ${JSON.stringify(response)}`);
         } catch (error) {
-            console.warn(`AI Blogger: ${modelId} failed:`, error.message);
-            // Continue to next model
+            console.error(`AI Blogger: model ${modelId} failed: ${error.message}`);
+            // If it's a 404, we might need to try the models/ prefix
+            if (error.message.includes("not found")) {
+                try {
+                    console.log(`AI Blogger: Re-trying ${modelId} with 'models/' prefix...`);
+                    const prefixedResponse = await ai.models.generateContent({
+                        model: `models/${modelId}`,
+                        contents: [{ role: 'user', parts: [{ text: `Generate a high-quality, photorealistic tourism image of: ${prompt}. Cinematic lighting, 4k, professional photography.` }] }],
+                        config: { responseModalities: ['TEXT', 'IMAGE'] }
+                    });
+                    if (prefixedResponse && prefixedResponse.candidates && prefixedResponse.candidates[0].content.parts) {
+                        for (const part of prefixedResponse.candidates[0].content.parts) {
+                            if (part.inlineData) {
+                                console.log(`AI Blogger: Image generation successful with models/${modelId}!`);
+                                return `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`;
+                            }
+                        }
+                    }
+                } catch (prefixedError) {
+                    console.error(`AI Blogger: models/${modelId} also failed: ${prefixedError.message}`);
+                }
+            }
         }
     }
 
-    console.warn("AI Blogger: All native image generation models failed.");
+    console.warn("AI Blogger: All native image generation attempts failed.");
     return null;
 };
 
