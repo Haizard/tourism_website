@@ -28,7 +28,7 @@ const Trending = () => {
     if (tours.length === 0) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % tours.length);
-    }, 2000);
+    }, 4000); // Slower interval for better readability
     return () => clearInterval(interval);
   }, [tours]);
 
@@ -37,8 +37,6 @@ const Trending = () => {
     window.scrollTo(0, 0);
   };
 
-  // Determine which cards to show based on screen size
-  // For simplicity and "sliding" feel, we'll show a window of 3 cards
   const getVisibleTours = () => {
     if (tours.length === 0) return [];
     const items = [];
@@ -94,11 +92,11 @@ const Trending = () => {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100" />
 
-                    <div className="absolute top-6 left-6 flex gap-2">
+                    <div className="absolute top-6 left-6 flex flex-wrap gap-2 z-20">
                       <Badge variant="luxury" className="backdrop-blur-md bg-white/10">
                         {item.tourType || "Trending"}
                       </Badge>
@@ -109,26 +107,34 @@ const Trending = () => {
                       )}
                     </div>
 
-                    <div className="absolute bottom-8 left-8 right-8">
+                    <div className="absolute bottom-8 left-8 right-8 z-20">
                       <p className="text-secondary font-black text-xs uppercase tracking-widest mb-2">
                         {item.location}
                       </p>
-                      <h3 className="text-3xl font-black text-white mb-4 font-heading uppercase tracking-tighter leading-none">
+                      <h3 className="text-3xl font-black text-white mb-4 font-heading uppercase tracking-tighter leading-none transition-transform duration-500 group-hover:-translate-y-2">
                         {item.title}
                       </h3>
-                      <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                        <p className="text-slate-300 font-bold text-sm">
-                          From{" "}
-                          <span className="text-white text-2xl font-black">
-                            ${item.price}
-                          </span>
-                        </p>
-                        <motion.div
-                          whileHover={{ x: 5 }}
-                          className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-secondary shadow-lg shadow-primary/20"
-                        >
-                          →
-                        </motion.div>
+
+                      <div className="relative overflow-hidden">
+                        {/* Static Price Info */}
+                        <div className="flex justify-between items-center pt-4 border-t border-white/10 transition-all duration-500 group-hover:opacity-0 group-hover:translate-y-4">
+                          <p className="text-slate-300 font-bold text-sm">
+                            From{" "}
+                            <span className="text-white text-2xl font-black">
+                              ${item.price}
+                            </span>
+                          </p>
+                          <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-secondary">
+                            →
+                          </div>
+                        </div>
+
+                        {/* Slide-up Book Now Button */}
+                        <div className="absolute inset-0 flex items-center justify-center translate-y-full transition-all duration-500 group-hover:translate-y-0">
+                          <button className="bg-primary text-white font-black px-8 py-3 rounded-full uppercase tracking-widest text-xs shadow-xl shadow-primary/40 active:scale-95">
+                            Book Now
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </Card>

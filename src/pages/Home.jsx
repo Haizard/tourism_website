@@ -6,6 +6,7 @@ import Places from "../components/Places/Places";
 import Testimonial from "../components/Testimonial/Testimonial";
 import Banner from "../components/Banner/Banner";
 import Features from "../components/Home/Features";
+import Stats from "../components/Home/Stats";
 import Trending from "../components/Home/Trending";
 
 const Home = () => {
@@ -32,6 +33,9 @@ const Home = () => {
 
       {/* Features — warm ivory (bg-surface) */}
       <Features />
+
+      {/* Live Statistics — dark */}
+      <Stats />
 
       {/* Trending — dark (bg-background) */}
       <Trending />
