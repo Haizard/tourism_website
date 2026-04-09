@@ -32,29 +32,6 @@ export const NavbarLinks = [
   },
 ];
 
-const DropdownLinks = [
-  {
-    name: "Safari Adventures",
-    link: "/packages?type=Safari",
-  },
-  {
-    name: "Mountain Trekking",
-    link: "/packages?type=Trekking",
-  },
-  {
-    name: "Beach Holidays",
-    link: "/packages?type=Beach",
-  },
-  {
-    name: "Cultural Tours",
-    link: "/packages?type=Cultural",
-  },
-  {
-    name: "Day Trips",
-    link: "/packages?type=Day Trip",
-  },
-];
-
 const Navbar = ({ handleOrderPopup }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -73,7 +50,13 @@ const Navbar = ({ handleOrderPopup }) => {
 
   return (
     <>
-      <nav className="fixed top-0 right-0 w-full z-50 transition-all duration-500 bg-slate-900/95 backdrop-blur-lg border-b border-white/5 py-2">
+      <nav
+        className={`fixed top-0 right-0 w-full z-50 transition-all duration-500 py-3 ${
+          isScrolled
+            ? "bg-slate-900/95 backdrop-blur-lg border-b border-white/5"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
         <div className="container">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
@@ -81,7 +64,7 @@ const Navbar = ({ handleOrderPopup }) => {
                 <img
                   src={Logo}
                   alt="Logo"
-                  className="transition-all duration-500 h-11 rounded-full"
+                  className={`transition-all duration-500 rounded-full ${isScrolled ? "h-11" : "h-14"}`}
                 />
               </Link>
             </div>

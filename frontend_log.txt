@@ -1,0 +1,5 @@
+
+> 14_tour_travel@0.0.0 frontend
+> vite
+
+sh: 1: vite: not found
