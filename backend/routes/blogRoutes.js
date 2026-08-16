@@ -1,25 +1,15 @@
 import express from 'express';
 import { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog } from '../controllers/blogController.js';
 import { generateDailyBlog } from '../controllers/blogAutomationController.js';
+import { auth } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Auto-generate blog
-router.post('/auto-generate', generateDailyBlog);
-
-// Get all blogs
+router.post('/auto-generate', auth, generateDailyBlog);
 router.get('/', getAllBlogs);
-
-// Get single blog
 router.get('/:id', getBlogById);
-
-// Create blog
-router.post('/', createBlog);
-
-// Update blog
-router.put('/:id', updateBlog);
-
-// Delete blog
-router.delete('/:id', deleteBlog);
+router.post('/', auth, createBlog);
+router.put('/:id', auth, updateBlog);
+router.delete('/:id', auth, deleteBlog);
 
 export default router;

@@ -1,10 +1,12 @@
 import express from 'express';
 import CustomInquiry from '../models/CustomInquiry.js';
+import { auth } from '../middleware/authMiddleware.js';
+import { inquiryLimiter } from '../middleware/rateLimiter.js';
+import { sendInquiryEmail, sendInquiryReply } from '../services/emailService.js';
 
 const router = express.Router();
 
-// Get all inquiries (Admin)
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const inquiries = await CustomInquiry.find().sort({ createdAt: -1 });
         res.status(200).json(inquiries);
@@ -13,34 +15,35 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Create a new inquiry (Customer)
-router.post('/', async (req, res) => {
-    const inquiryData = req.body;
-    const newInquiry = new CustomInquiry(inquiryData);
+router.post('/', inquiryLimiter, async (req, res) => {
+    const inquiry = new CustomInquiry(req.body);
     try {
-        await newInquiry.save();
-        res.status(201).json(newInquiry);
+        const saved = await inquiry.save();
+        await sendInquiryEmail(saved);
+        res.status(201).json(saved);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 });
 
-// Update status (Admin)
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', auth, async (req, res) => {
     try {
-        const { status } = req.body;
-        const updated = await CustomInquiry.findByIdAndUpdate(req.params.id, { status }, { new: true });
-        res.status(200).json(updated);
+        const inquiry = await CustomInquiry.findById(req.params.id);
+        if (!inquiry) return res.status(404).json({ message: 'Inquiry not found' });
+        const oldStatus = inquiry.status;
+        inquiry.status = req.body.status || inquiry.status;
+        await inquiry.save();
+        if (oldStatus !== inquiry.status) await sendInquiryReply(inquiry, inquiry.status);
+        res.status(200).json(inquiry);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Delete (Admin)
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         await CustomInquiry.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: 'Inquiry deleted' });
+        res.status(200).json({ message: 'Inquiry deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

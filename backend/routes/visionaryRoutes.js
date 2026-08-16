@@ -1,62 +1,51 @@
 import express from 'express';
 import Visionary from '../models/Visionary.js';
+import { auth } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// GET all visionaries
 router.get('/', async (req, res) => {
     try {
-        const visionaries = await Visionary.find().sort({ createdAt: -1 });
-        res.json(visionaries);
+        const visionaries = await Visionary.find();
+        res.status(200).json(visionaries);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// GET a single visionary
 router.get('/:id', async (req, res) => {
     try {
         const visionary = await Visionary.findById(req.params.id);
-        res.json(visionary);
+        if (!visionary) return res.status(404).json({ message: 'Visionary not found' });
+        res.status(200).json(visionary);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-router.post('/', async (req, res) => {
-    const visionary = new Visionary({
-        name: req.body.name,
-        duty: req.body.duty,
-        image: req.body.image
-    });
-
+router.post('/', auth, async (req, res) => {
+    const visionary = new Visionary(req.body);
     try {
-        const newVisionary = await visionary.save();
-        res.status(201).json(newVisionary);
+        await visionary.save();
+        res.status(201).json(visionary);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(409).json({ message: error.message });
     }
 });
 
-// PUT to update a visionary
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     try {
-        const updatedVisionary = await Visionary.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
-        res.json(updatedVisionary);
+        const updated = await Visionary.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(200).json(updated);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 
-// DELETE a visionary
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         await Visionary.findByIdAndDelete(req.params.id);
-        res.json({ message: 'Visionary deleted' });
+        res.status(200).json({ message: 'Visionary deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
