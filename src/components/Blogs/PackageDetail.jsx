@@ -25,6 +25,7 @@ const PackageDetail = () => {
     exclusions,
     duration,
     maxGroupSize,
+    childDiscountPercent,
   } = location.state || {};
 
   const [isOrderPopupVisible, setOrderPopupVisible] = useState(false);
@@ -250,6 +251,7 @@ const PackageDetail = () => {
         setOrderPopupVisible={setOrderPopupVisible}
         packageTour={title}
         packagePrice={price}
+        childDiscountPercent={childDiscountPercent}
       />
     </div>
   );
