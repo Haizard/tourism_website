@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   fetchTours,
@@ -17,7 +17,6 @@ import {
   deleteBlog,
   generateAiBlog,
   fetchInquiries,
-  updateInquiryStatus,
   deleteInquiry,
   fetchTaxonomies,
   createTaxonomy,
@@ -42,6 +41,7 @@ import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import Badge from "../components/UI/Badge";
 import AdminSidebar from "../components/Admin/AdminSidebar";
+import ImageUpload from "../components/Admin/ImageUpload";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -125,7 +125,7 @@ const AdminDashboard = () => {
     bestTimeToVisit: "",
     location: "",
     highlights: "",
-    gallery: "",
+    gallery: [],
     wildlifeCalendar: "",
   });
 
@@ -373,9 +373,8 @@ const AdminDashboard = () => {
         .split("\n")
         .map((h) => h.trim())
         .filter(Boolean),
-      gallery: destinationFormData.gallery
-        .split("\n")
-        .map((g) => g.trim())
+      gallery: (destinationFormData.gallery || [])
+        .map((g) => String(g).trim())
         .filter(Boolean),
       wildlifeCalendar: destinationFormData.wildlifeCalendar
         .split("\n")
@@ -400,7 +399,7 @@ const AdminDashboard = () => {
         bestTimeToVisit: "",
         location: "",
         highlights: "",
-        gallery: "",
+        gallery: [],
         wildlifeCalendar: "",
       });
       setEditingDestinationId(null);
@@ -636,20 +635,15 @@ const AdminDashboard = () => {
                         className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">
-                        Image URL
-                      </label>
-                      <input
-                        type="text"
-                        name="image"
-                        value={tourFormData.image}
-                        onChange={handleTourInputChange}
-                        placeholder="https://..."
-                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary"
-                        required
-                      />
-                    </div>
+                    <ImageUpload
+                      label="Image"
+                      value={tourFormData.image}
+                      onChange={(v) =>
+                        setTourFormData({ ...tourFormData, image: v })
+                      }
+                      required
+                      placeholder="Or paste an image URL"
+                    />
                   </div>
 
                   <div className="glass-card bg-primary/5 p-8 rounded-2xl border-none">
@@ -994,20 +988,15 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-gray-400 ml-2">
-                      Cover Image URL
-                    </label>
-                    <input
-                      type="text"
-                      name="image"
-                      value={blogFormData.image}
-                      onChange={handleBlogInputChange}
-                      placeholder="https://..."
-                      className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-secondary"
-                      required
-                    />
-                  </div>
+                  <ImageUpload
+                    label="Cover Image"
+                    value={blogFormData.image}
+                    onChange={(v) =>
+                      setBlogFormData({ ...blogFormData, image: v })
+                    }
+                    required
+                    placeholder="Or paste an image URL"
+                  />
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-gray-400 ml-2">
                       Story Content
@@ -1200,7 +1189,7 @@ const AdminDashboard = () => {
                       </p>
                       <div className="bg-gray-50/50 p-4 rounded-xl mb-4 border border-gray-100">
                         <p className="text-gray-600 text-sm italic line-clamp-2 leading-relaxed">
-                          "{i.message}"
+                          &ldquo;{i.message}&rdquo;
                         </p>
                       </div>
                     </div>
@@ -1290,7 +1279,7 @@ const AdminDashboard = () => {
                       <div className="mb-8 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                         <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-3">Custom Requirements</p>
                         <p className="text-slate-600 italic leading-relaxed whitespace-pre-wrap">
-                          "{selectedInquiry.message}"
+                          &ldquo;{selectedInquiry.message}&rdquo;
                         </p>
                       </div>
 
@@ -1350,16 +1339,18 @@ const AdminDashboard = () => {
                       required
                     />
                   </div>
-                  <div className="flex gap-4">
-                    <input
-                      type="text"
-                      name="img"
-                      value={galleryFormData.img}
-                      onChange={handleGalleryInputChange}
-                      placeholder="Image URL"
-                      className="flex-1 bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary"
-                      required
-                    />
+                  <div className="flex gap-4 items-start">
+                    <div className="flex-1">
+                      <ImageUpload
+                        label="Image"
+                        value={galleryFormData.img}
+                        onChange={(v) =>
+                          setGalleryFormData({ ...galleryFormData, img: v })
+                        }
+                        required
+                        placeholder="Or paste an image URL"
+                      />
+                    </div>
                     <Button type="submit" disabled={loading} className="px-10">
                       Upload Asset
                     </Button>
@@ -1522,18 +1513,15 @@ const AdminDashboard = () => {
                         required
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Image URL</label>
-                      <input
-                        type="text"
-                        name="image"
-                        value={visionaryFormData.image}
-                        onChange={handleVisionaryInputChange}
-                        placeholder="https://..."
-                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
-                        required
-                      />
-                    </div>
+                    <ImageUpload
+                      label="Image"
+                      value={visionaryFormData.image}
+                      onChange={(v) =>
+                        setVisionaryFormData({ ...visionaryFormData, image: v })
+                      }
+                      required
+                      placeholder="Or paste an image URL"
+                    />
                   </div>
                   <div className="flex gap-4">
                     <Button type="submit" disabled={loading} className="px-10">
@@ -1647,18 +1635,18 @@ const AdminDashboard = () => {
                         className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Hero Image URL</label>
-                      <input
-                        type="text"
-                        name="heroImage"
-                        value={destinationFormData.heroImage}
-                        onChange={handleDestinationInputChange}
-                        placeholder="https://..."
-                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
-                        required
-                      />
-                    </div>
+                    <ImageUpload
+                      label="Hero Image"
+                      value={destinationFormData.heroImage}
+                      onChange={(v) =>
+                        setDestinationFormData({
+                          ...destinationFormData,
+                          heroImage: v,
+                        })
+                      }
+                      required
+                      placeholder="Or paste an image URL"
+                    />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1711,16 +1699,18 @@ const AdminDashboard = () => {
                         className="w-full bg-gray-50 p-4 rounded-xl border-none h-32 outline-none focus:ring-2 focus:ring-primary font-medium"
                       ></textarea>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-black uppercase text-gray-400 ml-2">Gallery URLs (One per line)</label>
-                      <textarea
-                        name="gallery"
-                        value={destinationFormData.gallery}
-                        onChange={handleDestinationInputChange}
-                        placeholder="https://image1.jpg&#10;https://image2.jpg"
-                        className="w-full bg-gray-50 p-4 rounded-xl border-none h-32 outline-none focus:ring-2 focus:ring-primary font-medium"
-                      ></textarea>
-                    </div>
+                    <ImageUpload
+                      label="Gallery Images"
+                      value={destinationFormData.gallery}
+                      onChange={(v) =>
+                        setDestinationFormData({
+                          ...destinationFormData,
+                          gallery: v,
+                        })
+                      }
+                      multiple
+                      placeholder="Or paste image URLs, one per line"
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -1749,7 +1739,7 @@ const AdminDashboard = () => {
                             bestTimeToVisit: "",
                             location: "",
                             highlights: "",
-                            gallery: "",
+                            gallery: [],
                             wildlifeCalendar: "",
                           });
                         }}
@@ -1787,7 +1777,7 @@ const AdminDashboard = () => {
                               bestTimeToVisit: d.bestTimeToVisit,
                               location: d.location || "",
                               highlights: (d.highlights || []).join("\n"),
-                              gallery: (d.gallery || []).join("\n"),
+                              gallery: d.gallery || [],
                               wildlifeCalendar: (d.wildlifeCalendar || [])
                                 .map((c) => `${c.month}: ${c.event}`)
                                 .join("\n"),
@@ -1873,17 +1863,14 @@ const AdminDashboard = () => {
                         required
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Avatar URL (optional)</label>
-                      <input
-                        type="text"
-                        name="image"
-                        value={testimonialFormData.image}
-                        onChange={handleTestimonialInputChange}
-                        placeholder="https://..."
-                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-secondary font-medium"
-                      />
-                    </div>
+                    <ImageUpload
+                      label="Avatar"
+                      value={testimonialFormData.image}
+                      onChange={(v) =>
+                        setTestimonialFormData({ ...testimonialFormData, image: v })
+                      }
+                      placeholder="Or paste an image URL"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Review Text</label>
