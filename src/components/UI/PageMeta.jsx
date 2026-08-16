@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const defaultMeta = {
   title: "Makolo Adventure Tours — Tanzania Safaris & Adventures",
@@ -37,6 +38,11 @@ const PageMeta = ({ title, description }) => {
   }, [meta.title, meta.description]);
 
   return null;
+};
+
+PageMeta.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
 };
 
 export default PageMeta;

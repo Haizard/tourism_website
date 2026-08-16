@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { fetchTestimonials } from "../../services/api";
 
@@ -35,7 +35,7 @@ const Testimonial = () => {
             {testimonials.map(({ _id, name, role, text, rating, image }) => (
               <div key={_id} className="px-4 py-3">
                 <div className="bg-white rounded-3xl p-8 shadow-md border border-slate-100 h-full relative">
-                  <span className="absolute top-6 right-8 text-7xl text-primary/10 font-serif leading-none select-none">"</span>
+                  <span className="absolute top-6 right-8 text-7xl text-primary/10 font-serif leading-none select-none">&quot;</span>
                   <div className="flex gap-1 text-secondary mb-4">
                     {Array.from({ length: rating || 5 }).map((_, i) => <span key={i}>★</span>)}
                   </div>
