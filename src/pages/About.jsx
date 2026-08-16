@@ -174,7 +174,7 @@ const About = () => {
                   <p className="font-black uppercase tracking-widest text-xs opacity-60">
                     Email
                   </p>
-                  <p className="text-lg font-bold">hello@makolosafari.com</p>
+                  <p className="text-lg font-bold">makoloafrikaadventures@mail.com</p>
                 </div>
               </div>
             </div>

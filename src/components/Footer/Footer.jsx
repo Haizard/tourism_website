@@ -47,11 +47,11 @@ const Footer = () => {
             </p>
             <div className="space-y-3">
               <a
-                href="mailto:makoloadventuresafaris@gmail.com"
+                href="mailto:makoloafrikaadventures@mail.com"
                 className="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors text-sm font-bold"
               >
                 <FaEnvelope className="text-primary" />
-                makoloadventuresafaris@gmail.com
+                makoloafrikaadventures@mail.com
               </a>
               <a
                 href="tel:+255710887798"
