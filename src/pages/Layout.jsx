@@ -5,6 +5,7 @@ import Footer from "../components/Footer/Footer";
 import OrderPopup from "../components/OrderPopup/OrderPopup";
 import ChatBot from "../components/Chat/ChatBot";
 import WhatsAppButton from "../components/WhatsApp/WhatsAppButton";
+import PageMeta from "../components/UI/PageMeta";
 
 const Layout = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -20,6 +21,7 @@ const Layout = () => {
 
   return (
     <>
+      <PageMeta />
       {!isAdminRoute && <Navbar handleOrderPopup={handleOrderPopup} />}
       <Outlet />
       {!isAdminRoute && (
