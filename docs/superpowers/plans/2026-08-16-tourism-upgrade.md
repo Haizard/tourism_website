@@ -339,13 +339,19 @@ router.get('/', auth, async (req, res) => {
 // Create a new booking (Customer)
 router.post('/', bookingLimiter, async (req, res) => {
     const bookingData = req.body;
-    const { travelDate, adults = 1, children = 0, referralSource = '', totalPrice } = bookingData;
+    const { travelDate, adults = 1, children = 0, referralSource = '' } = bookingData;
     if (!travelDate) return res.status(400).json({ message: 'Travel date is required.' });
 
     try {
         const tour = await TourPackage.findOne({ title: bookingData.packageTour });
         let childDiscount = 0;
-        if (tour) childDiscount = tour.childDiscountPercent || 0;
+        // Server-authoritative pricing: compute total from tour price + child discount
+        let totalPrice = Number(bookingData.totalPrice) || 0;
+        if (tour) {
+            childDiscount = tour.childDiscountPercent || 0;
+            const childPrice = tour.price * (1 - childDiscount / 100);
+            totalPrice = Math.round((Number(adults) * tour.price + Number(children) * childPrice) * 100) / 100;
+        }
         if (tour && tour.isGroupTour) {
             const pax = Number(adults) + Number(children);
             if (tour.currentBookings + pax > tour.maxCapacity) {
@@ -770,7 +776,7 @@ import React, { useState, useEffect } from "react";
 import { IoCloseOutline, IoPeopleOutline, IoWalletOutline } from "react-icons/io5";
 import { createBooking } from "../../services/api";
 
-const OrderPopup = ({ isVisible, setOrderPopupVisible, packageTour, packagePrice }) => {
+const OrderPopup = ({ isVisible, setOrderPopupVisible, packageTour, packagePrice, childDiscountPercent = 0 }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -786,7 +792,6 @@ const OrderPopup = ({ isVisible, setOrderPopupVisible, packageTour, packagePrice
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [bookingRef, setBookingRef] = useState("");
-  const [childDiscount, setChildDiscount] = useState(0);
 
   const pricePerAdult = packagePrice || 0;
 
@@ -795,12 +800,10 @@ const OrderPopup = ({ isVisible, setOrderPopupVisible, packageTour, packagePrice
       ...prev,
       packageTour: packageTour || prev.packageTour,
     }));
-    // Reset per-booking fields when package changes
-    if (packagePrice !== undefined) setChildDiscount(0);
   }, [packageTour, packagePrice]);
 
   const calcTotal = (adults, children) => {
-    const childPrice = pricePerAdult * (1 - childDiscount / 100);
+    const childPrice = pricePerAdult * (1 - (childDiscountPercent || 0) / 100);
     return Math.round((adults * pricePerAdult + children * childPrice) * 100) / 100;
   };
 
@@ -1157,9 +1160,17 @@ Add a trust/badges strip near the footer bottom:
 </div>
 ```
 
-- [ ] **Step 7: Add trust strip to PackageDetail**
+- [ ] **Step 7: Add trust strip + pass child discount to OrderPopup in PackageDetail**
 
-In `src/components/Blogs/PackageDetail.jsx`, inside the right sidebar `<div className="space-y-8">`, after the booking box add:
+In `src/components/Blogs/PackageDetail.jsx`, destructure `childDiscountPercent` from `location.state` (add to the existing destructure near line 28):
+
+```jsx
+    maxGroupSize,
+    childDiscountPercent,
+  } = location.state || {};
+```
+
+In the right sidebar `<div className="space-y-8">`, after the booking box add:
 
 ```jsx
 <div className="bg-white border p-6 rounded-[32px]">
@@ -1171,6 +1182,20 @@ In `src/components/Blogs/PackageDetail.jsx`, inside the right sidebar `<div clas
   </ul>
 </div>
 ```
+
+Update the `OrderPopup` usage at the bottom of the file to pass the discount:
+
+```jsx
+<OrderPopup
+  isVisible={isOrderPopupVisible}
+  setOrderPopupVisible={setOrderPopupVisible}
+  packageTour={title}
+  packagePrice={price}
+  childDiscountPercent={childDiscountPercent}
+/>
+```
+
+Note: server re-computes `totalPrice` authoritatively from the tour's `price` and `childDiscountPercent`; this prop only makes the client preview accurate.
 
 - [ ] **Step 8: Verify build**
 
