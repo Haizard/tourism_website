@@ -20,6 +20,7 @@ const tourPackageSchema = new mongoose.Schema({
   maxGroupSize: { type: Number },
   tourType: { type: String }, // e.g., Safari, Trekking
   category: { type: String }, // e.g., Luxury, Budget
+  childDiscountPercent: { type: Number, default: 50 },
   featured: { type: Boolean, default: false },
   // Group Tour Fields
   isGroupTour: { type: Boolean, default: false },
