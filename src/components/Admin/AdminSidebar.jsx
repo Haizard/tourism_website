@@ -8,6 +8,9 @@ import {
     FaTags,
     FaUsers,
     FaSignOutAlt,
+    FaMapMarkedAlt,
+    FaQuoteLeft,
+    FaEnvelopeOpenText,
 } from "react-icons/fa";
 import Logo from "../../assets/logo.jpg";
 
@@ -18,6 +21,9 @@ const AdminSidebar = ({ activeTab, setActiveTab, handleLogout }) => {
         { id: "gallery", label: "Gallery", icon: <FaImages /> },
         { id: "bookings", label: "Bookings", icon: <FaCalendarCheck /> },
         { id: "inquiries", label: "Inquiries", icon: <FaQuestionCircle /> },
+        { id: "destinations", label: "Destinations", icon: <FaMapMarkedAlt /> },
+        { id: "testimonials", label: "Testimonials", icon: <FaQuoteLeft /> },
+        { id: "newsletter", label: "Newsletter", icon: <FaEnvelopeOpenText /> },
         { id: "visionaries", label: "Visionaries", icon: <FaUsers /> },
         { id: "filters", label: "Filters", icon: <FaTags /> },
     ];

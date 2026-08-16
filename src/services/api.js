@@ -47,6 +47,7 @@ export const deleteGallery = (id) => API.delete(`/gallery/${id}`);
 export const fetchBookings = () => API.get("/bookings");
 export const createBooking = (newBooking) => API.post("/bookings", newBooking);
 export const deleteBooking = (id) => API.delete(`/bookings/${id}`);
+export const updateBookingStatus = (id, status) => API.patch(`/bookings/${id}`, { status });
 
 // Blogs
 export const fetchBlogs = () => API.get("/blogs");

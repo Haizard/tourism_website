@@ -10,6 +10,7 @@ import {
   deleteGallery,
   fetchBookings,
   deleteBooking,
+  updateBookingStatus,
   fetchBlogs,
   createBlog,
   updateBlog,
@@ -25,6 +26,15 @@ import {
   createVisionary,
   updateVisionary,
   deleteVisionary,
+  fetchDestinations,
+  createDestination,
+  updateDestination,
+  deleteDestination,
+  fetchTestimonials,
+  createTestimonial,
+  deleteTestimonial,
+  fetchNewsletter,
+  deleteNewsletter,
 } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -43,6 +53,9 @@ const AdminDashboard = () => {
   const [inquiries, setInquiries] = useState([]);
   const [taxonomies, setTaxonomies] = useState([]);
   const [visionaries, setVisionaries] = useState([]);
+  const [destinations, setDestinations] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [newsletter, setNewsletter] = useState([]);
 
   // Auth Check
   useEffect(() => {
@@ -103,11 +116,34 @@ const AdminDashboard = () => {
     image: "",
   });
 
+  const [destinationFormData, setDestinationFormData] = useState({
+    name: "",
+    slug: "",
+    heroImage: "",
+    shortIntro: "",
+    description: "",
+    bestTimeToVisit: "",
+    location: "",
+    highlights: "",
+    gallery: "",
+    wildlifeCalendar: "",
+  });
+
+  const [testimonialFormData, setTestimonialFormData] = useState({
+    name: "",
+    role: "",
+    text: "",
+    rating: 5,
+    image: "",
+    verified: true,
+  });
+
   const [selectedInquiry, setSelectedInquiry] = useState(null);
 
   const [editingTourId, setEditingTourId] = useState(null);
   const [editingBlogId, setEditingBlogId] = useState(null);
   const [editingVisionaryId, setEditingVisionaryId] = useState(null);
+  const [editingDestinationId, setEditingDestinationId] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -118,6 +154,9 @@ const AdminDashboard = () => {
     loadInquiries();
     loadTaxonomies();
     loadVisionaries();
+    loadDestinations();
+    loadTestimonials();
+    loadNewsletter();
   }, []);
 
   const loadTours = async () => {
@@ -176,6 +215,30 @@ const AdminDashboard = () => {
       console.error(e);
     }
   };
+  const loadDestinations = async () => {
+    try {
+      const res = await fetchDestinations();
+      setDestinations(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const loadTestimonials = async () => {
+    try {
+      const res = await fetchTestimonials();
+      setTestimonials(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const loadNewsletter = async () => {
+    try {
+      const res = await fetchNewsletter();
+      setNewsletter(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleTourInputChange = (e) =>
     setTourFormData({ ...tourFormData, [e.target.name]: e.target.value });
@@ -185,6 +248,10 @@ const AdminDashboard = () => {
     setGalleryFormData({ ...galleryFormData, [e.target.name]: e.target.value });
   const handleVisionaryInputChange = (e) =>
     setVisionaryFormData({ ...visionaryFormData, [e.target.name]: e.target.value });
+  const handleDestinationInputChange = (e) =>
+    setDestinationFormData({ ...destinationFormData, [e.target.name]: e.target.value });
+  const handleTestimonialInputChange = (e) =>
+    setTestimonialFormData({ ...testimonialFormData, [e.target.name]: e.target.value });
 
   // Tour Submit
   const handleTourSubmit = async (e) => {
@@ -293,6 +360,84 @@ const AdminDashboard = () => {
       } catch (e) {
         console.error(e);
       }
+    }
+  };
+
+  // Destination Submit
+  const handleDestinationSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const processed = {
+      ...destinationFormData,
+      highlights: destinationFormData.highlights
+        .split("\n")
+        .map((h) => h.trim())
+        .filter(Boolean),
+      gallery: destinationFormData.gallery
+        .split("\n")
+        .map((g) => g.trim())
+        .filter(Boolean),
+      wildlifeCalendar: destinationFormData.wildlifeCalendar
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => {
+          const [month, ...rest] = line.split(":");
+          return { month: (month || "").trim(), event: rest.join(":").trim() };
+        })
+        .filter((c) => c.month && c.event),
+    };
+    try {
+      if (editingDestinationId)
+        await updateDestination(editingDestinationId, processed);
+      else await createDestination(processed);
+      setDestinationFormData({
+        name: "",
+        slug: "",
+        heroImage: "",
+        shortIntro: "",
+        description: "",
+        bestTimeToVisit: "",
+        location: "",
+        highlights: "",
+        gallery: "",
+        wildlifeCalendar: "",
+      });
+      setEditingDestinationId(null);
+      loadDestinations();
+      alert("Destination saved!");
+    } catch (e) {
+      console.error(e);
+      alert(e.response?.data?.message || "Failed to save destination");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Testimonial Submit
+  const handleTestimonialSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await createTestimonial({
+        ...testimonialFormData,
+        rating: Number(testimonialFormData.rating),
+      });
+      setTestimonialFormData({
+        name: "",
+        role: "",
+        text: "",
+        rating: 5,
+        image: "",
+        verified: true,
+      });
+      loadTestimonials();
+      alert("Testimonial added!");
+    } catch (e) {
+      console.error(e);
+      alert(e.response?.data?.message || "Failed to add testimonial");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -990,11 +1135,20 @@ const AdminDashboard = () => {
                       <p className="text-2xl font-black text-gray-900">
                         ${b.totalPrice}
                       </p>
-                      <Badge
-                        variant={b.status === "confirmed" ? "primary" : "accent"}
+                      <select
+                        value={b.status || "Pending"}
+                        onChange={(e) =>
+                          updateBookingStatus(b._id, e.target.value).then(
+                            loadBookings,
+                          )
+                        }
+                        className="bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5 text-[10px] font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-primary"
                       >
-                        {b.status}
-                      </Badge>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
                       <button
                         onClick={() => deleteBooking(b._id).then(loadBookings)}
                         className="text-[10px] text-red-500 font-black uppercase hover:underline"
@@ -1436,6 +1590,417 @@ const AdminDashboard = () => {
                   </Card>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Destinations Section */}
+          {activeTab === "destinations" && (
+            <div className="animate-fade-in">
+              <div className="flex justify-between items-center mb-10">
+                <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">
+                  Destinations
+                </h2>
+                <Badge variant="primary">{destinations.length} Destinations</Badge>
+              </div>
+
+              <Card className="p-8 mb-12 border-none shadow-xl">
+                <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
+                  <span className="w-2 h-8 bg-primary rounded-full" />
+                  {editingDestinationId
+                    ? "Update Destination"
+                    : "Add New Destination"}
+                </h3>
+                <form onSubmit={handleDestinationSubmit} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={destinationFormData.name}
+                        onChange={handleDestinationInputChange}
+                        placeholder="e.g. Serengeti National Park"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Slug</label>
+                      <input
+                        type="text"
+                        name="slug"
+                        value={destinationFormData.slug}
+                        onChange={handleDestinationInputChange}
+                        placeholder="e.g. serengeti"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Location</label>
+                      <input
+                        type="text"
+                        name="location"
+                        value={destinationFormData.location}
+                        onChange={handleDestinationInputChange}
+                        placeholder="e.g. Serengeti"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Hero Image URL</label>
+                      <input
+                        type="text"
+                        name="heroImage"
+                        value={destinationFormData.heroImage}
+                        onChange={handleDestinationInputChange}
+                        placeholder="https://..."
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-bold"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Short Intro</label>
+                      <input
+                        type="text"
+                        name="shortIntro"
+                        value={destinationFormData.shortIntro}
+                        onChange={handleDestinationInputChange}
+                        placeholder="One-line hook shown on cards"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-medium"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Best Time to Visit</label>
+                      <input
+                        type="text"
+                        name="bestTimeToVisit"
+                        value={destinationFormData.bestTimeToVisit}
+                        onChange={handleDestinationInputChange}
+                        placeholder="e.g. June to October"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-primary font-medium"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Description</label>
+                    <textarea
+                      name="description"
+                      value={destinationFormData.description}
+                      onChange={handleDestinationInputChange}
+                      placeholder="Full destination story..."
+                      className="w-full bg-gray-50 p-6 rounded-2xl border-none focus:ring-2 focus:ring-primary h-40 font-medium leading-relaxed"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-xs font-black uppercase text-gray-400 ml-2">Highlights (One per line)</label>
+                      <textarea
+                        name="highlights"
+                        value={destinationFormData.highlights}
+                        onChange={handleDestinationInputChange}
+                        placeholder="Example:&#10;Great Migration&#10;Big Five sightings"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none h-32 outline-none focus:ring-2 focus:ring-primary font-medium"
+                      ></textarea>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-black uppercase text-gray-400 ml-2">Gallery URLs (One per line)</label>
+                      <textarea
+                        name="gallery"
+                        value={destinationFormData.gallery}
+                        onChange={handleDestinationInputChange}
+                        placeholder="https://image1.jpg&#10;https://image2.jpg"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none h-32 outline-none focus:ring-2 focus:ring-primary font-medium"
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase text-gray-400 ml-2">Wildlife Calendar (Format: Month: Event, One per line)</label>
+                    <textarea
+                      name="wildlifeCalendar"
+                      value={destinationFormData.wildlifeCalendar}
+                      onChange={handleDestinationInputChange}
+                      placeholder="Example:&#10;Jan-Mar: Calving season in Ndutu&#10;Jun-Oct: River crossings"
+                      className="w-full bg-gray-50 p-4 rounded-xl border-none h-32 outline-none focus:ring-2 focus:ring-primary font-medium"
+                    ></textarea>
+                  </div>
+
+                  <div className="flex justify-end gap-4">
+                    {editingDestinationId && (
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setEditingDestinationId(null);
+                          setDestinationFormData({
+                            name: "",
+                            slug: "",
+                            heroImage: "",
+                            shortIntro: "",
+                            description: "",
+                            bestTimeToVisit: "",
+                            location: "",
+                            highlights: "",
+                            gallery: "",
+                            wildlifeCalendar: "",
+                          });
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    )}
+                    <Button type="submit" disabled={loading} className="px-12">
+                      {editingDestinationId ? "Confirm Update" : "Add Destination"}
+                    </Button>
+                  </div>
+                </form>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {destinations.map((d) => (
+                  <Card key={d._id} className="group relative overflow-hidden border-none shadow-lg hover:shadow-2xl">
+                    <div className="h-48 overflow-hidden relative">
+                      <img
+                        src={d.heroImage}
+                        alt={d.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute top-4 right-4 flex gap-2">
+                        <button
+                          onClick={() => {
+                            setEditingDestinationId(d._id);
+                            setDestinationFormData({
+                              name: d.name,
+                              slug: d.slug,
+                              heroImage: d.heroImage,
+                              shortIntro: d.shortIntro,
+                              description: d.description,
+                              bestTimeToVisit: d.bestTimeToVisit,
+                              location: d.location || "",
+                              highlights: (d.highlights || []).join("\n"),
+                              gallery: (d.gallery || []).join("\n"),
+                              wildlifeCalendar: (d.wildlifeCalendar || [])
+                                .map((c) => `${c.month}: ${c.event}`)
+                                .join("\n"),
+                            });
+                            window.scrollTo(0, 0);
+                          }}
+                          className="p-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition shadow-sm"
+                        >
+                          <span className="text-xs font-black uppercase tracking-widest">Edit</span>
+                        </button>
+                        <button
+                          onClick={() => deleteDestination(d._id).then(loadDestinations)}
+                          className="p-2 bg-white/90 backdrop-blur-sm rounded-lg text-red-600 hover:bg-red-600 hover:text-white transition shadow-sm"
+                        >
+                          <span className="text-xs font-black uppercase tracking-widest">Delete</span>
+                        </button>
+                      </div>
+                      <div className="absolute bottom-4 left-4">
+                        <Badge variant="secondary">{d.location || "Tanzania"}</Badge>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <h4 className="font-black text-xl text-gray-900 mb-2 leading-tight">{d.name}</h4>
+                      <p className="text-gray-500 text-sm line-clamp-2">{d.shortIntro}</p>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Testimonials Section */}
+          {activeTab === "testimonials" && (
+            <div className="animate-fade-in">
+              <div className="flex justify-between items-center mb-10">
+                <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">
+                  Guest Testimonials
+                </h2>
+                <Badge variant="primary">{testimonials.length} Reviews</Badge>
+              </div>
+
+              <Card className="p-8 mb-12 border-none shadow-xl">
+                <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
+                  <span className="w-2 h-8 bg-secondary rounded-full" />
+                  Add New Review
+                </h3>
+                <form onSubmit={handleTestimonialSubmit} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Guest Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={testimonialFormData.name}
+                        onChange={handleTestimonialInputChange}
+                        placeholder="e.g. Sarah Thompson"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-secondary font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Role</label>
+                      <input
+                        type="text"
+                        name="role"
+                        value={testimonialFormData.role}
+                        onChange={handleTestimonialInputChange}
+                        placeholder="e.g. Wildlife Photographer"
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-secondary font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Rating (1-5)</label>
+                      <input
+                        type="number"
+                        name="rating"
+                        min="1"
+                        max="5"
+                        value={testimonialFormData.rating}
+                        onChange={handleTestimonialInputChange}
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-secondary font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Avatar URL (optional)</label>
+                      <input
+                        type="text"
+                        name="image"
+                        value={testimonialFormData.image}
+                        onChange={handleTestimonialInputChange}
+                        placeholder="https://..."
+                        className="w-full bg-gray-50 p-4 rounded-xl border-none focus:ring-2 focus:ring-secondary font-medium"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Review Text</label>
+                    <textarea
+                      name="text"
+                      value={testimonialFormData.text}
+                      onChange={handleTestimonialInputChange}
+                      placeholder="Their experience in their own words..."
+                      className="w-full bg-gray-50 p-6 rounded-2xl border-none focus:ring-2 focus:ring-secondary h-32 font-medium leading-relaxed"
+                      required
+                    ></textarea>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <input
+                      type="checkbox"
+                      id="verified"
+                      name="verified"
+                      checked={testimonialFormData.verified}
+                      onChange={(e) =>
+                        setTestimonialFormData({
+                          ...testimonialFormData,
+                          verified: e.target.checked,
+                        })
+                      }
+                      className="w-6 h-6 rounded accent-primary cursor-pointer"
+                    />
+                    <label htmlFor="verified" className="font-black text-gray-900 uppercase text-xs tracking-widest cursor-pointer">
+                      Mark as Verified
+                    </label>
+                  </div>
+                  <div className="flex justify-end">
+                    <Button type="submit" disabled={loading} className="px-12">
+                      Add Review
+                    </Button>
+                  </div>
+                </form>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {testimonials.map((t) => (
+                  <Card key={t._id} className="p-6 border-none shadow-lg hover:shadow-xl transition-all group">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex gap-1 text-secondary mb-4">
+                        {Array.from({ length: t.rating || 5 }).map((_, i) => (
+                          <span key={i}>★</span>
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => deleteTestimonial(t._id).then(loadTestimonials)}
+                        className="text-red-500 font-black text-[10px] uppercase hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed font-medium mb-6 italic">&ldquo;{t.text}&rdquo;</p>
+                    <div className="flex items-center gap-4">
+                      {t.image ? (
+                        <img src={t.image} alt={t.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/30" />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black ring-2 ring-primary/30">{t.name?.[0]}</div>
+                      )}
+                      <div>
+                        <p className="font-black text-gray-900 text-sm">{t.name}</p>
+                        <p className="text-primary font-bold text-xs uppercase tracking-wider">{t.role}</p>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Newsletter Section */}
+          {activeTab === "newsletter" && (
+            <div className="animate-fade-in">
+              <div className="flex justify-between items-center mb-10">
+                <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">
+                  Newsletter Subscribers
+                </h2>
+                <Badge variant="secondary">{newsletter.length} Subscribers</Badge>
+              </div>
+
+              {newsletter.length === 0 ? (
+                <p className="text-center text-gray-400 font-bold py-16">No subscribers yet.</p>
+              ) : (
+                <Card className="p-4 border-none shadow-lg overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                      <thead>
+                        <tr className="border-b border-gray-100 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                          <th className="p-4">Email</th>
+                          <th className="p-4">Subscribed</th>
+                          <th className="p-4 text-right">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {newsletter.map((s) => (
+                          <tr key={s._id} className="border-b border-gray-50 hover:bg-gray-50/50 transition">
+                            <td className="p-4 font-bold text-gray-900">{s.email}</td>
+                            <td className="p-4 text-gray-500 text-sm">
+                              {new Date(s.createdAt).toLocaleDateString()}
+                            </td>
+                            <td className="p-4 text-right">
+                              <button
+                                onClick={() => deleteNewsletter(s._id).then(loadNewsletter)}
+                                className="text-red-500 font-black text-[10px] uppercase hover:underline"
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </Card>
+              )}
             </div>
           )}
         </div>
