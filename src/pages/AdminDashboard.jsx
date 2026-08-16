@@ -46,14 +46,14 @@ const AdminDashboard = () => {
 
   // Auth Check
   useEffect(() => {
-    const auth = localStorage.getItem("adminAuth");
-    if (auth !== "true") {
+    const auth = localStorage.getItem("adminToken");
+    if (!auth) {
       navigate("/login");
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("adminAuth");
+    localStorage.removeItem("adminToken");
     navigate("/login");
   };
 

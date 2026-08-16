@@ -11,6 +11,7 @@ import PackagesPage from "./pages/PackagesPage";
 import BlogDetail from "./components/Blogs/BlogDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
+import ProtectedRoute from "./components/Admin/ProtectedRoute";
 import TailorMade from "./pages/TailorMade";
 import ScrollToTop from "./components/UI/ScrollToTop";
 import AOS from "aos";
@@ -40,7 +41,7 @@ const App = () => {
             <Route path="packages/:title" element={<PackageDetail />} />
             <Route path="best-places" element={<PlacesRoute />} />
             <Route path="about" element={<About />} />
-            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="login" element={<AdminLogin />} />
             <Route path="tailor-made" element={<TailorMade />} />
             <Route path="*" element={<NoPage />} />

@@ -6,6 +6,30 @@ const API_URL = window.location.hostname === "localhost"
 
 const API = axios.create({ baseURL: API_URL });
 
+// Auth
+export const loginAdmin = (credentials) => API.post("/auth/login", credentials);
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("adminToken");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("adminToken");
+      const url = error.config?.url || "";
+      const isLoginRequest = url.includes("/auth/login");
+      if (!isLoginRequest && window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Tour Packages
 export const fetchTours = (params = "") => API.get(`/tours${params}`);
 export const fetchTour = (id) => API.get(`/tours/${id}`);

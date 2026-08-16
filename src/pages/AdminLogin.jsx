@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginAdmin } from "../services/api";
 
 const AdminLogin = () => {
   const [credentials, setCredentials] = useState({
@@ -14,21 +15,22 @@ const AdminLogin = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      if (
-        credentials.username === "admin" &&
-        credentials.password === "admin123"
-      ) {
-        localStorage.setItem("adminAuth", "true");
-        navigate("/admin");
-      } else {
-        setError("Invalid credentials. Access denied.");
-        setLoading(false);
-      }
-    }, 800);
+    setError("");
+    try {
+      const res = await loginAdmin(credentials);
+      localStorage.setItem("adminToken", res.data.token);
+      navigate("/admin");
+    } catch (err) {
+      setError(
+        err.response?.status === 401
+          ? "Invalid credentials. Access denied."
+          : "Server error. Please try again."
+      );
+      setLoading(false);
+    }
   };
 
   return (
