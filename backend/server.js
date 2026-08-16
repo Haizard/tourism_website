@@ -20,6 +20,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Cache the MongoDB connection across serverless (Vercel) warm invocations.
+// Without this, every cold start re-connects and the first requests race the
+// async connect(), producing intermittent 500s (mongoose buffer timeout).
+let cached = global.__mongoose;
+if (!cached) {
+    cached = global.__mongoose = { conn: null, promise: null };
+}
+
 // Trust the preview/reverse proxy so express-rate-limit can read X-Forwarded-For correctly
 app.set('trust proxy', 1);
 
@@ -29,6 +37,18 @@ app.use(cors({
     origin: ["http://localhost:5173", "https://makoloafrika.com", "https://tourism-website-inky.vercel.app"],
     credentials: true
 }));
+
+// Ensure the database is connected before handling any request. On Vercel this
+// must be awaited per-request (cold starts); locally it connects once on boot.
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('❌ MongoDB connection error:', error.message);
+        res.status(503).json({ message: 'Database temporarily unavailable, please retry.' });
+    }
+});
 
 // Routes
 app.use('/api/tours', tourRoutes);
@@ -49,31 +69,41 @@ app.get('/', (req, res) => {
     res.send('Tourism API is running...');
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`🚀 Server is listening on port: ${PORT}`);
-});
-
-// Database connection
+// Database connection (cached across serverless warm invocations)
 const connectDB = async () => {
-    if (mongoose.connection.readyState >= 1) return;
+    if (cached.conn) return cached.conn;
 
-    const MONGODB_URI = process.env.MONGODB_URI;
+    if (!cached.promise) {
+        const MONGODB_URI = process.env.MONGODB_URI;
 
-    if (!MONGODB_URI) {
-        console.error('❌ MONGODB_URI is not defined in environment variables');
-        return;
+        if (!MONGODB_URI) {
+            console.error('❌ MONGODB_URI is not defined in environment variables');
+            cached.promise = Promise.reject(new Error('MONGODB_URI is not defined'));
+        } else {
+            cached.promise = mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+        }
     }
 
     try {
-        await mongoose.connect(MONGODB_URI);
+        cached.conn = await cached.promise;
         console.log('✅ Connected to MongoDB');
+        return cached.conn;
     } catch (error) {
-        console.error('❌ MongoDB connection error:', error.message);
+        // Allow a retry on the next request instead of caching a permanent failure
+        cached.promise = null;
+        throw error;
     }
 };
 
-// Execute connection
-connectDB();
+// Start server only when run directly (local/dev), not on Vercel serverless
+if (!process.env.VERCEL) {
+    // Start server
+    app.listen(PORT, () => {
+        console.log(`🚀 Server is listening on port: ${PORT}`);
+    });
+
+    // Execute connection on boot for local development
+    connectDB().catch((error) => console.error('❌ MongoDB connection error:', error.message));
+}
 
 export default app;
