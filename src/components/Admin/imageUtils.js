@@ -36,23 +36,27 @@ export async function compressImageFile(file) {
   const validation = validateImageFile(file);
   if (!validation.ok) return { ok: false, error: validation.error, dataUrl: null };
 
-  if (file.type === 'image/gif') {
-    const dataUrl = await readFileAsDataUrl(file);
-    return { ok: true, error: null, dataUrl };
-  }
+  try {
+    if (file.type === 'image/gif') {
+      const dataUrl = await readFileAsDataUrl(file);
+      return { ok: true, error: null, dataUrl };
+    }
 
-  const original = await readFileAsDataUrl(file);
-  const img = await loadImage(original);
-  const scale = Math.min(1, MAX_DIMENSION / Math.max(img.width, img.height));
-  const w = Math.max(1, Math.round(img.width * scale));
-  const h = Math.max(1, Math.round(img.height * scale));
-  const canvas = document.createElement('canvas');
-  canvas.width = w;
-  canvas.height = h;
-  canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-  const webpTest = canvas.toDataURL('image/webp');
-  const dataUrl = webpTest.startsWith('data:image/webp')
-    ? canvas.toDataURL('image/webp', COMPRESS_QUALITY)
-    : canvas.toDataURL('image/jpeg', COMPRESS_QUALITY);
-  return { ok: true, error: null, dataUrl };
+    const original = await readFileAsDataUrl(file);
+    const img = await loadImage(original);
+    const scale = Math.min(1, MAX_DIMENSION / Math.max(img.width, img.height));
+    const w = Math.max(1, Math.round(img.width * scale));
+    const h = Math.max(1, Math.round(img.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    const webpTest = canvas.toDataURL('image/webp');
+    const dataUrl = webpTest.startsWith('data:image/webp')
+      ? canvas.toDataURL('image/webp', COMPRESS_QUALITY)
+      : canvas.toDataURL('image/jpeg', COMPRESS_QUALITY);
+    return { ok: true, error: null, dataUrl };
+  } catch (error) {
+    return { ok: false, error: 'Failed to process image. Please try again.', dataUrl: null };
+  }
 }
