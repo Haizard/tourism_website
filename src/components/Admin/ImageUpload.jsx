@@ -29,7 +29,8 @@ const ImageUpload = ({
         results.push(res.dataUrl);
       }
       if (multiple) {
-        onChange([...(Array.isArray(value) ? value : []), ...results]);
+        const existing = (Array.isArray(value) ? value : []).filter(Boolean);
+        onChange([...existing, ...results]);
       } else {
         onChange(results[0]);
       }
@@ -102,26 +103,28 @@ const ImageUpload = ({
       <div className="space-y-3">
         {list.length > 0 && (
           <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
-            {list.map((src, i) => (
-              <div
-                key={i}
-                className="relative aspect-square rounded-xl overflow-hidden group bg-gray-100"
-              >
-                <img
-                  src={src}
-                  alt={`Upload ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeAt(i)}
-                  aria-label={`Remove image ${i + 1}`}
-                  className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-500 text-white text-xs font-black opacity-0 group-hover:opacity-100 transition"
+            {list.map((src, i) =>
+              src ? (
+                <div
+                  key={i}
+                  className="relative aspect-square rounded-xl overflow-hidden group bg-gray-100"
                 >
-                  &times;
-                </button>
-              </div>
-            ))}
+                  <img
+                    src={src}
+                    alt={`Upload ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeAt(i)}
+                    aria-label={`Remove image ${i + 1}`}
+                    className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-500 text-white text-xs font-black opacity-0 group-hover:opacity-100 transition"
+                  >
+                    &times;
+                  </button>
+                </div>
+              ) : null
+            )}
           </div>
         )}
         <button
