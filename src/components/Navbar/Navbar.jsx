@@ -27,6 +27,10 @@ export const NavbarLinks = [
     link: "/best-places",
   },
   {
+    name: "Destinations",
+    link: "/destinations",
+  },
+  {
     name: "Tailor-Made",
     link: "/tailor-made",
   },

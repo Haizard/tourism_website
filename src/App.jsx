@@ -18,6 +18,8 @@ import Terms from "./pages/Terms";
 import CancellationPolicy from "./pages/CancellationPolicy";
 import FAQ from "./pages/FAQ";
 import ScrollToTop from "./components/UI/ScrollToTop";
+import Destinations from "./pages/Destinations";
+import DestinationDetail from "./pages/DestinationDetail";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -44,6 +46,8 @@ const App = () => {
             <Route path="packages" element={<PackagesPage />} />
             <Route path="packages/:title" element={<PackageDetail />} />
             <Route path="best-places" element={<PlacesRoute />} />
+            <Route path="destinations" element={<Destinations />} />
+            <Route path="destinations/:slug" element={<DestinationDetail />} />
             <Route path="about" element={<About />} />
             <Route path="admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="login" element={<AdminLogin />} />

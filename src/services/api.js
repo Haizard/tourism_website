@@ -83,4 +83,11 @@ export const fetchTestimonials = () => API.get("/testimonials");
 export const createTestimonial = (data) => API.post("/testimonials", data);
 export const deleteTestimonial = (id) => API.delete(`/testimonials/${id}`);
 
+// Destinations
+export const fetchDestinations = () => API.get("/destinations");
+export const fetchDestination = (slug) => API.get(`/destinations/${slug}`);
+export const createDestination = (data) => API.post("/destinations", data);
+export const updateDestination = (id, data) => API.put(`/destinations/${id}`, data);
+export const deleteDestination = (id) => API.delete(`/destinations/${id}`);
+
 export default API;

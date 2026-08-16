@@ -12,11 +12,15 @@ import taxonomyRoutes from './routes/taxonomyRoutes.js';
 import visionaryRoutes from './routes/visionaryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
+import destinationRoutes from './routes/destinationRoutes.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Trust the preview/reverse proxy so express-rate-limit can read X-Forwarded-For correctly
+app.set('trust proxy', 1);
 
 // Middleware
 app.use(express.json());
@@ -36,6 +40,7 @@ app.use('/api/taxonomies', taxonomyRoutes);
 app.use('/api/visionaries', visionaryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/destinations', destinationRoutes);
 
 // Health check
 app.get('/', (req, res) => {
