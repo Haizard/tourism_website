@@ -78,4 +78,9 @@ export const deleteVisionary = (id) => API.delete(`/visionaries/${id}`);
 // Chat
 export const sendChatMessage = (data) => API.post("/chat", data);
 
+// Testimonials
+export const fetchTestimonials = () => API.get("/testimonials");
+export const createTestimonial = (data) => API.post("/testimonials", data);
+export const deleteTestimonial = (id) => API.delete(`/testimonials/${id}`);
+
 export default API;

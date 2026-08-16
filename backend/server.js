@@ -11,6 +11,7 @@ import customInquiryRoutes from './routes/customInquiryRoutes.js';
 import taxonomyRoutes from './routes/taxonomyRoutes.js';
 import visionaryRoutes from './routes/visionaryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import testimonialRoutes from './routes/testimonialRoutes.js';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api/custom-inquiries', customInquiryRoutes);
 app.use('/api/taxonomies', taxonomyRoutes);
 app.use('/api/visionaries', visionaryRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/testimonials', testimonialRoutes);
 
 // Health check
 app.get('/', (req, res) => {
