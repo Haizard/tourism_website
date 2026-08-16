@@ -13,6 +13,7 @@ import visionaryRoutes from './routes/visionaryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
 import destinationRoutes from './routes/destinationRoutes.js';
+import newsletterRoutes from './routes/newsletterRoutes.js';
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use('/api/visionaries', visionaryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/destinations', destinationRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 
 // Health check
 app.get('/', (req, res) => {

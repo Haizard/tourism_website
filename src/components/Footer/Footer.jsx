@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FooterLogo from "../../assets/logo.jpg";
 import {
   FaInstagram,
@@ -9,6 +9,48 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { subscribeNewsletter } from "../../services/api";
+
+const NewsletterForm = () => {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setMessage("");
+    try {
+      const res = await subscribeNewsletter(email);
+      setMessage(res.data.message || "Subscribed!");
+      setEmail("");
+    } catch (err) {
+      setError("Could not subscribe. Please try again.");
+    }
+  };
+
+  return (
+    <div>
+      <h3 className="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">Stay Inspired</h3>
+      <p className="text-gray-400 text-sm font-medium mb-4">Get safari tips & exclusive offers in your inbox.</p>
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Your email"
+          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm font-medium text-white outline-none focus:border-primary transition placeholder:text-gray-500"
+        />
+        <button type="submit" className="bg-primary text-white font-black px-4 py-3 rounded-xl text-sm uppercase tracking-wider hover:bg-primary/80 transition">
+          Join
+        </button>
+      </form>
+      {message && <p className="text-green-400 text-xs font-bold mt-2">{message}</p>}
+      {error && <p className="text-accent text-xs font-bold mt-2">{error}</p>}
+    </div>
+  );
+};
 
 const FooterLinks = [
   { title: "Home", link: "/" },
@@ -126,6 +168,7 @@ const Footer = () => {
             >
               Start Planning →
             </Link>
+            <NewsletterForm />
           </div>
 
           {/* Legal Column */}

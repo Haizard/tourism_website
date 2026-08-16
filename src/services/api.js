@@ -90,4 +90,9 @@ export const createDestination = (data) => API.post("/destinations", data);
 export const updateDestination = (id, data) => API.put(`/destinations/${id}`, data);
 export const deleteDestination = (id) => API.delete(`/destinations/${id}`);
 
+// Newsletter
+export const subscribeNewsletter = (email) => API.post("/newsletter", { email });
+export const fetchNewsletter = () => API.get("/newsletter");
+export const deleteNewsletter = (id) => API.delete(`/newsletter/${id}`);
+
 export default API;
