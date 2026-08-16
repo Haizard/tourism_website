@@ -159,6 +159,15 @@ const PackageDetail = () => {
               </button>
             </div>
 
+            <div className="bg-white border p-6 rounded-[32px]">
+              <h4 className="font-black uppercase tracking-tight text-gray-900 mb-4">Why Book With Us</h4>
+              <ul className="space-y-3 text-sm text-gray-600 font-medium">
+                <li className="flex items-start gap-2"><span className="text-primary">✓</span> Licensed Tanzania tour operator</li>
+                <li className="flex items-start gap-2"><span className="text-primary">✓</span> 24/7 on-trip support & insurance-backed</li>
+                <li className="flex items-start gap-2"><span className="text-primary">✓</span> Free expert consultation on your itinerary</li>
+              </ul>
+            </div>
+
             <div className="border p-8 rounded-[32px] overflow-hidden">
               <button
                 onClick={() => setIsInclusionsOpen(!isInclusionsOpen)}

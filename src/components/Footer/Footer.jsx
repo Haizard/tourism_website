@@ -22,7 +22,7 @@ const Footer = () => {
   return (
     <footer className="bg-slate-900 text-white">
       <div className="container py-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16">
           {/* Brand Column */}
           <div className="space-y-6">
             <div className="flex items-center gap-4">
@@ -127,6 +127,26 @@ const Footer = () => {
               Start Planning →
             </Link>
           </div>
+
+          {/* Legal Column */}
+          <div className="space-y-2">
+            <h3 className="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">
+              Legal
+            </h3>
+            <Link to="/privacy" onClick={() => window.scrollTo(0, 0)} className="block text-gray-400 hover:text-primary text-sm font-bold transition-colors">Privacy Policy</Link>
+            <Link to="/terms" onClick={() => window.scrollTo(0, 0)} className="block text-gray-400 hover:text-primary text-sm font-bold transition-colors">Terms & Conditions</Link>
+            <Link to="/cancellation-policy" onClick={() => window.scrollTo(0, 0)} className="block text-gray-400 hover:text-primary text-sm font-bold transition-colors">Cancellation Policy</Link>
+            <Link to="/faq" onClick={() => window.scrollTo(0, 0)} className="block text-gray-400 hover:text-primary text-sm font-bold transition-colors">FAQ</Link>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-gray-500">
+            <span className="px-3 py-1.5 rounded-full border border-white/10">Licensed Tour Operator</span>
+            <span className="px-3 py-1.5 rounded-full border border-white/10">TALA Member</span>
+            <span className="px-3 py-1.5 rounded-full border border-white/10">TATO Partner</span>
+          </div>
+          <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Arusha, Tanzania · Mon–Sat 8am–6pm EAT</p>
         </div>
       </div>
 

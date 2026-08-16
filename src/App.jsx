@@ -13,6 +13,10 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import ProtectedRoute from "./components/Admin/ProtectedRoute";
 import TailorMade from "./pages/TailorMade";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import CancellationPolicy from "./pages/CancellationPolicy";
+import FAQ from "./pages/FAQ";
 import ScrollToTop from "./components/UI/ScrollToTop";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -44,6 +48,10 @@ const App = () => {
             <Route path="admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="login" element={<AdminLogin />} />
             <Route path="tailor-made" element={<TailorMade />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="cancellation-policy" element={<CancellationPolicy />} />
+            <Route path="faq" element={<FAQ />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
