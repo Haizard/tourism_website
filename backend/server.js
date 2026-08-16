@@ -32,7 +32,7 @@ if (!cached) {
 app.set('trust proxy', 1);
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(cors({
     origin: ["http://localhost:5173", "https://makoloafrika.com", "https://tourism-website-inky.vercel.app"],
     credentials: true
