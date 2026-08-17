@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../components/UI/Card";
 import Badge from "../components/UI/Badge";
+import { MapPin, Mail } from "lucide-react";
 import { fetchVisionaries } from "../services/api";
 
 const About = () => {
@@ -49,7 +50,7 @@ const About = () => {
             <p className="text-gray-600 text-lg leading-relaxed font-medium">
               At Makolo Safari, we are dedicated to crafting unforgettable
               African adventures. Founded with a passion for the wild, our goal
-              is to connect you with the continent's stunning landscapes,
+              is to connect you with the continent&apos;s stunning landscapes,
               diverse wildlife, and rich cultures.
             </p>
 
@@ -91,7 +92,7 @@ const About = () => {
 
           {/* Right Column: Operators */}
           <div className="lg:col-span-5 space-y-10">
-            <div className="bg-gray-50 p-10 rounded-[40px] border border-gray-100 shadow-sm">
+            <div className="glass-light p-10 rounded-[40px] card-lift hover:shadow-glow-gold transition-shadow duration-300">
               <h3 className="text-2xl font-black font-heading mb-10 text-center uppercase tracking-tight">
                 The Visionaries
               </h3>
@@ -140,7 +141,7 @@ const About = () => {
               Our Global Headquarters
             </h2>
           </div>
-          <Card className="rounded-[40px] overflow-hidden shadow-2xl border-none">
+          <Card className="gradient-border rounded-[40px] overflow-hidden shadow-2xl border-none">
             <div className="w-full h-[500px]">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15932.024505825386!2d37.33322514384081!3d-3.348623974828584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1839d9b443856385%3A0x1584d50c63d8bccf!2sMoshi%2C%20Tanzania!5e0!3m2!1ssw!2sus!4v1722434954048!5m2!1ssw!2sus"
@@ -154,8 +155,8 @@ const About = () => {
             </div>
             <div className="p-8 bg-background text-white flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center text-primary text-xl">
-                  📍
+                <div className="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center text-primary">
+                  <MapPin className="w-6 h-6" />
                 </div>
                 <div>
                   <p className="font-black uppercase tracking-widest text-xs opacity-60">
@@ -167,8 +168,8 @@ const About = () => {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-secondary/20 rounded-2xl flex items-center justify-center text-secondary text-xl">
-                  📧
+                <div className="w-12 h-12 bg-secondary/20 rounded-2xl flex items-center justify-center text-secondary">
+                  <Mail className="w-6 h-6" />
                 </div>
                 <div>
                   <p className="font-black uppercase tracking-widest text-xs opacity-60">

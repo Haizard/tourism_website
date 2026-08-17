@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { createInquiry } from "../services/api";
 import {
   FaPlane,
@@ -66,11 +66,11 @@ const TailorMade = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 bg-gray-50">
+    <div className="min-h-screen pt-24 pb-12 section-wash-light">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+        <div className="max-w-4xl mx-auto glass-light gradient-border rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-white/40">
           {/* Sidebar Info */}
-          <div className="md:w-1/3 bg-primary p-10 text-white flex flex-col justify-between">
+          <div className="md:w-1/3 bg-gradient-to-br from-primary to-[#0e7490] p-10 text-white flex flex-col justify-between">
             <div>
               <h1 className="text-4xl font-black uppercase tracking-tighter leading-none mb-6">
                 Tailor Made Adventures
