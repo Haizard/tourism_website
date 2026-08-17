@@ -2,7 +2,7 @@ import React from "react";
 import PlaceCard from "./PlaceCard";
 import { fetchGallery } from "../../services/api";
 
-const Places = ({ handleOrderPopup }) => {
+const Places = () => {
   const [galleryData, setGalleryData] = React.useState([]);
 
   React.useEffect(() => {
@@ -18,7 +18,7 @@ const Places = ({ handleOrderPopup }) => {
   }, []);
 
   return (
-    <div className="bg-stone-300 py-24">
+    <div className="section-wash-light py-24">
       <section className="container">
         <div className="mb-16">
           <p className="text-primary font-bold uppercase tracking-widest mb-3 text-sm">
@@ -42,7 +42,7 @@ const Places = ({ handleOrderPopup }) => {
           ) : (
             <div className="col-span-full py-20 text-center">
               <p className="text-gray-400 font-bold uppercase tracking-widest italic font-heading text-xl">
-                Capturing the world's beauty...
+                Capturing the world&apos;s beauty...
               </p>
             </div>
           )}

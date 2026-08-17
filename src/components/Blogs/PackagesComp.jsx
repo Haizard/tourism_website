@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PackageCard from "./PackageCard";
 import FilterSidebar from "./FilterSidebar";
 import { fetchTours, fetchTaxonomies } from "../../services/api";
@@ -74,7 +74,7 @@ const PackagesComp = () => {
   }, [allTours, filters, search]);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="section-wash-light min-h-screen">
       <div className="container py-12 px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
@@ -117,7 +117,7 @@ const PackagesComp = () => {
                   <PackageCard key={item._id} {...item} />
                 ))
               ) : (
-                <div className="col-span-full py-32 text-center bg-white rounded-3xl border border-dashed border-gray-200 shadow-sm">
+                <div className="col-span-full py-32 text-center glass-light rounded-3xl border border-dashed border-white/60">
                   <div className="text-6xl mb-4">🔦</div>
                   <h3 className="text-xl font-black text-secondary uppercase tracking-tighter">
                     No Adventures Found

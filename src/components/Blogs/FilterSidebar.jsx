@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const FilterSidebar = ({ filters, setFilters, categories, tourTypes }) => {
   const handleCategoryChange = (cat) => {
@@ -23,7 +23,7 @@ const FilterSidebar = ({ filters, setFilters, categories, tourTypes }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-8 sticky top-24 h-fit">
+    <div className="glass-light p-6 rounded-2xl flex flex-col gap-8 sticky top-24 h-fit card-lift hover:shadow-glow-primary transition-shadow duration-300">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-black uppercase tracking-tighter text-secondary flex items-center gap-2">
           <span className="w-2 h-6 bg-primary rounded-full"></span>
@@ -126,6 +126,17 @@ const FilterSidebar = ({ filters, setFilters, categories, tourTypes }) => {
       </div>
     </div>
   );
+};
+
+FilterSidebar.propTypes = {
+  filters: PropTypes.shape({
+    category: PropTypes.string,
+    tourType: PropTypes.string,
+    maxPrice: PropTypes.number,
+  }),
+  setFilters: PropTypes.func.isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string),
+  tourTypes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default FilterSidebar;

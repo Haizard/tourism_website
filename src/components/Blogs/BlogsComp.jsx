@@ -18,7 +18,7 @@ const BlogsComp = () => {
   }, []);
 
   return (
-    <div className="bg-slate-100 py-24">
+    <div className="section-wash-light py-24">
       <section className="container">
         <div className="mb-16">
           <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
