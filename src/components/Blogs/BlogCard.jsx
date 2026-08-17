@@ -1,5 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import Card from "../UI/Card";
 import Badge from "../UI/Badge";
 
@@ -11,7 +11,13 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
       state={{ image, date, title, content, author, category }}
       className="group block h-full"
     >
-      <Card className="relative flex flex-col h-full border-none shadow-xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-500 rounded-[40px] bg-white group">
+      <Card
+        variant="light"
+        glow="gold"
+        className="relative flex flex-col h-full border-none overflow-hidden rounded-[40px] shadow-xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500"
+      >
+        <div className="top-accent z-10" />
+
         <div className="relative h-48 md:h-72 overflow-hidden">
           <img
             src={image}
@@ -32,15 +38,16 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
           </div>
 
           <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-            <span className="text-white font-black text-[10px] uppercase tracking-[0.3em]">
+            <span className="relative text-white font-black text-[10px] uppercase tracking-[0.3em]">
               Read Story
+              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-secondary" />
             </span>
           </div>
         </div>
 
-        <div className="p-4 md:p-10 flex-1 flex flex-col relative bg-white">
+        <div className="p-4 md:p-10 flex-1 flex flex-col relative bg-white/60">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-black text-xs ring-2 ring-secondary/40">
               {author?.[0] || 'A'}
             </div>
             <div className="flex flex-col">
@@ -66,15 +73,24 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
               Explore <span>→</span>
             </div>
             <div className="flex gap-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover:bg-primary transition-colors delay-75" />
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover:bg-primary transition-colors delay-100" />
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover:bg-primary transition-colors delay-150" />
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover:bg-secondary transition-colors delay-75" />
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover:bg-secondary transition-colors delay-100" />
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover:bg-secondary transition-colors delay-150" />
             </div>
           </div>
         </div>
       </Card>
     </Link>
   );
+};
+
+BlogCard.propTypes = {
+  image: PropTypes.string,
+  date: PropTypes.string,
+  title: PropTypes.string,
+  content: PropTypes.string,
+  author: PropTypes.string,
+  category: PropTypes.string,
 };
 
 export default BlogCard;
