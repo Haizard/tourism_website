@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { IoLocationSharp, IoTimeOutline, IoPeopleOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
+import PropTypes from "prop-types";
 import Badge from "../UI/Badge";
 import Card from "../UI/Card";
 
@@ -20,6 +21,7 @@ const PackageCard = (props) => {
   } = props;
   const spotsLeft = maxCapacity - currentBookings;
   const progress = (currentBookings / maxCapacity) * 100;
+  const limited = isGroupTour && spotsLeft <= 3;
 
   return (
     <Link
@@ -28,7 +30,11 @@ const PackageCard = (props) => {
       state={props}
       className="group block h-full"
     >
-      <Card className="relative h-full border-none shadow-xl hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] transition-all duration-700 rounded-[40px] overflow-hidden bg-white px-0 py-0">
+      <Card
+        variant="light"
+        glow="primary"
+        className="relative h-full border-none shadow-xl transition-all duration-700 rounded-[40px] overflow-hidden"
+      >
         <div className="relative h-48 md:h-72 overflow-hidden">
           <img
             src={image}
@@ -37,7 +43,7 @@ const PackageCard = (props) => {
             decoding="async"
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
 
           <div className="absolute top-6 left-6 flex flex-wrap gap-2">
             <Badge variant="luxury" className="backdrop-blur-md bg-white/10 border-white/20 text-white uppercase font-black text-[9px] tracking-widest px-3 py-1">
@@ -46,9 +52,15 @@ const PackageCard = (props) => {
             <Badge variant="secondary" className="backdrop-blur-md bg-primary/20 border-primary/20 text-white uppercase font-black text-[9px] tracking-widest px-3 py-1">
               {category || "Luxury"}
             </Badge>
+            {limited && (
+              <span className="animate-pulse-soft inline-flex items-center gap-1.5 bg-red-500/90 text-white border border-red-300/50 shadow-[0_0_18px_rgba(239,68,68,0.6)] px-3 py-1 rounded-full text-[9px] uppercase font-black tracking-widest">
+                Limited Spots
+              </span>
+            )}
           </div>
 
-          <div className="absolute bottom-6 left-6 right-6">
+          {/* Location + title shift up on hover to make room for the CTA */}
+          <div className="absolute bottom-6 left-6 right-6 transition-transform duration-500 group-hover:-translate-y-8">
             <div className="flex items-center gap-1.5 text-white/90 mb-2">
               <IoLocationSharp className="text-primary text-sm" />
               <span className="text-[10px] font-black uppercase tracking-[0.2em]">
@@ -60,7 +72,14 @@ const PackageCard = (props) => {
             </h3>
           </div>
 
-          <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white/95 backdrop-blur shadow-xl rounded-2xl px-3 py-1 md:px-4 md:py-2 text-center transform group-hover:scale-110 transition-transform duration-500">
+          {/* Book Now pill slides up on hover */}
+          <div className="absolute bottom-0 left-0 right-0 px-6 pb-4 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+            <span className="inline-flex items-center justify-center w-full bg-primary text-white font-black uppercase tracking-widest text-xs py-3 rounded-full shadow-glow-primary">
+              Book Now →
+            </span>
+          </div>
+
+          <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white/70 backdrop-blur-md shadow-xl rounded-2xl px-3 py-1 md:px-4 md:py-2 text-center transform group-hover:scale-110 transition-transform duration-500">
             <p className="text-[7px] md:text-[9px] font-black text-gray-400 uppercase tracking-tighter leading-none mb-1">From</p>
             <p className="text-sm md:text-xl font-black text-primary leading-none">${price}</p>
           </div>
@@ -68,7 +87,7 @@ const PackageCard = (props) => {
 
         <div className="p-4 md:p-8">
           {isGroupTour && (
-            <div className="mb-6 bg-gray-50/50 p-4 rounded-3xl border border-gray-100 flex flex-col gap-3">
+            <div className="mb-6 bg-white/50 p-4 rounded-3xl border border-white/60 flex flex-col gap-3">
               <div className="flex justify-between items-center">
                 <span className="flex items-center gap-1.5 text-[9px] font-black uppercase text-gray-900 tracking-widest">
                   <IoPeopleOutline className="text-primary text-sm" /> Confirmed Group
@@ -109,6 +128,20 @@ const PackageCard = (props) => {
       </Card>
     </Link>
   );
+};
+
+PackageCard.propTypes = {
+  image: PropTypes.string,
+  title: PropTypes.string,
+  location: PropTypes.string,
+  price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  description: PropTypes.string,
+  tourType: PropTypes.string,
+  category: PropTypes.string,
+  isGroupTour: PropTypes.bool,
+  maxCapacity: PropTypes.number,
+  currentBookings: PropTypes.number,
+  launchDate: PropTypes.string,
 };
 
 export default PackageCard;
