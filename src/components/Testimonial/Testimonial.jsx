@@ -24,7 +24,7 @@ const Testimonial = () => {
   };
 
   return (
-    <div className="py-24 bg-slate-200">
+    <div className="py-24 section-wash-light">
       <div className="container">
         <div className="text-center mb-16">
           <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">Guest Reviews</p>
@@ -34,17 +34,18 @@ const Testimonial = () => {
           <Slider {...settings}>
             {testimonials.map(({ _id, name, role, text, rating, image }) => (
               <div key={_id} className="px-4 py-3">
-                <div className="bg-white rounded-3xl p-8 shadow-md border border-slate-100 h-full relative">
+                <div className="glass-light rounded-3xl p-8 h-full relative card-lift hover:shadow-glow-gold transition-shadow duration-300">
                   <span className="absolute top-6 right-8 text-7xl text-primary/10 font-serif leading-none select-none">&quot;</span>
+                  <span className="absolute top-0 left-8 right-8 h-1 rounded-b-full bg-gradient-to-r from-primary via-secondary to-primary" />
                   <div className="flex gap-1 text-secondary mb-4">
                     {Array.from({ length: rating || 5 }).map((_, i) => <span key={i}>★</span>)}
                   </div>
                   <p className="text-slate-700 text-sm leading-relaxed font-medium mb-8 relative z-10">{text}</p>
                   <div className="flex items-center gap-4">
                     {image ? (
-                      <img src={image} alt={name} loading="lazy" className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/30" />
+                      <img src={image} alt={name} loading="lazy" className="w-12 h-12 rounded-full object-cover ring-2 ring-secondary/40" />
                     ) : (
-                      <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black ring-2 ring-primary/30">{name?.[0]}</div>
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center font-black ring-2 ring-secondary/40">{name?.[0]}</div>
                     )}
                     <div>
                       <p className="font-black text-slate-900 text-sm">{name}</p>
