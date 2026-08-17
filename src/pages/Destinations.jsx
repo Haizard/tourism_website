@@ -33,12 +33,20 @@ const Destinations = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {destinations.map((d) => (
               <Link key={d._id} to={`/destinations/${d.slug}`} className="group block">
-                <div className="relative h-80 overflow-hidden rounded-[40px] shadow-xl">
+                <div className="relative h-80 overflow-hidden rounded-[40px] shadow-xl card-lift hover:shadow-glow-primary transition-shadow duration-500 group-hover:-translate-y-2">
                   <img src={d.heroImage} alt={d.name} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6">
-                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-2 group-hover:text-primary transition-colors">{d.name}</h3>
+                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-2 group-hover:text-primary transition-colors relative w-fit">
+                      {d.name}
+                      <span className="absolute -bottom-1 left-0 right-0 h-0.5 scale-x-0 group-hover:scale-x-100 origin-left bg-gradient-to-r from-primary to-secondary transition-transform duration-500" />
+                    </h3>
                     <p className="text-gray-300 text-sm font-medium line-clamp-2">{d.shortIntro}</p>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 px-6 pb-6 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <span className="inline-flex items-center justify-center gap-2 w-full bg-white/15 backdrop-blur-md border border-white/30 text-white font-black uppercase tracking-widest text-[10px] py-3 rounded-full">
+                      Explore Destination →
+                    </span>
                   </div>
                 </div>
               </Link>
