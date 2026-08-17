@@ -50,6 +50,62 @@
     /* bg-surface */
     @apply text-gray-800;
   }
+
+  /* Glass surfaces */
+  .glass-light {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40;
+    box-shadow: 0 8px 32px -12px rgba(15, 23, 42, 0.12);
+  }
+
+  .glass-dark {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  /* 1px gradient border ring (mask technique — works over any bg) */
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #0d9488, #eab308);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Top accent line (gold gradient) for cards */
+  .top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0d9488, #eab308, #0d9488);
+  }
+
+  /* Shadow-only transition (transform is owned by framer-motion) */
+  .card-lift {
+    transition: box-shadow 0.3s ease;
+  }
+
+  /* Section backdrop washes */
+  .section-wash-light {
+    background-color: #f5f0ec;
+    background-image: radial-gradient(60rem 30rem at 85% -10%, rgba(13, 148, 136, 0.08), transparent 60%),
+      radial-gradient(50rem 25rem at 10% 110%, rgba(234, 179, 8, 0.08), transparent 60%);
+  }
+
+  .section-wash-dark {
+    background-color: #0e1a17;
+    background-image: radial-gradient(60rem 30rem at 85% -10%, rgba(13, 148, 136, 0.14), transparent 60%),
+      radial-gradient(50rem 25rem at 10% 110%, rgba(234, 179, 8, 0.07), transparent 60%);
+  }
 }
 
 @layer utilities {
@@ -59,5 +115,15 @@
 
   .gold-shadow {
     box-shadow: 0 8px 40px -8px rgba(212, 168, 83, 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

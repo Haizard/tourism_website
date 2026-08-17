@@ -26,18 +26,28 @@ export default {
           "2xl": "6rem",
         },
       },
+      boxShadow: {
+        "glow-primary": "0 20px 60px -15px rgba(13,148,136,0.35)",
+        "glow-gold": "0 20px 60px -15px rgba(234,179,8,0.30)",
+        "glow-accent": "0 20px 60px -15px rgba(249,115,22,0.35)",
+      },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out forwards',
-        'slide-up': 'slideUp 0.5s ease-out forwards',
+        "fade-in": "fadeIn 0.5s ease-out forwards",
+        "slide-up": "slideUp 0.5s ease-out forwards",
+        "pulse-soft": "pulseSoft 1.6s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
         slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        pulseSoft: {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.75", transform: "scale(0.97)" },
         },
       },
     },
