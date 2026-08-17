@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Card from "../UI/Card";
@@ -51,7 +51,7 @@ const Trending = () => {
   const visibleTours = getVisibleTours();
 
   return (
-    <div className="py-24 bg-slate-900 overflow-hidden">
+    <div className="py-24 section-wash-dark overflow-hidden">
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <motion.div
@@ -88,6 +88,8 @@ const Trending = () => {
                   transition={{ duration: 0.8, ease: "circOut" }}
                 >
                   <Card
+                    variant="image"
+                    glow="gold"
                     className="group relative h-[420px] rounded-[40px] overflow-hidden border-none shadow-2xl cursor-pointer"
                     onClick={() => handleNavigate(item)}
                   >
@@ -107,6 +109,12 @@ const Trending = () => {
                           Group
                         </Badge>
                       )}
+                      {item.isGroupTour &&
+                        item.maxCapacity - item.currentBookings <= 3 && (
+                          <span className="animate-pulse-soft inline-flex items-center gap-1.5 bg-red-500/90 text-white border border-red-300/50 shadow-[0_0_18px_rgba(239,68,68,0.6)] px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-widest">
+                            Limited Spots
+                          </span>
+                        )}
                     </div>
 
                     <div className="absolute bottom-8 left-8 right-8">

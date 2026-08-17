@@ -1,4 +1,3 @@
-import React from "react";
 import TravelImg from "../../assets/camp1.jpg";
 import { MdFlight, MdOutlineLocalHotel } from "react-icons/md";
 import { IoIosWifi } from "react-icons/io";
@@ -26,7 +25,7 @@ const amenities = [
 
 const Banner = () => {
   return (
-    <div className="bg-slate-900 py-24">
+    <div className="section-wash-dark py-24">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Image section */}
@@ -37,8 +36,8 @@ const Banner = () => {
               alt="Tanzania Adventure"
               className="relative z-10 w-full h-[420px] object-cover rounded-[32px] shadow-2xl"
             />
-            <div className="absolute bottom-0 right-0 z-20 bg-secondary text-white p-5 rounded-2xl shadow-xl border border-secondary/20">
-              <p className="font-black text-2xl leading-none">500+</p>
+            <div className="absolute bottom-0 right-0 z-20 bg-white/10 backdrop-blur-md border border-white/20 text-white p-5 rounded-2xl shadow-2xl">
+              <p className="font-black text-2xl leading-none text-secondary">500+</p>
               <p className="text-xs font-bold uppercase tracking-widest mt-1 text-white/90">
                 Happy Adventurers
               </p>
