@@ -14,7 +14,7 @@ const BlogCard = ({ image, date, title, content, author, category }) => {
       <Card
         variant="light"
         glow="gold"
-        className="relative flex flex-col h-full border-none overflow-hidden rounded-[40px] shadow-xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500"
+        className="relative flex flex-col h-full border-none overflow-hidden rounded-[40px] shadow-xl transition-all duration-500"
       >
         <div className="top-accent z-10" />
 
