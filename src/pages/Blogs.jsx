@@ -1,4 +1,3 @@
-import React from "react";
 import BlogsComp from "../components/Blogs/BlogsComp";
 import Badge from "../components/UI/Badge";
 
@@ -10,7 +9,7 @@ const Blogs = () => {
         <div className="absolute inset-0 bg-black/60 z-10" />
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center" />
         <div className="container relative z-20 text-center text-white">
-          <Badge variant="primary" className="mb-4">
+          <Badge variant="primary" className="mb-4 backdrop-blur-md bg-white/20 text-white border-white/30">
             Stories & Insights
           </Badge>
           <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter font-heading">
